@@ -13,12 +13,23 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Desktop from '../assets/desktop.png'
+import Logo1 from '../assets/logo_black_full.svg'
+import Logo2 from '../assets/logo_black.svg'
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
-   
     margin: '10% auto',
-    width: '60%'
+    width: '50%'
+    
+  },
+  logoText: {
+    width: '100%',
+    margin: 'auto',
+    height: '10vh',
+    textAlign: 'center',
+    backgroundImage: `url(${Logo1})`,
+    backgroundRepeat: 'no-repeat',
     
   },
   image: {
@@ -27,6 +38,13 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor:
       theme.palette.type === 'light' ? theme.palette.grey[50] : theme.palette.grey[900],
     backgroundPosition: 'center',
+  },
+
+  logo: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    margin: '10% auto',
   },
   paper: {
     margin: theme.spacing(8, 4),
@@ -53,8 +71,12 @@ export default function Login() {
   return (
     <Grid container component="main" className={classes.root}>
       <CssBaseline />
-      <Grid item xs={false} sm={4} md={7} className={classes.image} />
+      <Grid item xs={false} sm={4} md={7} className={classes.logoText} />
+      <Grid item xs={false} sm={4} md={7} className={classes.image}>
+        <img src={Logo2} alt="" className={classes.logo} />
+      </Grid>
       <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
+        
         <div className={classes.paper}>
           <Avatar className={classes.avatar}>
             <LockOutlinedIcon />
@@ -68,10 +90,10 @@ export default function Login() {
               margin="normal"
               required
               fullWidth
-              id="email"
-              label="Email Address"
-              name="email"
-              autoComplete="email"
+              id="username"
+              label="Username"
+              name="username"
+              autoComplete="username"
               autoFocus
             />
             <TextField
@@ -84,10 +106,6 @@ export default function Login() {
               type="password"
               id="password"
               autoComplete="current-password"
-            />
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
             />
             <Button
               type="submit"
