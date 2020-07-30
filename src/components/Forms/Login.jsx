@@ -3,11 +3,7 @@ import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
-import Link from '@material-ui/core/Link';
 import Paper from '@material-ui/core/Paper';
-import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
@@ -19,12 +15,11 @@ import Logo2 from '../assets/logo_black.svg'
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    margin: '10% auto',
+    margin: '5% auto',
     width: '50%'
     
   },
   logoText: {
-    width: '100%',
     margin: 'auto',
     height: '10vh',
     textAlign: 'center',
@@ -35,8 +30,7 @@ const useStyles = makeStyles((theme) => ({
   image: {
     backgroundImage: `url(${Desktop})`,
     backgroundRepeat: 'no-repeat',
-    backgroundColor:
-      theme.palette.type === 'light' ? theme.palette.grey[50] : theme.palette.grey[900],
+    backgroundColor: 'lightblue',
     backgroundPosition: 'center',
   },
 
@@ -54,10 +48,10 @@ const useStyles = makeStyles((theme) => ({
   },
   avatar: {
     margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
+    backgroundColor: 'blue',
   },
   form: {
-    width: '100%', // Fix IE 11 issue.
+    width: '100%',
     marginTop: theme.spacing(1),
   },
   submit: {
@@ -76,7 +70,6 @@ export default function Login() {
         <img src={Logo2} alt="" className={classes.logo} />
       </Grid>
       <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
-        
         <div className={classes.paper}>
           <Avatar className={classes.avatar}>
             <LockOutlinedIcon />
