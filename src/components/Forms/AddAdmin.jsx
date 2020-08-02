@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
-import { Container, Grid, Button } from "@material-ui/core";
+import { Container, Grid, Button, InputLabel, Select, FormControl } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
     field: {
@@ -46,21 +46,20 @@ export default function AddAdmin() {
                     alignItems="center"
                     spacing={2}
                 >
-                    <Grid container item xs={12} md={6} lg={6}>
+                   <Grid container item xs={12} md={6} lg={6}>
                         <TextField
-                            label="Email"
-                            variant="filled"
+                            label="Full Name"
+                            variant="outlined"
                             className={classes.field}
-                            name="email"
-                            type="email"
-                            value={input.email}
+                            name="fullname"
+                            value={input.fullname}
                             onChange={handleChange}
                         />
                     </Grid>
                     <Grid container item xs={12} md={6} lg={6}>
                         <TextField
                             label="Username"
-                            variant="filled"
+                            variant="outlined"
                             className={classes.field}
                             name="username"
                             value={input.username}
@@ -70,7 +69,7 @@ export default function AddAdmin() {
                     <Grid container item xs={12} md={6} lg={6}>
                         <TextField
                             label="Password"
-                            variant="filled"
+                            variant="outlined"
                             className={classes.field}
                             name="password"
                             value={input.password}
@@ -88,7 +87,7 @@ export default function AddAdmin() {
                     <Grid container item xs={12} md={6} lg={6}>
                         <TextField
                             label="Confirm Password"
-                            variant="filled"
+                            variant="outlined"
                             className={classes.field}
                             name="confirmPassword"
                             value={input.confirmPassword}
@@ -102,6 +101,25 @@ export default function AddAdmin() {
                                 "Password not match"
                             }
                         />
+                    </Grid>
+                    <Grid container item xs={12} md={6} lg={6}>
+                    <FormControl variant="outlined" className={classes.field}>
+                        <InputLabel htmlFor="outlined-age-native-simple">Role</InputLabel>
+                        <Select
+                        native
+                        // value={state.age}
+                        onChange={handleChange}
+                        label="Role"
+                        inputProps={{
+                            name: 'age',
+                            id: 'outlined-age-native-simple',
+                        }}
+                        >
+                        <option aria-label="None" value="" />
+                        <option value={10}>Super Admin</option>
+                        <option value={20}>Admin</option>
+                        </Select>
+                    </FormControl>
                     </Grid>
                     <Grid container item xs={12} md={6} lg={6}>
                         <Button

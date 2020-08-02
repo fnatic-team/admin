@@ -5,9 +5,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import { Typography } from "@material-ui/core";
 // import { createMuiTheme } from '@material-ui/core/styles';
-// import {
-//     Overview,
-//   } from './components';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -83,7 +80,6 @@ export default function Dashboard() {
                         xl={9}
                         xs={12}
                         >
-                        {/* <Overview /> */}
                     </Grid>
                 
             </Container>

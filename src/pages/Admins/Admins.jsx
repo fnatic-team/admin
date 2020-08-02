@@ -15,9 +15,15 @@ import EditIcon from "@material-ui/icons/Edit";
 import AddIcon from "@material-ui/icons/Add";
 import { Link } from "react-router-dom";
 
+
 const useStyles = makeStyles((theme) => ({
+    root: {
+        width: '80%',
+        margin: '5% auto',
+    },
     table: {
-        minWidth: 1000,
+        paddingLeft: theme.spacing(3),
+        paddingRight: theme.spacing(3),
     },
     button: {
         margin: theme.spacing(1),
@@ -33,93 +39,106 @@ function createData(no, name, role, action) {
 
 const rows = [
     createData(1, "Rohmad", "Super Admin"),
-    createData(1, "Boyas", "Admin"),
-    createData(1, "Juan", "Admin"),
-    createData(1, "Ian", "Admin"),
-    createData(1, "Shinta", "Admin"),
+    createData(2, "Boyas", "Admin"),
+    createData(3, "Juan", "Admin"),
+    createData(4, "Ian", "Admin"),
+    createData(5, "Shinta", "Admin"),
 ];
 
 export default function Admin() {
     const classes = useStyles();
 
     return (
-        <Fragment>
-            <Container>
-                <Grid
-                    container
-                    direction="row"
-                    justify="space-between"
-                    alignItems="center"
-                >
-                    <Grid>
-                        <h1>List Admin</h1>
-                    </Grid>
-                    <Grid>
-                        <Link
-                            to="/dashboard/admins/create"
-                            className={classes.link}
-                        >
-                            <Button
-                                variant="contained"
-                                color="primary"
-                                className={classes.button}
-                                startIcon={<AddIcon />}
-                            >
-                                Add
-                            </Button>
-                        </Link>
-                    </Grid>
-                </Grid>
-            </Container>
-
-            <TableContainer component={Paper}>
-                <Table className={classes.table} aria-label="simple table">
-                    <TableHead>
-                        <TableRow>
-                            <TableCell>No</TableCell>
-                            <TableCell align="left">Name</TableCell>
-                            <TableCell align="left">Role</TableCell>
-                            <TableCell align="right">Actions</TableCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {rows.map((row) => (
-                            <TableRow key={row.no}>
-                                <TableCell component="th" scope="row">
-                                    {row.no}
-                                </TableCell>
-                                <TableCell align="left">
-                                    {row.name}
-                                </TableCell>
-                                <TableCell align="left">{row.role}</TableCell>
-                                <TableCell align="right">{row.action}
-                                    <Link
-                                            to="/dashboard/admins/edit"
-                                            className={classes.link}
-                                        >
-                                            <Button
-                                                variant="contained"
-                                                color="primary"
-                                                className={classes.button}
-                                                startIcon={<EditIcon />}
-                                            >
-                                                Edit
-                                            </Button>
-                                    </Link>
+        <Fragment >
+            <div className={classes.root}>
+                <Container>
+                    <Grid
+                        container
+                        direction="row"
+                        justify="space-between"
+                        alignItems="center"
+                    >
+                        <Grid>
+                            <h1>List Admin</h1>
+                        </Grid>
+                        <Grid>
+                            <Link
+                                    to="/dashboard/admins/edit"
+                                    className={classes.link}
+                                >
                                     <Button
                                         variant="contained"
-                                        color="secondary"
+                                        color="primary"
                                         className={classes.button}
-                                        startIcon={<DeleteIcon />}
+                                        startIcon={<EditIcon />}
                                     >
-                                        Delete
+                                        Edit
                                     </Button>
+                            </Link>
+                            <Link
+                                to="/dashboard/admins/create"
+                                className={classes.link}
+                            >
+                                <Button
+                                    variant="contained"
+                                    color="primary"
+                                    className={classes.button}
+                                    startIcon={<AddIcon />}
+                                >
+                                    Add
+                                </Button>
+                            </Link>
+                        </Grid>
+                    </Grid>
+                </Container>
+
+                <TableContainer component={Paper} className={classes.table} >
+                    <Table  aria-label="a dense table" size="small">
+                        <TableHead>
+                            <TableRow > 
+                                <TableCell>
+                                    <h2>No</h2>
+                                </TableCell>
+                                <TableCell align="left">
+                                    <h2>Name</h2>
+                                </TableCell>
+                                <TableCell align="left">
+                                    <h2>Role</h2>
+                                </TableCell>
+                                <TableCell align="right">
+                                    <h2>Action</h2>
                                 </TableCell>
                             </TableRow>
-                        ))}
-                    </TableBody>
-                </Table>
-            </TableContainer>
+                        </TableHead>
+                        <TableBody>
+                            {rows.map((row) => (
+                                <TableRow key={row.no}>
+                                    <TableCell component="th" scope="row">
+                                        <h3>{row.no}</h3>
+                                    </TableCell>
+                                    <TableCell align="left">
+                                        <h3>{row.name}</h3>
+                                    </TableCell>
+                                    <TableCell align="left">
+                                        <h3>{row.role}</h3>
+                                    </TableCell>
+                                    <TableCell align="right">
+                                        <h3>{row.action}</h3>
+                                        <Button
+                                            variant="contained"
+                                            color="secondary"
+                                            className={classes.button}
+                                            startIcon={<DeleteIcon />}
+                                        >
+                                            Delete
+                                        </Button>
+                                    </TableCell>
+                                </TableRow>
+                            ))}
+                        </TableBody>
+                    </Table>
+                </TableContainer>
+            </div>
         </Fragment>
     );
 }

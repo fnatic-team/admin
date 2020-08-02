@@ -1,117 +1,106 @@
 import React from 'react';
-import Card from '@material-ui/core/Card';
-import CardHeader from '@material-ui/core/CardHeader';
-import IconButton from '@material-ui/core/IconButton';
-import CardContent from '@material-ui/core/CardContent';
-import CardMedia from '@material-ui/core/CardMedia';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import Grid from '@material-ui/core/Grid';
+import { makeStyles, Theme} from '@material-ui/core/styles';
+import AppBar from '@material-ui/core/AppBar';
+import Tabs from '@material-ui/core/Tabs';
+import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
-import GradeIcon from '@material-ui/icons/Grade';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
+import Box from '@material-ui/core/Box';
+import PendingSpeaker from './components/PendingSpeaker'
+import ListSpeaker from './components/ListSpeaker'
 
 
 
-const useStyles = makeStyles((theme) => ({
-  icon: {
-    marginRight: theme.spacing(2),
-  },
-  heroContent: {
-    backgroundColor: theme.palette.background.paper,
-    padding: theme.spacing(8, 0, 6),
-  },
-  heroButtons: {
-    marginTop: theme.spacing(4),
-  },
-  cardGrid: {
-    padding: theme.spacing(0),
-    margin: theme.spacing(0),
-    backgroundColor: '#5997b2',
-    marginBottom: theme.spacing(3),
-  },
-  card: {
-    height: '100%',
-    display: 'flex',
-    flexDirection: 'column',
-  },
-  cardMedia: {
-    paddingTop: '80%', 
-    borderRadius: '50%',
-    margin: 'auto',
-    width: '80%'
-  },
-  cardContent: {
+interface TabPanelProps {
+  children?: React.ReactNode;
+  index: any;
+  value: any;
+}
+
+function TabPanel(props: TabPanelProps) {
+  const { children, value, index, ...other } = props;
+
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`nav-tabpanel-${index}`}
+      aria-labelledby={`nav-tab-${index}`}
+      {...other}
+    >
+      {value === index && (
+        <Box p={3}>
+          <Typography>{children}</Typography>
+        </Box>
+      )}
+    </div>
+  );
+}
+
+function a11yProps(index: any) {
+  return {
+    id: `nav-tab-${index}`,
+    'aria-controls': `nav-tabpanel-${index}`,
+  };
+}
+
+interface LinkTabProps {
+  label?: string;
+  href?: string;
+}
+
+function LinkTab(props: LinkTabProps) {
+  return (
+    <Tab
+      component="a"
+      onClick={(event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
+        event.preventDefault();
+      }}
+      {...props}
+    />
+  );
+}
+
+
+const useStyles = makeStyles((theme: Theme) => ({
+  root: {
     flexGrow: 1,
-    matgin: 'auto',
-    textAlign: 'center',
-    backgroundColor: '#e3f2fd',
-  },
-  speaker:{
-    backgroundColor: '#bbdefb',
-    paddingBottom: theme.spacing(3),
-  },
-  avatar: {
-    
-  },
-  footer: {
     backgroundColor: theme.palette.background.paper,
-    padding: theme.spacing(6),
   },
 }));
 
-const cards = [1, 2, 3, 4, 5, 6];
-
 export default function Speaker() {
   const classes = useStyles();
+  const [value, setValue] = React.useState(0);
+
+  const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
+    setValue(newValue);
+  };
+
+ 
 
   return (
-    <React.Fragment>
-      <CssBaseline />
-      <h1>Speaker</h1>
-      <main>
-        {/* Hero unit */}
-        <Grid container spacing={4}>
-                {cards.map((card) => (
-                <Grid item key={card} xs={12} sm={6} md={3}>
-                    <Card className={classes.card}>
-                        <Grid className={classes.speaker}>  
-                            <CardHeader className={classes.cardGrid}
-                                action={
-                                <IconButton aria-label="settings">
-                                    <MoreVertIcon />
-                                </IconButton>
-                                }
-                                // title="Shrimp and Chorizo Paella"
-                                // subheader="September 14, 2016"
-                            />
-                            <CardMedia
-                                className={classes.cardMedia}
-                                image="https://source.unsplash.com/random"
-                                title="Image title"
-                            />
-                        </Grid>
-                        
-                    <CardContent className={classes.cardContent}>
-                        <Typography gutterBottom variant="h3" component="h2">
-                        Heading
-                        </Typography>
-                        <Typography variant="h5">
-                            React JS
-                        </Typography>
-                        <Typography variant="h5">
-                            Fee: 5jt/hours
-                        </Typography>
-                        <Typography variant="h5">
-                            <GradeIcon /><GradeIcon /><GradeIcon /><GradeIcon /><GradeIcon />
-                        </Typography>
-                    </CardContent>
-                    </Card>
-                </Grid>
-                ))}
-            </Grid>
-        
-      </main>
-    </React.Fragment>
+    <div className={classes.root}>
+      <AppBar position="static" >
+        <Tabs
+          variant="fullWidth"
+          value={value}
+          onChange={handleChange}
+          aria-label="nav tabs example"
+        >
+          <LinkTab label="Active Speaker" href="/drafts" {...a11yProps(0)} />
+          <LinkTab label="Pending Speaker" href="/trash" {...a11yProps(1)} />
+          <LinkTab label="In Active Speaker" href="/spam" {...a11yProps(2)} />
+        </Tabs>
+      </AppBar>
+      <TabPanel value={value} index={0}>
+        <ListSpeaker />
+      </TabPanel>
+      <TabPanel value={value} index={1}>
+        <PendingSpeaker />
+      </TabPanel>
+      <TabPanel value={value} index={2}>
+        Page Three
+      </TabPanel>
+    </div>
   );
 }

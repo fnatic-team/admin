@@ -17,6 +17,7 @@ const drawerWidth = 240;
 const useStyles = makeStyles((theme) => ({
     root: {
         display: "flex",
+        backgroundColor: '#e3f2fd',
     },
     toolbarIcon: {
         display: "flex",
@@ -28,6 +29,7 @@ const useStyles = makeStyles((theme) => ({
     drawerPaper: {
         position: "relative",
         whiteSpace: "nowrap",
+        backgroundColor: '#5997b2',
         width: drawerWidth,
         transition: theme.transitions.create("width", {
             easing: theme.transitions.easing.sharp,

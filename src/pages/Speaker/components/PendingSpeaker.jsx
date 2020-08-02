@@ -18,66 +18,25 @@ interface Column {
 }
 
 const columns: Column[] = [
-  { id: 'no', label: 'No', minWidth: 40 },
+  { id: 'no', label: 'No', minWidth: 50 },
+  { id: 'name', label: 'Name', minWidth: 100 },
   {
-    id: 'speaker',
-    label: 'Nama Speaker',
-    minWidth: 170,
-    align: 'left',
-    format: (value: number) => value.toLocaleString('en-US'),
-  },
-  {
-    id: 'audience',
-    label: 'Nama Audience',
+    id: 'document',
+    label: 'Document',
     minWidth: 170,
     align: 'center',
     format: (value: number) => value.toLocaleString('en-US'),
   },
   {
-    id: 'aa',
-    label: 'Nama Acara',
+    id: 'expertation',
+    label: 'Expertation',
     minWidth: 170,
     align: 'center',
     format: (value: number) => value.toLocaleString('en-US'),
   },
   {
-    id: 'agenda',
-    label: 'Waktu Acara',
-    minWidth: 170,
-    align: 'center',
-    format: (value: number) => value.toFixed(2),
-  },
-  {
-    id: 'agenda',
-    label: 'Lokasi Acara',
-    minWidth: 170,
-    align: 'center',
-    format: (value: number) => value.toFixed(2),
-  },
-  {
-    id: 'agenda',
-    label: 'Jumlah Peserta',
-    minWidth: 170,
-    align: 'center',
-    format: (value: number) => value.toFixed(2),
-  },
-  {
-    id: 'agenda',
-    label: 'Durasi Acara',
-    minWidth: 170,
-    align: 'center',
-    format: (value: number) => value.toFixed(2),
-  },
-  {
-    id: 'agenda',
-    label: 'Descripsi Acara',
-    minWidth: 170,
-    align: 'center',
-    format: (value: number) => value.toFixed(2),
-  },
-  {
-    id: 'agenda',
-    label: 'Status Acara',
+    id: 'status',
+    label: 'Status',
     minWidth: 170,
     align: 'center',
     format: (value: number) => value.toFixed(2),
@@ -124,7 +83,7 @@ const useStyles = makeStyles({
   },
 });
 
-export default function StickyHeadTable() {
+export default function PendingSpeaker() {
   const classes = useStyles();
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
-import { Container, Grid, Button } from "@material-ui/core";
+import { Container, Grid, Button, } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
     field: {
@@ -9,13 +9,13 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function AddAdmin() {
+export default function EditAdmin() {
     const classes = useStyles();
     const [input, setInput] = useState({
-        email: "",
         username: "",
         password: "",
         confirmPassword: "",
+        role: "",
     });
 
     const handleChange = (event) => {
@@ -48,19 +48,8 @@ export default function AddAdmin() {
                 >
                     <Grid container item xs={12} md={6} lg={6}>
                         <TextField
-                            label="Email"
-                            variant="filled"
-                            className={classes.field}
-                            name="email"
-                            type="email"
-                            value={input.email}
-                            onChange={handleChange}
-                        />
-                    </Grid>
-                    <Grid container item xs={12} md={6} lg={6}>
-                        <TextField
                             label="Username"
-                            variant="filled"
+                            variant="outlined"
                             className={classes.field}
                             name="username"
                             value={input.username}
@@ -70,7 +59,7 @@ export default function AddAdmin() {
                     <Grid container item xs={12} md={6} lg={6}>
                         <TextField
                             label="Password"
-                            variant="filled"
+                            variant="outlined"
                             className={classes.field}
                             name="password"
                             value={input.password}
@@ -88,7 +77,7 @@ export default function AddAdmin() {
                     <Grid container item xs={12} md={6} lg={6}>
                         <TextField
                             label="Confirm Password"
-                            variant="filled"
+                            variant="outlined"
                             className={classes.field}
                             name="confirmPassword"
                             value={input.confirmPassword}
