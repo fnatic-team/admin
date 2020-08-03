@@ -66,6 +66,10 @@ const useStyles = makeStyles((theme: Theme) => ({
     flexGrow: 1,
     backgroundColor: theme.palette.background.paper,
   },
+  head: {
+    backgroundColor: theme.palette.background.paper,
+    color: 'black',
+  }
 }));
 
 export default function Speaker() {
@@ -80,16 +84,16 @@ export default function Speaker() {
 
   return (
     <div className={classes.root}>
-      <AppBar position="static" >
+      <AppBar position="static" className={classes.head}>
         <Tabs
-          variant="fullWidth"
+          variant="standard"
           value={value}
           onChange={handleChange}
           aria-label="nav tabs example"
         >
-          <LinkTab label="Active Speaker" href="/drafts" {...a11yProps(0)} />
-          <LinkTab label="Pending Speaker" href="/trash" {...a11yProps(1)} />
-          <LinkTab label="In Active Speaker" href="/spam" {...a11yProps(2)} />
+          <LinkTab label="Active Speaker" href="" {...a11yProps(0)} />
+          <LinkTab label="Pending Speaker" href="" {...a11yProps(1)} />
+          <LinkTab label="In Active Speaker" href="" {...a11yProps(2)} />
         </Tabs>
       </AppBar>
       <TabPanel value={value} index={0}>

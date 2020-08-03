@@ -22,8 +22,11 @@ const useStyles = makeStyles((theme) => ({
         margin: '5% auto',
     },
     table: {
-        paddingLeft: theme.spacing(3),
-        paddingRight: theme.spacing(3),
+        padding: theme.spacing(3),
+    },
+    tablehead: {
+        padding: '0',
+        margin: '0',
     },
     button: {
         margin: theme.spacing(1),
@@ -93,10 +96,10 @@ export default function Admin() {
                 </Container>
 
                 <TableContainer component={Paper} className={classes.table} >
-                    <Table  aria-label="a dense table" size="small">
-                        <TableHead>
-                            <TableRow > 
-                                <TableCell>
+                    <Table aria-label="a dense table" size="small">
+                        <TableHead >
+                            <TableRow className={classes.tablehead} > 
+                                <TableCell >
                                     <h2>No</h2>
                                 </TableCell>
                                 <TableCell align="left">
@@ -123,7 +126,7 @@ export default function Admin() {
                                         <h3>{row.role}</h3>
                                     </TableCell>
                                     <TableCell align="right">
-                                        <h3>{row.action}</h3>
+                                        {row.action}
                                         <Button
                                             variant="contained"
                                             color="secondary"

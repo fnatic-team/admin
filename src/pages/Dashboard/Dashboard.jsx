@@ -4,7 +4,7 @@ import Container from "@material-ui/core/Container";
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import { Typography } from "@material-ui/core";
-// import { createMuiTheme } from '@material-ui/core/styles';
+import Overview from "./components/Overview"
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
         justifyContent: 'space-around'
     },
     chart: {
-        backgroundColor: 'white',
+        margin: '5% auto',
     },
     paper: {
         width: '30%',
@@ -24,22 +24,6 @@ const useStyles = makeStyles((theme) => ({
         height: theme.spacing(16),
         },
 }));
-// const theme = createMuiTheme({
-//     palette: {
-//       primary: {
-//         light: '#757ce8',
-//         main: '#3f50b5',
-//         dark: '#002884',
-//         contrastText: '#fff',
-//       },
-//       secondary: {
-//         light: '#ff7961',
-//         main: '#f44336',
-//         dark: '#ba000d',
-//         contrastText: '#000',
-//       },
-//     },
-//   });
 
 
 export default function Dashboard() {
@@ -73,13 +57,14 @@ export default function Dashboard() {
                             </Typography>
                         </Paper>
                     </Grid>
-                    <Grid
+                    <Grid className={classes.chart}
                         item
                         lg={8}
                         md={12}
                         xl={9}
                         xs={12}
                         >
+                            <Overview />
                     </Grid>
                 
             </Container>
