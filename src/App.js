@@ -2,7 +2,7 @@ import React from "react";
 import "./App.css";
 
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import { MainMenu } from "./components";
+// import { MainMenu } from "./components";
 import { Login } from "./pages";
 // import store from "./redux/store";
 // import { Provider } from "react-redux";
@@ -16,9 +16,9 @@ function App() {
                     <Route exact path="/">
                         <Login />
                     </Route>
-                    <Route path="/dashboard">
+                    {/* <PrivateRoute path="/dashboard">
                         <MainMenu />
-                    </Route>
+                    </PrivateRoute> */}
                 </Switch>
             </Router>
         // </Provider>
