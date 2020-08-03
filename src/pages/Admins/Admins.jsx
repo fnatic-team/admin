@@ -23,7 +23,6 @@ const useStyles = makeStyles((theme) => ({
     },
     table: {
         padding: theme.spacing(3),
-        // paddingRight: theme.spacing(3),
     },
     tablehead: {
         padding: '0',
