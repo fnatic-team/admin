@@ -16,8 +16,7 @@ import Logo2 from '../assets/logo_black.svg'
 const useStyles = makeStyles((theme) => ({
   root: {
     margin: '5% auto',
-    width: '50%'
-    
+    width: '50%',
   },
   logoText: {
     margin: 'auto',
@@ -109,7 +108,6 @@ export default function Login() {
             >
               Sign In
             </Button>
-            
           </form>
         </div>
       </Grid>
