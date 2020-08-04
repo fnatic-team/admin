@@ -12,7 +12,7 @@ export const getAllAdmin = () => async (dispatch) => {
         method: "GET",
         headers: {
             "content-type": "application/json",
-            // authorization: `Bearer ${token}`,
+            authorization: `Bearer ${token}`,
         },
     };
 
