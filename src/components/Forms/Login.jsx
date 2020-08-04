@@ -12,15 +12,20 @@ import Desktop from '../assets/desktop.png'
 import Logo1 from '../assets/logo_black_full.svg'
 import Logo2 from '../assets/logo_black.svg'
 
+import { useDispatch } from "react-redux";
+import { login } from "../../redux/actions";
+import { Formik, Form, Field, ErrorMessage } from "formik";
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    margin: '5% auto',
+    margin: '10% auto',
     width: '50%',
+    display: 'flex',
   },
   logoText: {
     margin: 'auto',
-    height: '10vh',
+    height: '7vh',
     textAlign: 'center',
     backgroundImage: `url(${Logo1})`,
     backgroundRepeat: 'no-repeat',
@@ -47,7 +52,7 @@ const useStyles = makeStyles((theme) => ({
   },
   avatar: {
     margin: theme.spacing(1),
-    backgroundColor: 'blue',
+    backgroundColor: '#6cc7d9',
   },
   form: {
     width: '100%',
@@ -58,12 +63,27 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const CustomField = (props) => {
+  return (
+      <TextField
+          fullWidth
+          variant="outlined"
+          margin="normal"
+          required
+          size="larger"
+          {...props}
+      />
+  );
+};
+
 export default function Login() {
   const classes = useStyles();
+  const dispatch = useDispatch();
+  const history = useHistory();
 
   return (
     <Grid container component="main" className={classes.root}>
-      <CssBaseline />
+       <CssBaseline />
       <Grid item xs={false} sm={4} md={7} className={classes.logoText} />
       <Grid item xs={false} sm={4} md={7} className={classes.image}>
         <img src={Logo2} alt="" className={classes.logo} />
@@ -76,39 +96,59 @@ export default function Login() {
           <Typography component="h1" variant="h5">
             Login
           </Typography>
-          <form className={classes.form} noValidate>
-            <TextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              id="username"
-              label="Username"
-              name="username"
-              autoComplete="username"
-              autoFocus
-            />
-            <TextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              name="password"
-              label="Password"
-              type="password"
-              id="password"
-              autoComplete="current-password"
-            />
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              color="primary"
-              className={classes.submit}
-            >
-              Sign In
-            </Button>
-          </form>
+          <Formik
+            initialValues={{ username: "", password: "" }}
+            validate={(values) => {
+                const errors = {};
+                if (!values.username) {
+                    errors.username = "Required";
+                } 
+                if (!values.password) {
+                    errors.password = "Required";
+                }
+                return errors;
+            }}
+            onSubmit={(values) => {
+                dispatch(login(values, history));
+            }}
+        >
+            {() => (
+                <Form className={classes.form}>
+                    <Field
+                        type="username"
+                        as={CustomField}
+                        name="username"
+                        label="Username"
+                        autoFocus
+                    />
+                    <ErrorMessage
+                        name="username"
+                        component="div"
+                        className={classes.error}
+                    />
+                    <Field
+                        type="password"
+                        as={CustomField}
+                        name="password"
+                        label="Password"
+                    />
+                    <ErrorMessage
+                        name="password"
+                        component="div"
+                        className={classes.error}
+                    />
+                    <Button
+                        type="submit"
+                        fullWidth
+                        variant="contained"
+                        color="primary"
+                        className={classes.submit}
+                    >
+                        Sign In
+                    </Button>
+                </Form>
+            )}
+        </Formik>
         </div>
       </Grid>
     </Grid>
