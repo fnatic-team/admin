@@ -20,26 +20,8 @@ export const getActiveSpeaker = () => async (dispatch) => {
 
     await dispatch({
         type: GET_ACTIVE_SPEAKER,
-        payload: result.result,
+        payload: result,
     });
 };
 
-export const getActiveSpeaker = () => async (dispatch) => {
-    const token = localStorage.getItem("token");
 
-    const options = {
-        method: "GET",
-        headers: {
-            "content-type": "application/json",
-            authorization: `Bearer ${token}`,
-        },
-    };
-
-    const response = await fetch(`${url}/api/user/activeSpeaker`, options);
-    const result = await response.json();
-
-    await dispatch({
-        type: GET_ACTIVE_SPEAKER,
-        payload: result.result,
-    });
-};

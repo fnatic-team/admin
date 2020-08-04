@@ -18,7 +18,7 @@ export const getAllAdmin = () => async (dispatch) => {
 
     const response = await fetch(`${url}/api/admin/getAllAdmin`, options);
     const result = await response.json();
-    console.log(result)
+   
 
     await dispatch({
         type: GET_ALL_ADMIN,
