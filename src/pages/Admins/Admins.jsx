@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
@@ -14,6 +14,8 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import EditIcon from "@material-ui/icons/Edit";
 import AddIcon from "@material-ui/icons/Add";
 import { Link } from "react-router-dom";
+import { getAllAdmin, deleteAdmin } from "../../redux/actions";
+import { useDispatch, useSelector } from "react-redux";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -36,20 +38,16 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-function createData(no, name, role, action) {
-    return { no, name, role, action };
-}
-
-const rows = [
-    createData(1, "Rohmad", "Super Admin"),
-    createData(2, "Boyas", "Admin"),
-    createData(3, "Juan", "Admin"),
-    createData(4, "Ian", "Admin"),
-    createData(5, "Shinta", "Admin"),
-];
 
 export default function Admin() {
     const classes = useStyles();
+    const dispatch = useDispatch();
+    const admins = useSelector((state) => state.admin);
+    console.log(admins)
+
+    useEffect(() => {
+        dispatch(getAllAdmin());
+    }, [dispatch]);
 
     return (
         <Fragment >
@@ -114,28 +112,33 @@ export default function Admin() {
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {rows.map((row) => (
-                                <TableRow key={row.no}>
+                            {Array.isArray(admins) &&
+                            admins.map((row, index) => (
+                                <TableRow key={row._id}>
                                     <TableCell component="th" scope="row">
-                                        <h3>{row.no}</h3>
+                                        <h3>{index+1}</h3>
                                     </TableCell>
                                     <TableCell align="left">
-                                        <h3>{row.name}</h3>
+                                        <h3>{row.fullname}</h3>
                                     </TableCell>
                                     <TableCell align="left">
                                         <h3>{row.role}</h3>
                                     </TableCell>
+                                    {row.role==='superadmin' && 
                                     <TableCell align="right">
-                                        {row.action}
                                         <Button
                                             variant="contained"
                                             color="secondary"
                                             className={classes.button}
                                             startIcon={<DeleteIcon />}
+                                            onClick={() =>
+                                                dispatch(deleteAdmin(row._id))
+                                            }
                                         >
                                             Delete
                                         </Button>
                                     </TableCell>
+                                    }
                                 </TableRow>
                             ))}
                         </TableBody>
