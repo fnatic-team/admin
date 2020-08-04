@@ -46,9 +46,9 @@ export const getAdminByID = (id) => async (dispatch) => {
     });
 };
 
-export const addAdmin = (values, history) => async () => {
+export const addAdmin = (values, role, history) => async () => {
     const token = localStorage.getItem("token");
-
+    console.log(role);
     try {
         const options = {
             method: "POST",
@@ -59,7 +59,7 @@ export const addAdmin = (values, history) => async () => {
             body: JSON.stringify(values),
         };
 
-        const response = await fetch(`${url}/admin`, options);
+        const response = await fetch(`${url}/api/admin/add/${role}`, options);
         const result = await response.json();
 
         if (response.status === 200) {

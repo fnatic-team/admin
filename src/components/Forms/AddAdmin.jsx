@@ -1,43 +1,71 @@
-import React, { useState } from "react";
+import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import { Container, Grid, Button, InputLabel, Select, FormControl } from "@material-ui/core";
+import { Formik, Form, Field, ErrorMessage } from "formik";
+import { useDispatch } from "react-redux";
+import { addAdmin } from "../../redux/actions";
+import { useHistory } from "react-router-dom";
+import jwtDecode from "jwt-decode";
 
 const useStyles = makeStyles((theme) => ({
     field: {
         width: "100%",
     },
+    error: {
+        color: "red",
+        fontStyle: "italic",
+    },
 }));
 
 export default function AddAdmin() {
     const classes = useStyles();
-    const [input, setInput] = useState({
-        email: "",
-        username: "",
-        password: "",
-        confirmPassword: "",
-    });
+    const dispatch = useDispatch();
+    const history = useHistory();
+    const loggedAdmin = jwtDecode(localStorage.getItem('token'))
 
-    const handleChange = (event) => {
-        setInput({
-            ...input,
-            [event.target.name]: event.target.value,
-        });
-    };
-
-    const handleSubmit = (event) => {
-        event.preventDefault();
-
-        console.log(input);
+    const CustomField = (props) => {
+        return (
+            <TextField
+                fullWidth
+                variant="outlined"
+                margin="normal"
+                className={classes.field}
+                required
+                {...props}
+            />
+        );
     };
 
     return (
         <Container>
-            <form
+            <Formik
+                initialValues={{
+                    fullname: "",
+                    username: "",
+                    password: "",
+                    confirmPassword: "",
+                    role: "",
+                }}
+                validate={(values) => {
+                    const errors = {};
+                   if (values.password !== values.confirmPassword) {
+                        errors.confirmPassword = "Password not match";
+                    } else if (values.password.length < 8) {
+                        errors.password = "Minimum Password 8 Character";
+                    }
+                    return errors;
+                }}
+                onSubmit={(values) => {
+                    console.log(values)
+                    dispatch(addAdmin(values, loggedAdmin.role.toUpperCase(),  history));
+                }}
+            >
+                {() => (
+                <Form
                 className={classes.root}
                 noValidate
                 autoComplete="off"
-                onSubmit={handleSubmit}
             >
                 <Grid
                     container
@@ -46,93 +74,98 @@ export default function AddAdmin() {
                     alignItems="center"
                     spacing={2}
                 >
-                   <Grid container item xs={12} md={6} lg={6}>
-                        <TextField
-                            label="Full Name"
-                            variant="outlined"
-                            className={classes.field}
+                    <Grid container item xs={12} md={6} lg={6}>
+                        <Field
+                            type="fullname"
+                            as={CustomField}
                             name="fullname"
-                            value={input.fullname}
-                            onChange={handleChange}
+                            label="Full Name"
+                            autoFocus
                         />
                     </Grid>
                     <Grid container item xs={12} md={6} lg={6}>
-                        <TextField
-                            label="Username"
-                            variant="outlined"
-                            className={classes.field}
+                        <Field
+                            type="text"
+                            as={CustomField}
                             name="username"
-                            value={input.username}
-                            onChange={handleChange}
+                            label="Username"
+                        />
+                        <ErrorMessage
+                            name="username"
+                            component="div"
+                            className={classes.error}
                         />
                     </Grid>
                     <Grid container item xs={12} md={6} lg={6}>
-                        <TextField
-                            label="Password"
-                            variant="outlined"
-                            className={classes.field}
+                        <Field
+                            type="password"
+                            as={CustomField}
                             name="password"
-                            value={input.password}
-                            type="password"
-                            onChange={handleChange}
-                            error={
-                                input.password !== input.confirmPassword && true
-                            }
-                            helperText={
-                                input.password !== input.confirmPassword &&
-                                "Password not match"
-                            }
+                            label="Password"
+                        />
+                        <ErrorMessage
+                            name="password"
+                            component="div"
+                            className={classes.error}
                         />
                     </Grid>
                     <Grid container item xs={12} md={6} lg={6}>
-                        <TextField
-                            label="Confirm Password"
-                            variant="outlined"
-                            className={classes.field}
-                            name="confirmPassword"
-                            value={input.confirmPassword}
+                        <Field
                             type="password"
-                            onChange={handleChange}
-                            error={
-                                input.password !== input.confirmPassword && true
-                            }
-                            helperText={
-                                input.password !== input.confirmPassword &&
-                                "Password not match"
-                            }
+                            as={CustomField}
+                            name="confirmPassword"
+                            label="Re-enter Password"
+                        />
+                        <ErrorMessage
+                            name="confirmPassword"
+                            component="div"
+                            className={classes.error}
                         />
                     </Grid>
                     <Grid container item xs={12} md={6} lg={6}>
                     <FormControl variant="outlined" className={classes.field}>
-                        <InputLabel htmlFor="outlined-age-native-simple">Role</InputLabel>
-                        <Select
+                        {/* <InputLabel htmlFor="outlined-age-native-simple">Role</InputLabel> */}
+                        {/* <Select
                         native
-                        // value={state.age}
-                        onChange={handleChange}
+                        
                         label="Role"
                         inputProps={{
-                            name: 'age',
-                            id: 'outlined-age-native-simple',
+                            name: 'role',
                         }}
+                        // name="role"
                         >
                         <option aria-label="None" value="" />
-                        <option value={10}>Super Admin</option>
-                        <option value={20}>Admin</option>
-                        </Select>
+                        <option value='SUPERADMIN'>Super Admin</option>
+                        <option value='ADMIN'>Admin</option>
+                        </Select> */}
+                        <Field 
+                            name="role" 
+                            as="select" 
+                            placeholder="Role"
+                            variant="outlined"
+                            margin="normal">
+                                
+                            <option value=""></option>
+                            <option value="SUPERADMIN">Super Admin</option>
+                            <option value="ADMIN">Admin</option>
+                        </Field>
                     </FormControl>
                     </Grid>
                     <Grid container item xs={12} md={6} lg={6}>
                         <Button
+                            type="submit"
+                            fullWidth
                             variant="contained"
                             color="primary"
-                            type="submit"
-                            className={classes.field}
+                            className={classes.submit}
                         >
                             Submit
                         </Button>
                     </Grid>
                 </Grid>
-            </form>
+            </Form>
+             )}
+            </Formik>
         </Container>
     );
 }
