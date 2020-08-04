@@ -20,7 +20,7 @@ import { useHistory } from "react-router-dom";
 const useStyles = makeStyles((theme) => ({
   root: {
     margin: '10% auto',
-    width: '50%',
+    width: '70%',
     display: 'flex',
   },
   logoText: {
