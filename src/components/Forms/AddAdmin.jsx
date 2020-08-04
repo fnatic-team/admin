@@ -16,6 +16,7 @@ const useStyles = makeStyles((theme) => ({
         color: "red",
         fontStyle: "italic",
     },
+
 }));
 
 export default function AddAdmin() {
@@ -34,6 +35,19 @@ export default function AddAdmin() {
                 required
                 {...props}
             />
+        );
+    };
+
+    const SelectField = (props) => {
+        return (
+            <Select
+                native
+                label="Role"
+                inputProps={{
+                    name: 'role',
+                }}
+                {...props}
+            ></Select>
         );
     };
 
@@ -124,30 +138,21 @@ export default function AddAdmin() {
                     </Grid>
                     <Grid container item xs={12} md={6} lg={6}>
                     <FormControl variant="outlined" className={classes.field}>
-                        {/* <InputLabel htmlFor="outlined-age-native-simple">Role</InputLabel> */}
-                        {/* <Select
-                        native
-                        
-                        label="Role"
-                        inputProps={{
-                            name: 'role',
-                        }}
-                        // name="role"
-                        >
-                        <option aria-label="None" value="" />
-                        <option value='SUPERADMIN'>Super Admin</option>
-                        <option value='ADMIN'>Admin</option>
-                        </Select> */}
+                        <InputLabel>
+                            Role
+                        </InputLabel>
                         <Field 
                             name="role" 
-                            as="select" 
+                            as={SelectField} 
                             placeholder="Role"
                             variant="outlined"
-                            margin="normal">
+                            margin="normal"
+                        >
                                 
                             <option value=""></option>
-                            <option value="SUPERADMIN">Super Admin</option>
-                            <option value="ADMIN">Admin</option>
+                            <option value="superadmin">Super Admin</option>
+                            <option value="admin">Admin</option>
+                        
                         </Field>
                     </FormControl>
                     </Grid>

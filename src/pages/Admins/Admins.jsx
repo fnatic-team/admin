@@ -14,7 +14,7 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import EditIcon from "@material-ui/icons/Edit";
 import AddIcon from "@material-ui/icons/Add";
 import { Link } from "react-router-dom";
-import { getAllAdmin} from "../../redux/actions";
+import { getAllAdmin, deleteAdmin } from "../../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
 
 
@@ -125,12 +125,15 @@ export default function Admin() {
                                         <h3>{row.role}</h3>
                                     </TableCell>
                                     {row.role==='superadmin' && 
-                                        <TableCell align="right">
+                                    <TableCell align="right">
                                         <Button
                                             variant="contained"
                                             color="secondary"
                                             className={classes.button}
                                             startIcon={<DeleteIcon />}
+                                            onClick={() =>
+                                                dispatch(deleteAdmin(row._id))
+                                            }
                                         >
                                             Delete
                                         </Button>
