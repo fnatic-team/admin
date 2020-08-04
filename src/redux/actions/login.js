@@ -14,9 +14,10 @@ export const login = (values, history) => async () => {
 
         const response = await fetch(`${url}/api/admin/login`, options);
         const result = await response.json();
+        console.log(result);
 
         if (response.status === 200) {
-            localStorage.setItem("token", result.result);
+            localStorage.setItem("token", result.token);
 
             const Toast = Swal.mixin({
                 toast: true,

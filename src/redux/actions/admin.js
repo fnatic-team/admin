@@ -16,12 +16,13 @@ export const getAllAdmin = () => async (dispatch) => {
         },
     };
 
-    const response = await fetch(`${url}//api/admin/getAllAdmin`, options);
+    const response = await fetch(`${url}/api/admin/getAllAdmin`, options);
     const result = await response.json();
+    console.log(result)
 
     await dispatch({
         type: GET_ALL_ADMIN,
-        payload: result.data,
+        payload: result.result,
     });
 };
 
@@ -36,7 +37,7 @@ export const getAdminByID = (id) => async (dispatch) => {
         },
     };
 
-    const response = await fetch(`${url}/admin/${id}`, options);
+    const response = await fetch(`${url}/api/admin/${id}`, options);
     const result = await response.json();
 
     dispatch({
@@ -45,9 +46,9 @@ export const getAdminByID = (id) => async (dispatch) => {
     });
 };
 
-export const addAdmin = (values, history) => async () => {
+export const addAdmin = (values, role, history) => async () => {
     const token = localStorage.getItem("token");
-
+    console.log(role);
     try {
         const options = {
             method: "POST",
@@ -58,7 +59,7 @@ export const addAdmin = (values, history) => async () => {
             body: JSON.stringify(values),
         };
 
-        const response = await fetch(`${url}/admin`, options);
+        const response = await fetch(`${url}/api/admin/add/${role}`, options);
         const result = await response.json();
 
         if (response.status === 200) {
@@ -98,7 +99,7 @@ export const updateAdmin = (values, id, history) => async () => {
             body: JSON.stringify(values),
         };
 
-        const response = await fetch(`${url}/admin/${id}`, options);
+        const response = await fetch(`${url}/api/admin/${id}`, options);
         const result = await response.json();
 
         if (response.status === 200) {
@@ -131,7 +132,7 @@ export const deleteAdmin = (id) => async (dispatch) => {
             },
         };
 
-        const response = await fetch(`${url}/admin/${id}`, options);
+        const response = await fetch(`${url}/api/admin/${id}`, options);
         const result = await response.json();
 
         if (response.status === 200) {
@@ -163,7 +164,7 @@ export const getDashboard = () => async (dispatch) => {
         },
     };
 
-    const response = await fetch(`${url}/admin/dashboard`, options);
+    const response = await fetch(`${url}/dashboard/admins`, options);
     const result = await response.json();
 
     await dispatch({
