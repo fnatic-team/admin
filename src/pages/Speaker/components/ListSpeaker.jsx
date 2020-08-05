@@ -10,9 +10,11 @@ import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 import TableSortLabel from '@material-ui/core/TableSortLabel';
 import Paper from '@material-ui/core/Paper';
-import { getActiveSpeaker } from "../../../redux/actions";
+import { getActiveSpeaker, updateStatusSpeaker } from "../../../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
 import Avatar from '@material-ui/core/Avatar';
+import Button from "@material-ui/core/Button";
+import RejectedIcon from "@material-ui/icons/Clear";
 
 
 
@@ -139,7 +141,7 @@ export default function ListSpeaker() {
     console.log(activeSpeakers)
 
     useEffect(() => {
-        dispatch(getActiveSpeaker());
+        dispatch(getActiveSpeaker(), updateStatusSpeaker());
     }, [dispatch]);
 
   const handleRequestSort = (event, property) => {
@@ -194,6 +196,25 @@ export default function ListSpeaker() {
                       <TableCell align="right">{row.category}</TableCell>
                       <TableCell align="right">{row.fee}</TableCell>
                       <TableCell align="right">{row.rating}</TableCell>
+                      <TableCell align="right">
+                        <Button
+                                variant="contained"
+                                color="secondary"
+                                className={classes.button}
+                                size="small"
+                                startIcon={<RejectedIcon />}
+                                onClick={() =>
+                                    dispatch(
+                                        updateStatusSpeaker(
+                                            row._id,
+                                            "PENDING"
+                                        )
+                                    )
+                                }
+                            >
+                                Suspend
+                          </Button>
+                      </TableCell>
                     </TableRow>
                   );
                 })}
