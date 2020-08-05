@@ -10,10 +10,13 @@ import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 import TableSortLabel from '@material-ui/core/TableSortLabel';
 import Paper from '@material-ui/core/Paper';
-import { getActiveSpeaker } from "../../../redux/actions";
+import Button from "@material-ui/core/Button";
+import RejectedIcon from "@material-ui/icons/Clear";
+import ApprovedIcon from "@material-ui/icons/CheckBox";
+import { getPendingSpeaker, updateStatusSpeaker } from "../../../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
-import Avatar from '@material-ui/core/Avatar';
-
+import { green } from '@material-ui/core/colors';
+import AttachFileIcon from '@material-ui/icons/AttachFile';
 
 
 function descendingComparator(a, b, orderBy) {
@@ -43,11 +46,12 @@ function stableSort(array, comparator) {
 }
 
 const headCells = [
-  { id: 'avatar', numeric: false, disablePadding: true, label: 'Avatar' },
-  { id: 'name', numeric: true, disablePadding: false, label: 'Name' },
+  { id: 'name', numeric: false, disablePadding: true, label: 'Name' },
+  { id: 'doc', numeric: true, disablePadding: false, label: 'Documentation' },
   { id: 'expertation', numeric: true, disablePadding: false, label: 'Expertation' },
-  { id: 'fee', numeric: true, disablePadding: false, label: 'Fee' },
-  { id: 'rating', numeric: true, disablePadding: false, label: 'Rating' },
+  { id: 'createdAt', numeric: true, disablePadding: false, label: 'Registered At' },
+  { id: 'status', numeric: true, disablePadding: false, label: 'Status' },
+  { id: 'action', numeric: true, disablePadding: false, label: 'Action' },
 ];
 
 function EnhancedTableHead(props) {
@@ -124,6 +128,9 @@ const useStyles = makeStyles((theme) => ({
     top: 20,
     width: 1,
   },
+  button: {
+    margin: theme.spacing(1),
+},
 }));
 
 export default function EnhancedTable() {
@@ -134,11 +141,11 @@ export default function EnhancedTable() {
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
     const dispatch = useDispatch();
-    const activeSpeakers = useSelector((stateSpeaker) => stateSpeaker.speaker);
-    console.log(activeSpeakers)
+    const pendingSpeakers = useSelector((state) => state.speaker);
+    console.log(pendingSpeakers)
 
     useEffect(() => {
-        dispatch(getActiveSpeaker());
+        dispatch(getPendingSpeaker());
     }, [dispatch]);
 
   const handleRequestSort = (event, property) => {
@@ -170,30 +177,71 @@ export default function EnhancedTable() {
               order={order}
               orderBy={orderBy}
               onRequestSort={handleRequestSort}
-              // rowCount={activeSpeakers.length}
+              rowCount={pendingSpeakers.length}
             />
             <TableBody>
-              {stableSort(activeSpeakers, getComparator(order, orderBy))
+              {stableSort(pendingSpeakers, getComparator(order, orderBy))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, index) => {
-
                   return (
+                    
                     <TableRow
                       hover
                       role="checkbox"
                       tabIndex={-1}
-                      key={row.role}
+                      key={row._id}
                     >
+                     
                       <TableCell >
                         {index+1}
                       </TableCell>
                       <TableCell component="th" scope="row" padding="none">
-                        <Avatar alt="Remy Sharp" src={row.image} />
+                        {row.name}
                       </TableCell>
-                      <TableCell align="right">{row.name}</TableCell>
+                      <TableCell align="right">
+                        <Button variant="contained" style={{ color: green[500] }} href={row.cv}>
+                            <AttachFileIcon />
+                        </Button>
+                      </TableCell>
                       <TableCell align="right">{row.category}</TableCell>
-                      <TableCell align="right">{row.carbs}</TableCell>
-                      <TableCell align="right">{row.protein}</TableCell>
+                      <TableCell align="right">{row.createdAt}</TableCell>
+                      <TableCell align="right">{row.status}</TableCell>
+                      <TableCell align="right">
+                          <Button
+                              variant="contained"
+                              color="primary"
+                              className={classes.button}
+                              size="small"
+                              startIcon={<ApprovedIcon />}
+                              onClick={() =>
+                                  dispatch(
+                                      updateStatusSpeaker(
+                                          row._id,
+                                          "ACTIVE"
+                                      )
+                                  )
+                              }
+                          >
+                              Approve
+                          </Button>
+                          <Button
+                              variant="contained"
+                              color="secondary"
+                              className={classes.button}
+                              size="small"
+                              startIcon={<RejectedIcon />}
+                              onClick={() =>
+                                  dispatch(
+                                      updateStatusSpeaker(
+                                          row._id,
+                                          "REJECTED"
+                                      )
+                                  )
+                              }
+                          >
+                              Reject
+                          </Button>
+                      </TableCell>
                     </TableRow>
                   );
                 })}
@@ -204,7 +252,7 @@ export default function EnhancedTable() {
         <TablePagination
           rowsPerPageOptions={[5, 10, 25]}
           component="div"
-          // count={activeSpeakers.length}
+          count={pendingSpeakers.length}
           rowsPerPage={rowsPerPage}
           page={page}
           onChangePage={handleChangePage}
