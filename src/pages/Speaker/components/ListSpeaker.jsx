@@ -48,6 +48,7 @@ const headCells = [
   { id: 'expertation', numeric: true, disablePadding: false, label: 'Expertation' },
   { id: 'fee', numeric: true, disablePadding: false, label: 'Fee' },
   { id: 'rating', numeric: true, disablePadding: false, label: 'Rating' },
+  { id: 'suspend', numeric: true, disablePadding: false, label: 'Suspend' },
 ];
 
 function EnhancedTableHead(props) {
@@ -192,8 +193,8 @@ export default function ListSpeaker() {
                       </TableCell>
                       <TableCell align="right">{row.name}</TableCell>
                       <TableCell align="right">{row.category}</TableCell>
-                      <TableCell align="right">{row.carbs}</TableCell>
-                      <TableCell align="right">{row.protein}</TableCell>
+                      <TableCell align="right">{row.fee}</TableCell>
+                      <TableCell align="right">{row.rating}</TableCell>
                     </TableRow>
                   );
                 })}
