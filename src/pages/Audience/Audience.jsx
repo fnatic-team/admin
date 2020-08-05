@@ -131,7 +131,7 @@ export default function ListSpeaker() {
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState('calories');
   const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
     const dispatch = useDispatch();
     const allAudience = useSelector((state) => state.audience);
@@ -189,7 +189,7 @@ export default function ListSpeaker() {
                       <TableCell component="th" scope="row" padding="none">
                         <Avatar alt="Remy Sharp" src={row.image} />
                       </TableCell>
-                      <TableCell align="right">{row.name}</TableCell>
+                      <TableCell align="left">{row.name}</TableCell>
                       <TableCell align="right">{row.email}</TableCell>
                       <TableCell align="right">{row.phone}</TableCell>
                       <TableCell align="right">{row.createdAt}</TableCell>
