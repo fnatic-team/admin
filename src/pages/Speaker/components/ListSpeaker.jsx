@@ -170,7 +170,7 @@ export default function ListSpeaker() {
               order={order}
               orderBy={orderBy}
               onRequestSort={handleRequestSort}
-              // rowCount={activeSpeakers.length}
+              rowCount={activeSpeakers.length}
             />
             <TableBody>
               {stableSort(activeSpeakers, getComparator(order, orderBy))
@@ -180,7 +180,6 @@ export default function ListSpeaker() {
                   return (
                     <TableRow
                       hover
-                      role="checkbox"
                       tabIndex={-1}
                       key={row.role}
                     >
@@ -204,7 +203,7 @@ export default function ListSpeaker() {
         <TablePagination
           rowsPerPageOptions={[5, 10, 25]}
           component="div"
-          // count={activeSpeakers.length}
+          count={activeSpeakers.length}
           rowsPerPage={rowsPerPage}
           page={page}
           onChangePage={handleChangePage}

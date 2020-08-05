@@ -36,12 +36,47 @@ export const getPendingSpeaker = () => async (dispatch) => {
         },
     };
 
-    const response = await fetch(`${url}/api/user/speaker`, options);
+    const response = await fetch(`${url}/api/user/pendingSpeaker`, options);
     const result = await response.json();
 
     await dispatch({
         type: GET_PENDING_SPEAKER,
         payload: result,
     });
+};
+
+
+export const updateStatusSpeaker = (id, status) => async (dispatch) => {
+    try {
+        const token = localStorage.getItem("token");
+
+        const options = {
+            method: "PUT",
+            headers: {
+                "content-type": "application/json",
+                authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify({ status: status }),
+        };
+
+        const response = await fetch(`${url}/api/user/${id}`, options);
+        const result = await response.json();
+
+        if (response.status === 200) {
+            Swal.fire({
+                icon: "success",
+                title: `User with ${id} - ${status}`,
+            });
+
+            dispatch(getPendingSpeaker());
+        } else {
+            Swal.fire({
+                icon: "error",
+                title: result.message,
+            });
+        }
+    } catch (error) {
+        console.error(error);
+    }
 };
 
