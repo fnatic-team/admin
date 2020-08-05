@@ -3,14 +3,14 @@ import {
     GET_PENDING_SPEAKER,
 } from "../actions";
 
-const initialState = [];
+const initialState = {activeSpeaker:[], pendingSpeaker:[] };
 
 export default (state = initialState, actions) => {
     switch (actions.type) {
         case GET_ACTIVE_SPEAKER:
-            return actions.payload;
+            return {...state, activeSpeaker : actions.payload};
         case GET_PENDING_SPEAKER:
-            return actions.payload;
+            return {...state, pendingSpeaker : actions.payload};
         default:
             return state;
     }

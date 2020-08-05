@@ -3,6 +3,7 @@ import Container from "@material-ui/core/Container";
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Routes from "./Routes";
+import bg2 from "./assets/bg2.jpg"
 
 
 const useStyles = makeStyles((theme) => ({
@@ -13,12 +14,15 @@ const useStyles = makeStyles((theme) => ({
         overflow: "auto",
         padding: '0',
         margin: '0',
+        backgroundImage: `url(${bg2})`,
+        backgroundSize: 'cover',
     },
     container: {
         paddingTop: theme.spacing(4),
         paddingBottom: theme.spacing(4),
         padding: '0',
         margin: 'auto',
+        width: '100vw',
     },
 }));
 

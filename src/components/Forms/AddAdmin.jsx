@@ -24,6 +24,7 @@ export default function AddAdmin() {
     const dispatch = useDispatch();
     const history = useHistory();
     const loggedAdmin = jwtDecode(localStorage.getItem('token'))
+    console.log(loggedAdmin.role, "logged")
 
     const CustomField = (props) => {
         return (

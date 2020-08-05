@@ -1,10 +1,11 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useEffect} from "react";
 import Grid from "@material-ui/core/Grid";
 import Container from "@material-ui/core/Container";
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import { Typography } from "@material-ui/core";
-import Overview from "./components/Overview"
+import { getPendingSpeaker, getActiveSpeaker } from "../../redux/actions";
+import { useDispatch, useSelector } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -28,6 +29,15 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Dashboard() {
     const classes = useStyles();
+    const dispatch = useDispatch();
+    const activeSpeakers = useSelector((state) => state.speaker.activeSpeaker);
+    const pendingSpeaker = useSelector ((state) => state.speaker.pendingSpeaker);
+    console.log(activeSpeakers.length, 'active')
+
+    useEffect(() => {
+        dispatch(getActiveSpeaker());
+        dispatch(getPendingSpeaker());
+    }, [dispatch]);
     
     return (
         <Fragment>
@@ -41,13 +51,13 @@ export default function Dashboard() {
                         <Paper elevation={3} className={classes.paper} >
                             <Typography >
                                 <h3>Total Aproved Speaker</h3>
-                                <h2>50</h2>
+                                <h2>{activeSpeakers.length}</h2>
                             </Typography>
                         </Paper>
                         <Paper elevation={3} className={classes.paper}>
                         <Typography >
                                 <h3>Total Pending  Speaker</h3>
-                                <h2>50</h2>
+                                <h2>{pendingSpeaker.length}</h2>
                             </Typography>
                         </Paper>
                         <Paper elevation={3} className={classes.paper}>
@@ -57,16 +67,6 @@ export default function Dashboard() {
                             </Typography>
                         </Paper>
                     </Grid>
-                    <Grid className={classes.chart}
-                        item
-                        lg={8}
-                        md={12}
-                        xl={9}
-                        xs={12}
-                        >
-                            <Overview />
-                    </Grid>
-                
             </Container>
         </Fragment>
     );
