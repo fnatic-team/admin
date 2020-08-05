@@ -10,9 +10,11 @@ import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 import TableSortLabel from '@material-ui/core/TableSortLabel';
 import Paper from '@material-ui/core/Paper';
-import { getActiveSpeaker } from "../../../redux/actions";
+import { getActiveSpeaker, updateStatusSpeaker } from "../../../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
 import Avatar from '@material-ui/core/Avatar';
+import Button from "@material-ui/core/Button";
+import RejectedIcon from "@material-ui/icons/Clear";
 
 
 
@@ -48,6 +50,7 @@ const headCells = [
   { id: 'expertation', numeric: true, disablePadding: false, label: 'Expertation' },
   { id: 'fee', numeric: true, disablePadding: false, label: 'Fee' },
   { id: 'rating', numeric: true, disablePadding: false, label: 'Rating' },
+  { id: 'suspend', numeric: true, disablePadding: false, label: 'Suspend' },
 ];
 
 function EnhancedTableHead(props) {
@@ -138,7 +141,7 @@ export default function ListSpeaker() {
     console.log(activeSpeakers)
 
     useEffect(() => {
-        dispatch(getActiveSpeaker());
+        dispatch(getActiveSpeaker(), updateStatusSpeaker());
     }, [dispatch]);
 
   const handleRequestSort = (event, property) => {
@@ -170,7 +173,7 @@ export default function ListSpeaker() {
               order={order}
               orderBy={orderBy}
               onRequestSort={handleRequestSort}
-              // rowCount={activeSpeakers.length}
+              rowCount={activeSpeakers.length}
             />
             <TableBody>
               {stableSort(activeSpeakers, getComparator(order, orderBy))
@@ -180,7 +183,6 @@ export default function ListSpeaker() {
                   return (
                     <TableRow
                       hover
-                      role="checkbox"
                       tabIndex={-1}
                       key={row.role}
                     >
@@ -192,8 +194,27 @@ export default function ListSpeaker() {
                       </TableCell>
                       <TableCell align="right">{row.name}</TableCell>
                       <TableCell align="right">{row.category}</TableCell>
-                      <TableCell align="right">{row.carbs}</TableCell>
-                      <TableCell align="right">{row.protein}</TableCell>
+                      <TableCell align="right">{row.fee}</TableCell>
+                      <TableCell align="right">{row.rating}</TableCell>
+                      <TableCell align="right">
+                        <Button
+                                variant="contained"
+                                color="secondary"
+                                className={classes.button}
+                                size="small"
+                                startIcon={<RejectedIcon />}
+                                onClick={() =>
+                                    dispatch(
+                                        updateStatusSpeaker(
+                                            row._id,
+                                            "PENDING"
+                                        )
+                                    )
+                                }
+                            >
+                                Suspend
+                          </Button>
+                      </TableCell>
                     </TableRow>
                   );
                 })}
@@ -204,7 +225,7 @@ export default function ListSpeaker() {
         <TablePagination
           rowsPerPageOptions={[5, 10, 25]}
           component="div"
-          // count={activeSpeakers.length}
+          count={activeSpeakers.length}
           rowsPerPage={rowsPerPage}
           page={page}
           onChangePage={handleChangePage}
