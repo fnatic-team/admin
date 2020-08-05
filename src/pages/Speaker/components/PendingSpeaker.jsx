@@ -199,7 +199,7 @@ export default function EnhancedTable() {
                         {row.name}
                       </TableCell>
                       <TableCell align="right">
-                        <Button variant="contained" style={{ color: green[500] }} href={row.cv}>
+                        <Button variant="contained" style={{ color: green[500] }} href={row.cv} target="_blank">
                             <AttachFileIcon />
                         </Button>
                       </TableCell>
