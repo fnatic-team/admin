@@ -1,117 +1,217 @@
-import React from 'react';
-import Card from '@material-ui/core/Card';
-import CardHeader from '@material-ui/core/CardHeader';
-import IconButton from '@material-ui/core/IconButton';
-import CardContent from '@material-ui/core/CardContent';
-import CardMedia from '@material-ui/core/CardMedia';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
+import React, { useEffect } from "react";
+import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
-import GradeIcon from '@material-ui/icons/Grade';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableContainer from '@material-ui/core/TableContainer';
+import TableHead from '@material-ui/core/TableHead';
+import TablePagination from '@material-ui/core/TablePagination';
+import TableRow from '@material-ui/core/TableRow';
+import TableSortLabel from '@material-ui/core/TableSortLabel';
+import Paper from '@material-ui/core/Paper';
+import { getActiveSpeaker } from "../../../redux/actions";
+import { useDispatch, useSelector } from "react-redux";
+import Avatar from '@material-ui/core/Avatar';
+
+
+
+function descendingComparator(a, b, orderBy) {
+  if (b[orderBy] < a[orderBy]) {
+    return -1;
+  }
+  if (b[orderBy] > a[orderBy]) {
+    return 1;
+  }
+  return 0;
+}
+
+function getComparator(order, orderBy) {
+  return order === 'desc'
+    ? (a, b) => descendingComparator(a, b, orderBy)
+    : (a, b) => -descendingComparator(a, b, orderBy);
+}
+
+function stableSort(array, comparator) {
+  const stabilizedThis = array.map((el, index) => [el, index]);
+  stabilizedThis.sort((a, b) => {
+    const order = comparator(a[0], b[0]);
+    if (order !== 0) return order;
+    return a[1] - b[1];
+  });
+  return stabilizedThis.map((el) => el[0]);
+}
+
+const headCells = [
+  { id: 'avatar', numeric: false, disablePadding: true, label: 'Avatar' },
+  { id: 'name', numeric: true, disablePadding: false, label: 'Name' },
+  { id: 'expertation', numeric: true, disablePadding: false, label: 'Expertation' },
+  { id: 'fee', numeric: true, disablePadding: false, label: 'Fee' },
+  { id: 'rating', numeric: true, disablePadding: false, label: 'Rating' },
+];
+
+function EnhancedTableHead(props) {
+  const { classes, order, orderBy, onRequestSort } = props;
+  const createSortHandler = (property) => (event) => {
+    onRequestSort(event, property);
+  };
+
+  return (
+    <TableHead>
+      <TableRow>
+        <TableCell >
+          No
+        </TableCell>
+        {headCells.map((headCell) => (
+
+          <TableCell
+            key={headCell.id}
+            align={headCell.numeric ? 'right' : 'left'}
+            padding={headCell.disablePadding ? 'none' : 'default'}
+            sortDirection={orderBy === headCell.id ? order : false}
+          >
+            <TableSortLabel
+              active={orderBy === headCell.id}
+              direction={orderBy === headCell.id ? order : 'asc'}
+              onClick={createSortHandler(headCell.id)}
+            >
+              {headCell.label}
+              {orderBy === headCell.id ? (
+                <span className={classes.visuallyHidden}>
+                  {order === 'desc' ? 'sorted descending' : 'sorted ascending'}
+                </span>
+              ) : null}
+            </TableSortLabel>
+          </TableCell>
+        ))}
+      </TableRow>
+    </TableHead>
+  );
+}
+
+EnhancedTableHead.propTypes = {
+  classes: PropTypes.object.isRequired,
+  onRequestSort: PropTypes.func.isRequired,
+  onSelectAllClick: PropTypes.func.isRequired,
+  order: PropTypes.oneOf(['asc', 'desc']).isRequired,
+  orderBy: PropTypes.string.isRequired,
+  rowCount: PropTypes.number.isRequired,
+};
+
+
 
 
 
 const useStyles = makeStyles((theme) => ({
-  icon: {
-    marginRight: theme.spacing(2),
+  root: {
+    width: '100%',
   },
-  heroContent: {
-    backgroundColor: theme.palette.background.paper,
-    padding: theme.spacing(8, 0, 6),
+  paper: {
+    width: '100%',
+    marginBottom: theme.spacing(2),
   },
-  heroButtons: {
-    marginTop: theme.spacing(4),
+  table: {
+    minWidth: 750,
   },
-  cardGrid: {
-    padding: theme.spacing(0),
-    margin: theme.spacing(0),
-    backgroundColor: '#5997b2',
-    marginBottom: theme.spacing(3),
-  },
-  card: {
-    height: '100%',
-    display: 'flex',
-    flexDirection: 'column',
-  },
-  cardMedia: {
-    paddingTop: '80%', 
-    borderRadius: '50%',
-    margin: 'auto',
-    width: '80%'
-  },
-  cardContent: {
-    flexGrow: 1,
-    matgin: 'auto',
-    textAlign: 'center',
-    backgroundColor: '#e3f2fd',
-  },
-  speaker:{
-    backgroundColor: '#bbdefb',
-    paddingBottom: theme.spacing(3),
-  },
-  avatar: {
-    
-  },
-  footer: {
-    backgroundColor: theme.palette.background.paper,
-    padding: theme.spacing(6),
+  visuallyHidden: {
+    border: 0,
+    clip: 'rect(0 0 0 0)',
+    height: 1,
+    margin: -1,
+    overflow: 'hidden',
+    padding: 0,
+    position: 'absolute',
+    top: 20,
+    width: 1,
   },
 }));
 
-const cards = [1, 2, 3, 4, 5, 6];
-
-export default function Speaker() {
+export default function ListSpeaker() {
   const classes = useStyles();
+  const [order, setOrder] = React.useState('asc');
+  const [orderBy, setOrderBy] = React.useState('calories');
+  const [page, setPage] = React.useState(0);
+  const [rowsPerPage, setRowsPerPage] = React.useState(5);
+
+    const dispatch = useDispatch();
+    const activeSpeakers = useSelector((state) => state.speaker);
+    console.log(activeSpeakers)
+
+    useEffect(() => {
+        dispatch(getActiveSpeaker());
+    }, [dispatch]);
+
+  const handleRequestSort = (event, property) => {
+    const isAsc = orderBy === property && order === 'asc';
+    setOrder(isAsc ? 'desc' : 'asc');
+    setOrderBy(property);
+  };
+
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
+  };
 
   return (
-    <React.Fragment>
-      <CssBaseline />
-      {/* <h1>Speaker</h1> */}
-      <main>
-        {/* Hero unit */}
-        <Grid container spacing={4}>
-                {cards.map((card) => (
-                <Grid item key={card} xs={12} sm={6} md={3}>
-                    <Card className={classes.card}>
-                        <Grid className={classes.speaker}>  
-                            <CardHeader className={classes.cardGrid}
-                                action={
-                                <IconButton aria-label="settings">
-                                    <MoreVertIcon />
-                                </IconButton>
-                                }
-                                // title="Shrimp and Chorizo Paella"
-                                // subheader="September 14, 2016"
-                            />
-                            <CardMedia
-                                className={classes.cardMedia}
-                                image="https://source.unsplash.com/random"
-                                title="Image title"
-                            />
-                        </Grid>
-                        
-                    <CardContent className={classes.cardContent}>
-                        <Typography gutterBottom variant="h3" component="h2">
-                        Heading
-                        </Typography>
-                        <Typography variant="h5">
-                            React JS
-                        </Typography>
-                        <Typography variant="h5">
-                            Fee: 5jt/hours
-                        </Typography>
-                        <Typography variant="h5">
-                            <GradeIcon /><GradeIcon /><GradeIcon /><GradeIcon /><GradeIcon />
-                        </Typography>
-                    </CardContent>
-                    </Card>
-                </Grid>
-                ))}
-            </Grid>
-        
-      </main>
-    </React.Fragment>
+    <div className={classes.root}>
+      <Paper className={classes.paper}>
+        <TableContainer>
+          <Table
+            className={classes.table}
+            aria-labelledby="tableTitle"
+            aria-label="enhanced table"
+          >
+            <EnhancedTableHead
+              classes={classes}
+              order={order}
+              orderBy={orderBy}
+              onRequestSort={handleRequestSort}
+              // rowCount={activeSpeakers.length}
+            />
+            <TableBody>
+              {stableSort(activeSpeakers, getComparator(order, orderBy))
+                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                .map((row, index) => {
+
+                  return (
+                    <TableRow
+                      hover
+                      role="checkbox"
+                      tabIndex={-1}
+                      key={row.role}
+                    >
+                      <TableCell >
+                        {index+1}
+                      </TableCell>
+                      <TableCell component="th" scope="row" padding="none">
+                        <Avatar alt="Remy Sharp" src={row.image} />
+                      </TableCell>
+                      <TableCell align="right">{row.name}</TableCell>
+                      <TableCell align="right">{row.category}</TableCell>
+                      <TableCell align="right">{row.carbs}</TableCell>
+                      <TableCell align="right">{row.protein}</TableCell>
+                    </TableRow>
+                  );
+                })}
+             
+            </TableBody>
+          </Table>
+        </TableContainer>
+        <TablePagination
+          rowsPerPageOptions={[5, 10, 25]}
+          component="div"
+          // count={activeSpeakers.length}
+          rowsPerPage={rowsPerPage}
+          page={page}
+          onChangePage={handleChangePage}
+          onChangeRowsPerPage={handleChangeRowsPerPage}
+        />
+      </Paper>
+     
+    </div>
   );
 }
