@@ -25,3 +25,23 @@ export const getActiveSpeaker = () => async (dispatch) => {
 };
 
 
+export const getPendingSpeaker = () => async (dispatch) => {
+    const token = localStorage.getItem("token");
+
+    const options = {
+        method: "GET",
+        headers: {
+            "content-type": "application/json",
+            authorization: `Bearer ${token}`,
+        },
+    };
+
+    const response = await fetch(`${url}/api/user/speaker`, options);
+    const result = await response.json();
+
+    await dispatch({
+        type: GET_PENDING_SPEAKER,
+        payload: result,
+    });
+};
+

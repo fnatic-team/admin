@@ -12,6 +12,7 @@ import TableSortLabel from '@material-ui/core/TableSortLabel';
 import Paper from '@material-ui/core/Paper';
 import { getActiveSpeaker } from "../../../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
+import Avatar from '@material-ui/core/Avatar';
 
 
 
@@ -125,7 +126,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function EnhancedTable() {
+export default function ListSpeaker() {
   const classes = useStyles();
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState('calories');
@@ -133,8 +134,8 @@ export default function EnhancedTable() {
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
     const dispatch = useDispatch();
-    const activeSpeakers = useSelector((stateSpeaker) => stateSpeaker.speaker);
-    console.log(activeSpeakers, 'speaker')
+    const activeSpeakers = useSelector((state) => state.speaker);
+    console.log(activeSpeakers)
 
     useEffect(() => {
         dispatch(getActiveSpeaker());
@@ -172,7 +173,7 @@ export default function EnhancedTable() {
               // rowCount={activeSpeakers.length}
             />
             <TableBody>
-              {/* {stableSort(rows, getComparator(order, orderBy))
+              {stableSort(activeSpeakers, getComparator(order, orderBy))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, index) => {
 
@@ -181,21 +182,21 @@ export default function EnhancedTable() {
                       hover
                       role="checkbox"
                       tabIndex={-1}
-                      key={row.name}
+                      key={row.role}
                     >
                       <TableCell >
                         {index+1}
                       </TableCell>
                       <TableCell component="th" scope="row" padding="none">
-                        {row.name}
+                        <Avatar alt="Remy Sharp" src={row.image} />
                       </TableCell>
-                      <TableCell align="right">{row.calories}</TableCell>
-                      <TableCell align="right">{row.fat}</TableCell>
+                      <TableCell align="right">{row.name}</TableCell>
+                      <TableCell align="right">{row.category}</TableCell>
                       <TableCell align="right">{row.carbs}</TableCell>
                       <TableCell align="right">{row.protein}</TableCell>
                     </TableRow>
                   );
-                })} */}
+                })}
              
             </TableBody>
           </Table>
