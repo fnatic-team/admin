@@ -218,7 +218,6 @@ export default function ListActiveSpeaker() {
                     </TableRow>
                   );
                 })}
-             
             </TableBody>
           </Table>
         </TableContainer>
