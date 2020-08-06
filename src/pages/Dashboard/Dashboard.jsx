@@ -48,14 +48,14 @@ export default function Dashboard() {
                         <h1>Dashboard</h1>
                     </Grid >
                 </Container >
-                    <Grid item xs={12} md={12} lg={12} className={classes.count}>
-                        <Paper elevation={3} className={classes.paper} >
+                    <Grid item xs={12} md={12} lg={12} className={classes.count} color="primary">
+                        <Paper elevation={3} className={classes.paper} color="primary" >
                             <Typography >
                                 <h3>Total Aproved Speaker</h3>
                                 <h2>{activeSpeakers.length}</h2>
                             </Typography>
                         </Paper>
-                        <Paper elevation={3} className={classes.paper}>
+                        <Paper elevation={3} className={classes.paper} >
                         <Typography >
                                 <h3>Total Pending  Speaker</h3>
                                 <h2>{pendingSpeaker.length}</h2>

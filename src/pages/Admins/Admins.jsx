@@ -45,7 +45,7 @@ export default function Admin() {
     const admins = useSelector((state) => state.admin);
     console.log(admins)
     const loggedAdmin = jwtDecode(localStorage.getItem('token'))
-    console.log(loggedAdmin.role, "logged")
+    console.log(loggedAdmin, "logged")
 
     useEffect(() => {
         dispatch(getAllAdmin());

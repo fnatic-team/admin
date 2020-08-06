@@ -1,7 +1,7 @@
 import React from "react";
 import { Switch, Route } from "react-router-dom";
 
-import { Dashboard, Admins, Login, CreateAdmin, EditAdmin, Speaker, Audience, Transaksi, NewPage1, NewPage2 } from "../pages";
+import { Dashboard, Admins, Login, CreateAdmin, EditAdmin, Speaker, Audience, Transaksi, Newsletter, Contact } from "../pages";
 
 export default function Routes() {
     return (
@@ -30,11 +30,11 @@ export default function Routes() {
             <Route exact path="/dashboard/transaksi">
                 <Transaksi />
             </Route>
-            <Route exact path="/dashboard/newpage1">
-                <NewPage1 />
+            <Route exact path="/dashboard/newsletter">
+                <Newsletter />
             </Route>
-            <Route exact path="/dashboard/newpage2">
-                <NewPage2 />
+            <Route exact path="/dashboard/contact">
+                <Contact />
             </Route>
         </Switch>
     );

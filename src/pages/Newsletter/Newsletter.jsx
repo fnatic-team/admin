@@ -1,9 +1,9 @@
 import React from 'react'
 
-export default function NewPage1() {
+export default function Newsletter() {
     return (
         <div>
-            <h1>New page 1</h1>
+            <h1>Newsletter</h1>
         </div>
     )
 }

@@ -31,8 +31,8 @@ const useStyles = makeStyles((theme) => ({
         backgroundSize: 'cover',
         objectFit: '',
         width: '100%',
-        marginRight: theme.spacing(10),
         paddingLeft: theme.spacing(5),
+        paddingRight: theme.spacing(5),
         height: "100vh",
     },
 }));
