@@ -1,31 +1,34 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import Avatar from '@material-ui/core/Avatar';
+import Superadmin from './assets/superadmin.jpg'
+import Admin from './assets/admin.jpg'
 import DashboardRoundedIcon from "@material-ui/icons/DashboardRounded";
 import DesktopMacRoundedIcon from '@material-ui/icons/DesktopMacRounded';
 import RecordVoiceOverRoundedIcon from '@material-ui/icons/RecordVoiceOverRounded';
 import PeopleAltRoundedIcon from '@material-ui/icons/PeopleAltRounded';
 import TimelineRoundedIcon from '@material-ui/icons/TimelineRounded';
 import { Link } from "react-router-dom";
-import { Typography, Grid } from "@material-ui/core";
+import { Grid } from "@material-ui/core";
 import Divider from '@material-ui/core/Divider';
-// import { getAllAdmin } from "../../redux/actions";
-// import { useDispatch, useSelector } from "react-redux";
+import DraftsRoundedIcon from '@material-ui/icons/DraftsRounded';
+import ImportContactsRoundedIcon from '@material-ui/icons/ImportContactsRounded';
+import jwtDecode from "jwt-decode";
 
 
 const useStyles = makeStyles((theme) => ({
     text: {
-        color: 'white',
+        color: '#e04349',
         '& span, & svg,': {
             fontSize: '1vw',
         }
     },
     link: {
         textDecoration: "none",
-        color: "white",
+        color: "#3336ff",
     },
     profile: {
         display: 'flex',
@@ -35,24 +38,35 @@ const useStyles = makeStyles((theme) => ({
 
     },
     avatar: {
-        width: theme.spacing(10),
-        height: theme.spacing(10),
         margin: 'auto',
         marginBottom: theme.spacing(2),
-      },
+        '& img, & svg,': {
+            width: '10vh',
+            height: '10vh',
+        },
+    },
 }));
 
 export default function ListMenuItem() {
     const classes = useStyles();
+    const loggedAdmin = jwtDecode(localStorage.getItem('token'))
+    console.log(loggedAdmin, "loggedAvatar")
 
     return (
         <div className={classes.text} >
             <ListItem className={classes.profile}>
+            { loggedAdmin.role==='superadmin' && 
+                <Avatar className={classes.avatar} >
+                    <img src={Superadmin} alt="" />
+                </Avatar>
+            }
+            { loggedAdmin.role==='admin' && 
+                <Avatar className={classes.avatar} >
+                    <img src={Admin} alt="" />
+                </Avatar>
+            }
                 <Grid>
-                    <Avatar className={classes.avatar}/>
-                </Grid>
-                <Grid>
-                    <ListItem>JUAN</ListItem>
+                    <ListItem>{loggedAdmin.fullname}</ListItem>
                 </Grid>
             </ListItem>
             <Divider />
@@ -96,20 +110,20 @@ export default function ListMenuItem() {
                         <ListItemText primary="Transaksi" />
                 </ListItem>
             </Link>
-            <Link to="/dashboard/newpage1" className={classes.link}>
+            <Link to="/dashboard/newsletter" className={classes.link}>
                 <ListItem button>
                     <ListItemIcon>
-                        <TimelineRoundedIcon color="primary" />
+                        <DraftsRoundedIcon color="primary" />
                     </ListItemIcon>
-                        <ListItemText primary="New Page1" />
+                        <ListItemText primary="Newsletter" />
                 </ListItem>
             </Link>
-            <Link to="/dashboard/newpage2" className={classes.link}>
+            <Link to="/dashboard/contact" className={classes.link}>
                 <ListItem button>
                     <ListItemIcon>
-                        <TimelineRoundedIcon color="primary" />
+                        <ImportContactsRoundedIcon color="primary" />
                     </ListItemIcon>
-                        <ListItemText primary="New Page2" />
+                        <ListItemText primary="Contact" />
                 </ListItem>
             </Link>
         </div>

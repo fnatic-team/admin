@@ -1,9 +1,8 @@
 import React from "react";
-import Container from "@material-ui/core/Container";
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Routes from "./Routes";
-import bg2 from "./assets/bg2.jpg"
+import bg2 from "./assets/image.jpg"
 import { Box } from "@material-ui/core";
 
 

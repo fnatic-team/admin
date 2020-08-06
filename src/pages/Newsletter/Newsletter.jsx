@@ -10,11 +10,8 @@ import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 import TableSortLabel from '@material-ui/core/TableSortLabel';
 import Paper from '@material-ui/core/Paper';
-import { getActiveSpeaker, updateStatusSpeaker } from "../../../redux/actions";
+import { getAllNewsletter } from "../../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
-import Avatar from '@material-ui/core/Avatar';
-import Button from "@material-ui/core/Button";
-import RejectedIcon from "@material-ui/icons/Clear";
 
 
 
@@ -45,12 +42,8 @@ function stableSort(array, comparator) {
 }
 
 const headCells = [
-  { id: 'avatar', numeric: false, disablePadding: true, label: 'Avatar' },
-  { id: 'name', numeric: true, disablePadding: false, label: 'Name' },
-  { id: 'expertation', numeric: true, disablePadding: false, label: 'Expertation' },
-  { id: 'fee', numeric: true, disablePadding: false, label: 'Fee' },
-  { id: 'rating', numeric: true, disablePadding: false, label: 'Rating' },
-  { id: 'suspend', numeric: true, disablePadding: false, label: 'Suspend' },
+  { id: 'email', numeric: true, disablePadding: false, label: 'Email' },
+  { id: 'createdAt', numeric: true, disablePadding: false, label: 'Registered At' },
 ];
 
 function EnhancedTableHead(props) {
@@ -129,7 +122,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function ListSpeaker() {
+export default function NewsLetter() {
   const classes = useStyles();
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState('calories');
@@ -137,11 +130,11 @@ export default function ListSpeaker() {
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
     const dispatch = useDispatch();
-    const activeSpeakers = useSelector((state) => state.speaker.activeSpeaker);
-    console.log(activeSpeakers)
+    const allNewsletter = useSelector((state) => state.newsletter);
+    console.log(allNewsletter, 'newsletter')
 
     useEffect(() => {
-        dispatch(getActiveSpeaker(), updateStatusSpeaker());
+        dispatch(getAllNewsletter());
     }, [dispatch]);
 
   const handleRequestSort = (event, property) => {
@@ -173,10 +166,10 @@ export default function ListSpeaker() {
               order={order}
               orderBy={orderBy}
               onRequestSort={handleRequestSort}
-              rowCount={activeSpeakers.length}
+              rowCount={allNewsletter.length}
             />
             <TableBody>
-              {stableSort(activeSpeakers, getComparator(order, orderBy))
+              {stableSort(allNewsletter, getComparator(order, orderBy))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, index) => {
 
@@ -184,37 +177,13 @@ export default function ListSpeaker() {
                     <TableRow
                       hover
                       tabIndex={-1}
-                      key={row.role}
+                      key={row._id}
                     >
                       <TableCell >
                         {index+1}
                       </TableCell>
-                      <TableCell component="th" scope="row" padding="none">
-                        <Avatar alt="Remy Sharp" src={row.image} />
-                      </TableCell>
-                      <TableCell align="right">{row.name}</TableCell>
-                      <TableCell align="right">{row.category}</TableCell>
-                      <TableCell align="right">{row.fee}</TableCell>
-                      <TableCell align="right">{row.rating}</TableCell>
-                      <TableCell align="right">
-                        <Button
-                                variant="contained"
-                                color="secondary"
-                                className={classes.button}
-                                size="small"
-                                startIcon={<RejectedIcon />}
-                                onClick={() =>
-                                    dispatch(
-                                        updateStatusSpeaker(
-                                            row._id,
-                                            "INACTIVE"
-                                        )
-                                    )
-                                }
-                            >
-                                Suspend
-                          </Button>
-                      </TableCell>
+                      <TableCell align="right">{row.email}</TableCell>
+                      <TableCell align="right">{row.createdAt}</TableCell>
                     </TableRow>
                   );
                 })}
@@ -225,7 +194,7 @@ export default function ListSpeaker() {
         <TablePagination
           rowsPerPageOptions={[5, 10, 25]}
           component="div"
-          count={activeSpeakers.length}
+          count={allNewsletter.length}
           rowsPerPage={rowsPerPage}
           page={page}
           onChangePage={handleChangePage}
