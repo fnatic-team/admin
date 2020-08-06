@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
     },
     link: {
         textDecoration: "none",
-        color: "#3336ff",
+        color: "#062031",
     },
     profile: {
         display: 'flex',

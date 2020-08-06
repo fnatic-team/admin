@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect} from "react";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import clsx from "clsx";
@@ -7,16 +7,19 @@ import Typography from "@material-ui/core/Typography";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
 import SideImage from "./assets/bg.jpg"
-
+import Badge from '@material-ui/core/Badge';
+import NotificationsActiveIcon from '@material-ui/icons/NotificationsActive';
 import LogoutIcon from "@material-ui/icons/ExitToApp";
+import { getPendingSpeaker} from "../redux/actions";
 import { useLocation, useHistory } from "react-router-dom";
 import { logout } from "../redux/actions";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector} from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
     appBar: {
         zIndex: theme.zIndex.drawer - 1,
         backgroundImage: `url(${SideImage})`,
+        paddingRight: theme.spacing(5),
     },
    
     menuButton: {
@@ -28,6 +31,9 @@ const useStyles = makeStyles((theme) => ({
     title: {
         flexGrow: 1,
     },
+    icon: {
+        marginLeft: theme.spacing(2),
+    },
 }));
 
 export default function Header(props) {
@@ -35,8 +41,12 @@ export default function Header(props) {
     const history = useHistory();
     const dispatch = useDispatch();
     const classes = useStyles();
-
     const routeName = pathname.split("/")[2];
+    const pendingSpeaker = useSelector ((state) => state.speaker.pendingSpeaker);
+
+    useEffect(() => {
+        dispatch(getPendingSpeaker());
+    }, [dispatch]);
 
     return (
         <AppBar
@@ -65,8 +75,11 @@ export default function Header(props) {
                 >
                     {routeName}
                 </Typography>
-                <IconButton onClick={() => dispatch(logout(history))}>
-                    <LogoutIcon className={classes.icon} />
+                <Badge className={classes.icon} badgeContent={pendingSpeaker.length} color="secondary">
+                    <NotificationsActiveIcon  color="primary"/>
+                </Badge >
+                <IconButton className={classes.icon} onClick={() => dispatch(logout(history))}>
+                    <LogoutIcon color="secondary" />
                 </IconButton>
             </Toolbar>
         </AppBar>
