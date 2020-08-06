@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from "react";
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
@@ -10,26 +10,11 @@ import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 import TableSortLabel from '@material-ui/core/TableSortLabel';
 import Paper from '@material-ui/core/Paper';
+import { getAllTransaction } from "../../redux/actions";
+import { useDispatch, useSelector } from "react-redux";
+import moment from 'moment';
 
-function createData(name, calories, fat, carbs, protein) {
-  return { name, calories, fat, carbs, protein };
-}
 
-const rows = [
-  createData('Cupcake', 305, 3.7, 67, 4.3),
-  createData('Donut', 452, 25.0, 51, 4.9),
-  createData('Eclair', 262, 16.0, 24, 6.0),
-  createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-  createData('Gingerbread', 356, 16.0, 49, 3.9),
-  createData('Honeycomb', 408, 3.2, 87, 6.5),
-  createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-  createData('Jelly Bean', 375, 0.0, 94, 0.0),
-  createData('KitKat', 518, 26.0, 65, 7.0),
-  createData('Lollipop', 392, 0.2, 98, 0.0),
-  createData('Marshmallow', 318, 0, 81, 2.0),
-  createData('Nougat', 360, 19.0, 9, 37.0),
-  createData('Oreo', 437, 18.0, 63, 4.0),
-];
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -58,11 +43,15 @@ function stableSort(array, comparator) {
 }
 
 const headCells = [
-  { id: 'name', numeric: false, disablePadding: true, label: 'Dessert (100g serving)' },
-  { id: 'calories', numeric: true, disablePadding: false, label: 'Calories' },
-  { id: 'fat', numeric: true, disablePadding: false, label: 'Fat (g)' },
-  { id: 'carbs', numeric: true, disablePadding: false, label: 'Carbs (g)' },
-  { id: 'protein', numeric: true, disablePadding: false, label: 'Protein (g)' },
+  { id: 'speakername', numeric: false, disablePadding: false, label: 'Speaker Name' },
+  { id: 'audiencename', numeric: false, disablePadding: false, label: 'Audience Name' },
+  { id: 'eventname', numeric: false, disablePadding: false, label: 'Event Name' },
+  { id: 'name', numeric: false, disablePadding: false, label: 'Event Date' },
+  { id: 'eventlocation', numeric: false, disablePadding: false, label: 'Event Location' },
+  { id: 'participants', numeric: false, disablePadding: false, label: 'Participants' },
+  { id: 'duration', numeric: false, disablePadding: false, label: 'Duration' },
+  { id: 'description', numeric: false, disablePadding: false, label: 'Description' },
+  { id: 'status', numeric: false, disablePadding: false, label: 'Status' },
 ];
 
 function EnhancedTableHead(props) {
@@ -72,12 +61,13 @@ function EnhancedTableHead(props) {
   };
 
   return (
-    <TableHead>
+    <TableHead className={classes.tablehead}>
       <TableRow>
-        <TableCell padding="checkbox">
-         
+        <TableCell >
+          No
         </TableCell>
         {headCells.map((headCell) => (
+
           <TableCell
             key={headCell.id}
             align={headCell.numeric ? 'right' : 'left'}
@@ -105,12 +95,15 @@ function EnhancedTableHead(props) {
 
 EnhancedTableHead.propTypes = {
   classes: PropTypes.object.isRequired,
-  numSelected: PropTypes.number.isRequired,
   onRequestSort: PropTypes.func.isRequired,
   order: PropTypes.oneOf(['asc', 'desc']).isRequired,
   orderBy: PropTypes.string.isRequired,
   rowCount: PropTypes.number.isRequired,
 };
+
+
+
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -122,6 +115,13 @@ const useStyles = makeStyles((theme) => ({
   },
   table: {
     minWidth: 750,
+  },
+  tablehead: {
+    backgroundColor: '#3a6986',
+      '& th, & a,': {
+        color: 'white',
+        fontSize: '18px',
+    },
   },
   visuallyHidden: {
     border: 0,
@@ -136,40 +136,24 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function EnhancedTable() {
+export default function Audience() {
   const classes = useStyles();
   const [order, setOrder] = React.useState('asc');
-  const [orderBy, setOrderBy] = React.useState('calories');
-  const [selected, setSelected] = React.useState([]);
+  const [orderBy, setOrderBy] = React.useState('eventdate');
   const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const [rowsPerPage, setRowsPerPage] = React.useState(10);
+
+    const dispatch = useDispatch();
+    const allTransaction = useSelector((state) => state.transaction);
+
+    useEffect(() => {
+        dispatch(getAllTransaction());
+    }, [dispatch]);
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
     setOrder(isAsc ? 'desc' : 'asc');
     setOrderBy(property);
-  };
-
-
-
-  const handleClick = (event, name) => {
-    const selectedIndex = selected.indexOf(name);
-    let newSelected = [];
-
-    if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, name);
-    } else if (selectedIndex === 0) {
-      newSelected = newSelected.concat(selected.slice(1));
-    } else if (selectedIndex === selected.length - 1) {
-      newSelected = newSelected.concat(selected.slice(0, -1));
-    } else if (selectedIndex > 0) {
-      newSelected = newSelected.concat(
-        selected.slice(0, selectedIndex),
-        selected.slice(selectedIndex + 1),
-      );
-    }
-
-    setSelected(newSelected);
   };
 
   const handleChangePage = (event, newPage) => {
@@ -180,9 +164,7 @@ export default function EnhancedTable() {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
-
-  
-
+ 
 
   return (
     <div className={classes.root}>
@@ -195,35 +177,33 @@ export default function EnhancedTable() {
           >
             <EnhancedTableHead
               classes={classes}
-              numSelected={selected.length}
               order={order}
               orderBy={orderBy}
               onRequestSort={handleRequestSort}
-              rowCount={rows.length}
+              rowCount={allTransaction.length}
             />
             <TableBody>
-              {stableSort(rows, getComparator(order, orderBy))
+              {stableSort(allTransaction, getComparator(order, orderBy))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, index) => {
-
                   return (
                     <TableRow
                       hover
-                      onClick={(event) => handleClick(event, row.name)}
-                      role="checkbox"
                       tabIndex={-1}
-                      key={row.name}
+                      key={row._id}
                     >
-                      <TableCell padding="checkbox">
-                       
+                      <TableCell>
+                        {index+1}
                       </TableCell>
-                      <TableCell component="th" scope="row" padding="none">
-                        {row.name}
-                      </TableCell>
-                      <TableCell align="right">{row.calories}</TableCell>
-                      <TableCell align="right">{row.fat}</TableCell>
-                      <TableCell align="right">{row.carbs}</TableCell>
-                      <TableCell align="right">{row.protein}</TableCell>
+                      <TableCell align="left">{row.speakerID.name}</TableCell>
+                      <TableCell align="left">{row.audienceID.name}</TableCell>
+                      <TableCell align="left">{row.nama_acara}</TableCell>
+                      <TableCell align="left">{moment(row.tanggal_acara).format('LL') + ', Pukul ' + row.waktu_acara}</TableCell>
+                      <TableCell align="left">{row.alamat + ', ' + row.kota}</TableCell>
+                      <TableCell align="left">{row.jml_peserta}</TableCell>
+                      <TableCell align="left">{row.durasi}</TableCell>
+                      <TableCell align="left">{row.deskripsi}</TableCell>
+                      <TableCell align="left">{row.status_transaksi}</TableCell>
                     </TableRow>
                   );
                 })}
@@ -234,7 +214,7 @@ export default function EnhancedTable() {
         <TablePagination
           rowsPerPageOptions={[5, 10, 25]}
           component="div"
-          count={rows.length}
+          count={allTransaction.length}
           rowsPerPage={rowsPerPage}
           page={page}
           onChangePage={handleChangePage}
