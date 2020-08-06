@@ -1,10 +1,11 @@
 import React from "react";
-import { makeStyles, createMuiTheme} from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import Avatar from '@material-ui/core/Avatar';
-import Logo2 from './assets/logo_black.svg'
+import Superadmin from './assets/superadmin.jpg'
+import Admin from './assets/admin.jpg'
 import DashboardRoundedIcon from "@material-ui/icons/DashboardRounded";
 import DesktopMacRoundedIcon from '@material-ui/icons/DesktopMacRounded';
 import RecordVoiceOverRoundedIcon from '@material-ui/icons/RecordVoiceOverRounded';
@@ -17,18 +18,7 @@ import DraftsRoundedIcon from '@material-ui/icons/DraftsRounded';
 import ImportContactsRoundedIcon from '@material-ui/icons/ImportContactsRounded';
 import jwtDecode from "jwt-decode";
 
-import purple from '@material-ui/core/colors/purple';
-const theme = createMuiTheme({
-    palette: {
-      primary: {
-        main: purple[500],
-      },
-      secondary: {
-        main: '#f44336',
-      },
-    },
-  });
-  
+
 const useStyles = makeStyles((theme) => ({
     text: {
         color: '#e04349',
@@ -47,16 +37,12 @@ const useStyles = makeStyles((theme) => ({
         marginTop: theme.spacing(3),
 
     },
-    image : {
-        width: '40%',
-    },
     avatar: {
         margin: 'auto',
-        backgroundColor: '#e04349',
         marginBottom: theme.spacing(2),
         '& img, & svg,': {
-            width: '100%',
-            height: '100%',
+            width: '10vh',
+            height: '10vh',
         },
     },
 }));
@@ -69,11 +55,16 @@ export default function ListMenuItem() {
     return (
         <div className={classes.text} >
             <ListItem className={classes.profile}>
-                <Grid className={classes.image}>
-                    <Avatar className={classes.avatar} >
-                        <img src={Logo2} alt="" />
-                    </Avatar>
-                </Grid>
+            { loggedAdmin.role==='superadmin' && 
+                <Avatar className={classes.avatar} >
+                    <img src={Superadmin} alt="" />
+                </Avatar>
+            }
+            { loggedAdmin.role==='admin' && 
+                <Avatar className={classes.avatar} >
+                    <img src={Admin} alt="" />
+                </Avatar>
+            }
                 <Grid>
                     <ListItem>{loggedAdmin.fullname}</ListItem>
                 </Grid>

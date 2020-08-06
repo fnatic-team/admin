@@ -78,6 +78,7 @@ export default function Admin() {
                                         Edit
                                     </Button>
                             </Link>
+                            {loggedAdmin.role==='superadmin' && 
                             <Link
                                 to="/dashboard/admins/create"
                                 className={classes.link}
@@ -90,7 +91,7 @@ export default function Admin() {
                                 >
                                     Add
                                 </Button>
-                            </Link>
+                            </Link>}
                         </Grid>
                     </Grid>
                 </Container>
