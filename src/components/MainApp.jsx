@@ -29,15 +29,15 @@ export default function MainApp() {
     const classes = useStyles();
 
     return (
-        <main className={classes.content}>
-            <div className={classes.appBarSpacer} />
-            <Box item xs={12} md={12} lg={12} className={classes.container}>
-                <Grid container spacing={3}>
-                    <Grid item xs={12} md={12} lg={12}>
-                        <Routes />
+        <Box className={classes.content}>
+            <Box className={classes.appBarSpacer} />
+                <Box item="true" xs={12} md={12} lg={12} className={classes.container}>
+                    <Grid container spacing={3}>
+                        <Grid item xs={12} md={12} lg={12}>
+                            <Routes />
+                        </Grid>
                     </Grid>
-                </Grid>
-            </Box>
-        </main>
+                </Box>
+        </Box>
     );
 }

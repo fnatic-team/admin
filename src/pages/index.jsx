@@ -4,7 +4,7 @@ export { default as Admins } from "../pages/Admins/Admins";
 export { default as CreateAdmin } from "../pages/CreateAdmin/CreateAdmin";
 export { default as EditAdmin } from "../pages/EditAdmin/EditAdmin";
 export { default as Speaker } from "../pages/Speaker/Speaker";
-export { default as Audience } from "../pages/Audience/Audience";
+export { default as TableAudience } from "../pages/Audience/Audience";
 export { default as Transaksi } from "../pages/Transaksi/Transaksi";
 export { default as Newsletter } from "./Newsletter/Newsletter"
 export { default as Contact } from "./Contact/Contact"

@@ -48,43 +48,55 @@ export default function Dashboard() {
                         <h1>Dashboard</h1>
                     </Grid >
                 </Container >
-                    <Grid item xs={12} md={12} lg={12} className={classes.count} color="primary">
-                        <Paper elevation={3} className={classes.paper} color="primary" >
+                    <Grid item xs={12} md={12} lg={12} className={classes.count} >
+                        <Paper elevation={3} className={classes.paper}  >
+                            <Typography variant="h6">
+                                Total Aproved Speaker
+                            </Typography>
                             <Typography >
-                                <h3>Total Aproved Speaker</h3>
-                                <h2>{activeSpeakers.length}</h2>
+                                {activeSpeakers.length}
                             </Typography>
                         </Paper>
                         <Paper elevation={3} className={classes.paper} >
-                        <Typography >
-                                <h3>Total Pending  Speaker</h3>
-                                <h2>{pendingSpeaker.length}</h2>
+                            <Typography >
+                                Total Pending  Speaker
+                            </Typography>
+                            <Typography>
+                                {pendingSpeaker.length}
                             </Typography>
                         </Paper>
                         <Paper elevation={3} className={classes.paper}>
-                        <Typography >
-                                <h3>Total Inactive Speaker</h3>
-                                <h2>{inactiveSpeaker.length}</h2>
+                            <Typography >
+                                Total Inactive Speaker
+                            </Typography>
+                            <Typography>
+                                {inactiveSpeaker.length}
                             </Typography>
                         </Paper>
                     </Grid>
                     <Grid item xs={12} md={12} lg={12} className={classes.count}>
                         <Paper elevation={3} className={classes.paper} >
                             <Typography >
-                                <h3>Total Audience</h3>
-                                <h2>{allAudience.length}</h2>
+                                Total Audience
+                            </Typography>
+                            <Typography>
+                                {allAudience.length}
                             </Typography>
                         </Paper>
                         <Paper elevation={3} className={classes.paper}>
-                        <Typography >
-                                <h3>Total Ongoing Event</h3>
-                                <h2>-</h2>
+                            <Typography >
+                                Total Audience
+                            </Typography>
+                            <Typography>
+                                -
                             </Typography>
                         </Paper>
                         <Paper elevation={3} className={classes.paper}>
-                        <Typography >
-                                <h3>Total Completed Event</h3>
-                                <h2>-</h2>
+                            <Typography >
+                                Total Audience
+                            </Typography>
+                            <Typography>
+                                -
                             </Typography>
                         </Paper>
                     </Grid>
