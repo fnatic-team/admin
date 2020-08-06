@@ -134,7 +134,7 @@ export default function ListSpeaker() {
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState('calories');
   const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
     const dispatch = useDispatch();
     const activeSpeakers = useSelector((state) => state.speaker.activeSpeaker);
