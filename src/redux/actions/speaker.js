@@ -3,6 +3,7 @@ const url = process.env.REACT_APP_API_URL;
 
 export const GET_ACTIVE_SPEAKER = "GET_ACTIVE_SPEAKER";
 export const GET_PENDING_SPEAKER = "GET_PENDING_SPEAKER"
+export const GET_INACTIVE_SPEAKER = "GET_INACTIVE_SPEAKER"
 
 export const getActiveSpeaker = () => async (dispatch) => {
     const token = localStorage.getItem("token");
@@ -45,6 +46,26 @@ export const getPendingSpeaker = () => async (dispatch) => {
     });
 };
 
+export const getInactiveSpeaker = () => async (dispatch) => {
+    const token = localStorage.getItem("token");
+
+    const options = {
+        method: "GET",
+        headers: {
+            "content-type": "application/json",
+            authorization: `Bearer ${token}`,
+        },
+    };
+
+    const response = await fetch(`${url}/api/user/InActiveSpeaker`, options);
+    const result = await response.json();
+
+    await dispatch({
+        type: GET_INACTIVE_SPEAKER,
+        payload: result,
+    });
+};
+
 
 export const updateStatusSpeaker = (id, status) => async (dispatch) => {
     try {
@@ -68,7 +89,9 @@ export const updateStatusSpeaker = (id, status) => async (dispatch) => {
                 title: `User with ${id} - ${status}`,
             });
 
+            dispatch(getActiveSpeaker());
             dispatch(getPendingSpeaker());
+            dispatch(getInactiveSpeaker());
         } else {
             Swal.fire({
                 icon: "error",
