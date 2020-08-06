@@ -33,9 +33,6 @@ const useStyles = makeStyles((theme) => ({
     profile: {
         display: 'flex',
         flexDirection: 'column',
-        marginBottom: theme.spacing(3),
-        marginTop: theme.spacing(3),
-
     },
     avatar: {
         margin: 'auto',
