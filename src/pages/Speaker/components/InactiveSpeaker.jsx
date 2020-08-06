@@ -10,13 +10,12 @@ import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 import TableSortLabel from '@material-ui/core/TableSortLabel';
 import Paper from '@material-ui/core/Paper';
+import { getInactiveSpeaker, updateStatusSpeaker } from "../../../redux/actions";
+import { useDispatch, useSelector } from "react-redux";
+import Avatar from '@material-ui/core/Avatar';
 import Button from "@material-ui/core/Button";
 import RejectedIcon from "@material-ui/icons/Clear";
-import ApprovedIcon from "@material-ui/icons/CheckBox";
-import { getPendingSpeaker, updateStatusSpeaker } from "../../../redux/actions";
-import { useDispatch, useSelector } from "react-redux";
-import { green } from '@material-ui/core/colors';
-import AttachFileIcon from '@material-ui/icons/AttachFile';
+
 
 
 function descendingComparator(a, b, orderBy) {
@@ -46,12 +45,11 @@ function stableSort(array, comparator) {
 }
 
 const headCells = [
-  { id: 'name', numeric: false, disablePadding: true, label: 'Name' },
-  { id: 'doc', numeric: true, disablePadding: false, label: 'Documentation' },
-  { id: 'expertation', numeric: true, disablePadding: false, label: 'Expertation' },
-  { id: 'createdAt', numeric: true, disablePadding: false, label: 'Registered At' },
-  { id: 'status', numeric: true, disablePadding: false, label: 'Status' },
-  { id: 'action', numeric: true, disablePadding: false, label: 'Action' },
+  { id: 'avatar', numeric: false, disablePadding: true, label: 'Avatar' },
+  { id: 'name', numeric: true, disablePadding: false, label: 'Name' },
+  { id: 'email', numeric: true, disablePadding: false, label: 'Email' },
+  { id: 'phone', numeric: true, disablePadding: false, label: 'Phone Number' },
+  { id: 'suspend', numeric: true, disablePadding: false, label: 'Suspend' },
 ];
 
 function EnhancedTableHead(props) {
@@ -128,12 +126,9 @@ const useStyles = makeStyles((theme) => ({
     top: 20,
     width: 1,
   },
-  button: {
-    margin: theme.spacing(1),
-},
 }));
 
-export default function EnhancedTable() {
+export default function ListSpeaker() {
   const classes = useStyles();
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState('calories');
@@ -141,11 +136,11 @@ export default function EnhancedTable() {
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
     const dispatch = useDispatch();
-    const pendingSpeakers = useSelector((state) => state.speaker.pendingSpeaker);
-    console.log(pendingSpeakers)
+    const inactiveSpeaker = useSelector((state) => state.speaker.inactiveSpeaker);
+    console.log(inactiveSpeaker)
 
     useEffect(() => {
-        dispatch(getPendingSpeaker());
+        dispatch(getInactiveSpeaker(), updateStatusSpeaker());
     }, [dispatch]);
 
   const handleRequestSort = (event, property) => {
@@ -177,69 +172,45 @@ export default function EnhancedTable() {
               order={order}
               orderBy={orderBy}
               onRequestSort={handleRequestSort}
-              rowCount={pendingSpeakers.length}
+              rowCount={inactiveSpeaker.length}
             />
             <TableBody>
-              {stableSort(pendingSpeakers, getComparator(order, orderBy))
+              {stableSort(inactiveSpeaker, getComparator(order, orderBy))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, index) => {
+
                   return (
-                    
                     <TableRow
                       hover
-                      role="checkbox"
                       tabIndex={-1}
-                      key={row._id}
+                      key={row.role}
                     >
-                     
                       <TableCell >
                         {index+1}
                       </TableCell>
                       <TableCell component="th" scope="row" padding="none">
-                        {row.name}
+                        <Avatar alt="Remy Sharp" src={row.image} />
                       </TableCell>
+                      <TableCell align="right">{row.name}</TableCell>
+                      <TableCell align="right">{row.email}</TableCell>
+                      <TableCell align="right">{row.phone}</TableCell>
                       <TableCell align="right">
-                        <Button variant="contained" style={{ color: green[500] }} href={row.cv} target="_blank">
-                            <AttachFileIcon />
-                        </Button>
-                      </TableCell>
-                      <TableCell align="right">{row.category}</TableCell>
-                      <TableCell align="right">{row.createdAt}</TableCell>
-                      <TableCell align="right">{row.status}</TableCell>
-                      <TableCell align="right">
-                          <Button
-                              variant="contained"
-                              color="primary"
-                              className={classes.button}
-                              size="small"
-                              startIcon={<ApprovedIcon />}
-                              onClick={() =>
-                                  dispatch(
-                                      updateStatusSpeaker(
-                                          row._id,
-                                          "ACTIVE"
-                                      )
-                                  )
-                              }
-                          >
-                              Approve
-                          </Button>
-                          <Button
-                              variant="contained"
-                              color="secondary"
-                              className={classes.button}
-                              size="small"
-                              startIcon={<RejectedIcon />}
-                              onClick={() =>
-                                  dispatch(
-                                      updateStatusSpeaker(
-                                          row._id,
-                                          "REJECTED"
-                                      )
-                                  )
-                              }
-                          >
-                              Reject
+                        <Button
+                                variant="contained"
+                                color="secondary"
+                                className={classes.button}
+                                size="small"
+                                startIcon={<RejectedIcon />}
+                                onClick={() =>
+                                    dispatch(
+                                        updateStatusSpeaker(
+                                            row._id,
+                                            "PENDING"
+                                        )
+                                    )
+                                }
+                            >
+                                Review
                           </Button>
                       </TableCell>
                     </TableRow>
@@ -252,7 +223,7 @@ export default function EnhancedTable() {
         <TablePagination
           rowsPerPageOptions={[5, 10, 25]}
           component="div"
-          count={pendingSpeakers.length}
+          count={inactiveSpeaker.length}
           rowsPerPage={rowsPerPage}
           page={page}
           onChangePage={handleChangePage}

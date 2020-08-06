@@ -207,7 +207,7 @@ export default function ListSpeaker() {
                                     dispatch(
                                         updateStatusSpeaker(
                                             row._id,
-                                            "PENDING"
+                                            "INACTIVE"
                                         )
                                     )
                                 }
