@@ -21,7 +21,7 @@ export const login = (values, history) => async () => {
 
             const Toast = Swal.mixin({
                 toast: true,
-                position: "top-end",
+                position: "center",
                 showConfirmButton: false,
                 timer: 3000,
                 timerProgressBar: true,
@@ -37,7 +37,7 @@ export const login = (values, history) => async () => {
             });
 
             setTimeout(() => {
-                history.push("/dashboard");
+                history.push("/dashboard/dashboard");
             }, 3000);
         } else {
             Swal.fire({

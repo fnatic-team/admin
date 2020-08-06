@@ -137,7 +137,7 @@ export default function ListSpeaker() {
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
     const dispatch = useDispatch();
-    const activeSpeakers = useSelector((state) => state.speaker);
+    const activeSpeakers = useSelector((state) => state.speaker.activeSpeaker);
     console.log(activeSpeakers)
 
     useEffect(() => {

@@ -6,3 +6,5 @@ export { default as EditAdmin } from "../pages/EditAdmin/EditAdmin";
 export { default as Speaker } from "../pages/Speaker/Speaker";
 export { default as Audience } from "../pages/Audience/Audience";
 export { default as Transaksi } from "../pages/Transaksi/Transaksi";
+export { default as NewPage1 } from "../pages/Newpage1/Newpage1"
+export { default as NewPage2 } from "../pages/Newpage2/Newpage2"

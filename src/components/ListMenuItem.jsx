@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
@@ -12,12 +12,20 @@ import TimelineRoundedIcon from '@material-ui/icons/TimelineRounded';
 import { Link } from "react-router-dom";
 import { Typography, Grid } from "@material-ui/core";
 import Divider from '@material-ui/core/Divider';
+// import { getAllAdmin } from "../../redux/actions";
+// import { useDispatch, useSelector } from "react-redux";
 
 
 const useStyles = makeStyles((theme) => ({
+    text: {
+        color: 'white',
+        '& span, & svg,': {
+            fontSize: '1vw',
+        }
+    },
     link: {
         textDecoration: "none",
-        color: "black",
+        color: "white",
     },
     profile: {
         display: 'flex',
@@ -38,22 +46,22 @@ export default function ListMenuItem() {
     const classes = useStyles();
 
     return (
-        <div>
+        <div className={classes.text} >
             <ListItem className={classes.profile}>
                 <Grid>
                     <Avatar className={classes.avatar}/>
                 </Grid>
                 <Grid>
-                    <Typography variant="h5">JUAN</Typography>
+                    <ListItem>JUAN</ListItem>
                 </Grid>
             </ListItem>
             <Divider />
-            <Link to="/dashboard" className={classes.link}>
-                <ListItem button>
+            <Link to="/dashboard/dashboard" className={classes.link}>
+                <ListItem button >
                     <ListItemIcon>
                         <DashboardRoundedIcon color="primary" />
                     </ListItemIcon>
-                        <ListItemText primary="Dashboard" />
+                        <ListItemText primary="Dashboard"/>
                 </ListItem>
             </Link>
             <Link to="/dashboard/admins" className={classes.link}>
@@ -86,6 +94,22 @@ export default function ListMenuItem() {
                         <TimelineRoundedIcon color="primary" />
                     </ListItemIcon>
                         <ListItemText primary="Transaksi" />
+                </ListItem>
+            </Link>
+            <Link to="/dashboard/newpage1" className={classes.link}>
+                <ListItem button>
+                    <ListItemIcon>
+                        <TimelineRoundedIcon color="primary" />
+                    </ListItemIcon>
+                        <ListItemText primary="New Page1" />
+                </ListItem>
+            </Link>
+            <Link to="/dashboard/newpage2" className={classes.link}>
+                <ListItem button>
+                    <ListItemIcon>
+                        <TimelineRoundedIcon color="primary" />
+                    </ListItemIcon>
+                        <ListItemText primary="New Page2" />
                 </ListItem>
             </Link>
         </div>

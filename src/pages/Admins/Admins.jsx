@@ -16,7 +16,7 @@ import AddIcon from "@material-ui/icons/Add";
 import { Link } from "react-router-dom";
 import { getAllAdmin, deleteAdmin } from "../../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
-
+import jwtDecode from "jwt-decode";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -44,6 +44,8 @@ export default function Admin() {
     const dispatch = useDispatch();
     const admins = useSelector((state) => state.admin);
     console.log(admins)
+    const loggedAdmin = jwtDecode(localStorage.getItem('token'))
+    console.log(loggedAdmin.role, "logged")
 
     useEffect(() => {
         dispatch(getAllAdmin());
@@ -124,7 +126,7 @@ export default function Admin() {
                                     <TableCell align="left">
                                         <h3>{row.role}</h3>
                                     </TableCell>
-                                    {row.role==='superadmin' && 
+                                    {loggedAdmin.role==='superadmin' && 
                                     <TableCell align="right">
                                         <Button
                                             variant="contained"
@@ -139,6 +141,20 @@ export default function Admin() {
                                         </Button>
                                     </TableCell>
                                     }
+                                    {loggedAdmin.role==='admin' && 
+                                    <TableCell align="right">
+                                        <Button
+                                            variant="contained"
+                                            color="secondary"
+                                            disabled
+                                            className={classes.button}
+                                            startIcon={<DeleteIcon />}
+                                        >
+                                            Delete
+                                        </Button>
+                                    </TableCell>
+                                    }
+                                    
                                 </TableRow>
                             ))}
                         </TableBody>

@@ -141,7 +141,7 @@ export default function EnhancedTable() {
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
     const dispatch = useDispatch();
-    const pendingSpeakers = useSelector((state) => state.speaker);
+    const pendingSpeakers = useSelector((state) => state.speaker.pendingSpeaker);
     console.log(pendingSpeakers)
 
     useEffect(() => {
