@@ -1,20 +1,19 @@
 import React, { useEffect } from "react";
-import PropTypes from 'prop-types';
-import { makeStyles } from '@material-ui/core/styles';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
-import TablePagination from '@material-ui/core/TablePagination';
-import TableRow from '@material-ui/core/TableRow';
-import TableSortLabel from '@material-ui/core/TableSortLabel';
-import Paper from '@material-ui/core/Paper';
+import PropTypes from "prop-types";
+import { makeStyles } from "@material-ui/core/styles";
+import Table from "@material-ui/core/Table";
+import TableBody from "@material-ui/core/TableBody";
+import TableCell from "@material-ui/core/TableCell";
+import TableContainer from "@material-ui/core/TableContainer";
+import TableHead from "@material-ui/core/TableHead";
+import TablePagination from "@material-ui/core/TablePagination";
+import TableRow from "@material-ui/core/TableRow";
+import TableSortLabel from "@material-ui/core/TableSortLabel";
+import Paper from "@material-ui/core/Paper";
 import { getAllContactUs } from "../../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
-import TextareaAutosize from '@material-ui/core/TextareaAutosize';
-import moment from 'moment';
-
+import TextareaAutosize from "@material-ui/core/TextareaAutosize";
+import moment from "moment";
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -27,7 +26,7 @@ function descendingComparator(a, b, orderBy) {
 }
 
 function getComparator(order, orderBy) {
-  return order === 'desc'
+  return order === "desc"
     ? (a, b) => descendingComparator(a, b, orderBy)
     : (a, b) => -descendingComparator(a, b, orderBy);
 }
@@ -43,11 +42,16 @@ function stableSort(array, comparator) {
 }
 
 const headCells = [
-  { id: 'name', numeric: true, disablePadding: false, label: 'Name' },
-  { id: 'email', numeric: true, disablePadding: false, label: 'Email' },
-  { id: 'subject', numeric: true, disablePadding: false, label: 'Subject' },
-  { id: 'message', numeric: true, disablePadding: false, label: 'Message' },
-  { id: 'createdAt', numeric: true, disablePadding: false, label: 'Date' },
+  { id: "name", numeric: true, disablePadding: false, label: "Name" },
+  { id: "email", numeric: true, disablePadding: false, label: "Email" },
+  { id: "subject", numeric: true, disablePadding: false, label: "Subject" },
+  { id: "message", numeric: true, disablePadding: false, label: "Message" },
+  {
+    id: "createdAt",
+    numeric: true,
+    disablePadding: false,
+    label: "Date",
+  },
 ];
 
 function EnhancedTableHead(props) {
@@ -59,26 +63,23 @@ function EnhancedTableHead(props) {
   return (
     <TableHead className={classes.tablehead}>
       <TableRow>
-        <TableCell >
-          No
-        </TableCell>
+        <TableCell>No</TableCell>
         {headCells.map((headCell) => (
-
           <TableCell
             key={headCell.id}
-            align={headCell.numeric ? 'right' : 'left'}
-            padding={headCell.disablePadding ? 'none' : 'default'}
+            align={headCell.numeric ? "right" : "left"}
+            padding={headCell.disablePadding ? "none" : "default"}
             sortDirection={orderBy === headCell.id ? order : false}
           >
             <TableSortLabel
               active={orderBy === headCell.id}
-              direction={orderBy === headCell.id ? order : 'asc'}
+              direction={orderBy === headCell.id ? order : "asc"}
               onClick={createSortHandler(headCell.id)}
             >
               {headCell.label}
               {orderBy === headCell.id ? (
                 <span className={classes.visuallyHidden}>
-                  {order === 'desc' ? 'sorted descending' : 'sorted ascending'}
+                  {order === "desc" ? "sorted descending" : "sorted ascending"}
                 </span>
               ) : null}
             </TableSortLabel>
@@ -93,41 +94,37 @@ EnhancedTableHead.propTypes = {
   classes: PropTypes.object.isRequired,
   onRequestSort: PropTypes.func.isRequired,
   onSelectAllClick: PropTypes.func.isRequired,
-  order: PropTypes.oneOf(['asc', 'desc']).isRequired,
+  order: PropTypes.oneOf(["asc", "desc"]).isRequired,
   orderBy: PropTypes.string.isRequired,
   rowCount: PropTypes.number.isRequired,
 };
 
-
-
-
-
 const useStyles = makeStyles((theme) => ({
   root: {
-    width: '100%',
+    width: "100%",
   },
   paper: {
-    width: '100%',
+    width: "100%",
     marginBottom: theme.spacing(2),
   },
   table: {
     minWidth: 750,
   },
   tablehead: {
-    backgroundColor: '#3a6986',
-      '& th, & a,': {
-        color: 'white',
-        fontSize: '18px',
+    backgroundColor: "#3a6986",
+    "& th, & a,": {
+      color: "white",
+      fontSize: "18px",
     },
   },
   visuallyHidden: {
     border: 0,
-    clip: 'rect(0 0 0 0)',
+    clip: "rect(0 0 0 0)",
     height: 1,
     margin: -1,
-    overflow: 'hidden',
+    overflow: "hidden",
     padding: 0,
-    position: 'absolute',
+    position: "absolute",
     top: 20,
     width: 1,
   },
@@ -135,22 +132,22 @@ const useStyles = makeStyles((theme) => ({
 
 export default function ContactUs() {
   const classes = useStyles();
-  const [order, setOrder] = React.useState('desc');
-  const [orderBy, setOrderBy] = React.useState('createdAt');
+  const [order, setOrder] = React.useState("desc");
+  const [orderBy, setOrderBy] = React.useState("createdAt");
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
-    const dispatch = useDispatch();
-    const allContactUs = useSelector((state) => state.contactus);
-    console.log(allContactUs, 'allContactUs')
+  const dispatch = useDispatch();
+  const allContactUs = useSelector((state) => state.contactus);
+  console.log(allContactUs, "allContactUs");
 
-    useEffect(() => {
-        dispatch(getAllContactUs());
-    }, [dispatch]);
+  useEffect(() => {
+    dispatch(getAllContactUs());
+  }, [dispatch]);
 
   const handleRequestSort = (event, property) => {
-    const isAsc = orderBy === property && order === 'asc';
-    setOrder(isAsc ? 'desc' : 'asc');
+    const isAsc = orderBy === property && order === "asc";
+    setOrder(isAsc ? "desc" : "asc");
     setOrderBy(property);
   };
 
@@ -183,32 +180,27 @@ export default function ContactUs() {
               {stableSort(allContactUs, getComparator(order, orderBy))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, index) => {
-
                   return (
-                    <TableRow
-                      hover
-                      tabIndex={-1}
-                      key={row._id}
-                    >
-                      <TableCell >
-                        {index+1}
-                      </TableCell>
+                    <TableRow hover tabIndex={-1} key={row._id}>
+                      <TableCell>{index + 1}</TableCell>
                       <TableCell align="right">{row.name}</TableCell>
                       <TableCell align="right">{row.email}</TableCell>
                       <TableCell align="right">{row.subject}</TableCell>
                       <TableCell align="right">
                         <TextareaAutosize
-                            rowsMax={4}
-                            aria-label="maximum height"
-                            placeholder="Maximum 4 rows"
-                            defaultValue={row.message}
+                          rowsMax={4}
+                          aria-label="maximum height"
+                          placeholder="Maximum 4 rows"
+                          defaultValue={row.message}
+                          readOnly
                         />
                       </TableCell>
-                      <TableCell align="right">{moment(row.createdAt).format('LL')}</TableCell>
+                      <TableCell align="right">
+                        {moment(row.createdAt).format("LL")}
+                      </TableCell>
                     </TableRow>
                   );
                 })}
-             
             </TableBody>
           </Table>
         </TableContainer>
@@ -222,7 +214,6 @@ export default function ContactUs() {
           onChangeRowsPerPage={handleChangeRowsPerPage}
         />
       </Paper>
-     
     </div>
   );
 }
