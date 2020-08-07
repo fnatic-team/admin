@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
+import Box from '@material-ui/core/Box';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
@@ -46,7 +47,7 @@ const headCells = [
   { id: 'speakername', numeric: false, disablePadding: false, label: 'Speaker Name' },
   { id: 'audiencename', numeric: false, disablePadding: false, label: 'Audience Name' },
   { id: 'eventname', numeric: false, disablePadding: false, label: 'Event Name' },
-  { id: 'name', numeric: false, disablePadding: false, label: 'Event Date' },
+  { id: 'tanggal_acara', numeric: false, disablePadding: false, label: 'Event Date' },
   { id: 'eventlocation', numeric: false, disablePadding: false, label: 'Event Location' },
   { id: 'participants', numeric: false, disablePadding: false, label: 'Participants' },
   { id: 'duration', numeric: false, disablePadding: false, label: 'Duration' },
@@ -138,8 +139,8 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Audience() {
   const classes = useStyles();
-  const [order, setOrder] = React.useState('asc');
-  const [orderBy, setOrderBy] = React.useState('eventdate');
+  const [order, setOrder] = React.useState('desc');
+  const [orderBy, setOrderBy] = React.useState('tanggal_acara');
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
@@ -167,7 +168,7 @@ export default function Audience() {
  
 
   return (
-    <div className={classes.root}>
+    <Box className={classes.root}>
       <Paper className={classes.paper}>
         <TableContainer>
           <Table
@@ -222,6 +223,6 @@ export default function Audience() {
         />
       </Paper>
      
-    </div>
+    </Box>
   );
 }

@@ -47,7 +47,7 @@ const headCells = [
   { id: 'email', numeric: true, disablePadding: false, label: 'Email' },
   { id: 'subject', numeric: true, disablePadding: false, label: 'Subject' },
   { id: 'message', numeric: true, disablePadding: false, label: 'Message' },
-  { id: 'date', numeric: true, disablePadding: false, label: 'Date' },
+  { id: 'createdAt', numeric: true, disablePadding: false, label: 'Date' },
 ];
 
 function EnhancedTableHead(props) {
@@ -135,8 +135,8 @@ const useStyles = makeStyles((theme) => ({
 
 export default function ContactUs() {
   const classes = useStyles();
-  const [order, setOrder] = React.useState('asc');
-  const [orderBy, setOrderBy] = React.useState('calories');
+  const [order, setOrder] = React.useState('desc');
+  const [orderBy, setOrderBy] = React.useState('createdAt');
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
 

@@ -9,9 +9,8 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Desktop from '../assets/desktop.png'
-import Logo1 from '../assets/logo_black_full.svg'
-import Logo2 from '../assets/logo_black.svg'
-
+import Logo1 from '../assets/logo_black_full.png'
+import CardMedia from '@material-ui/core/CardMedia';
 import { useDispatch } from "react-redux";
 import { login } from "../../redux/actions";
 import { Formik, Form, Field, ErrorMessage } from "formik";
@@ -19,30 +18,32 @@ import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    margin: '10% auto',
+    margin: '5% auto',
     width: '50%',
     display: 'flex',
+    backgroundColor: '#3a6986',
+    MozBorderRadius: '10px',
+    WebkitBorderRadius: '10px',
+    borderRadius: '10px',
   },
-  logoText: {
+  head: {
+    width: '40%',
     margin: 'auto',
-    height: '7vh',
-    textAlign: 'center',
-    backgroundImage: `url(${Logo1})`,
-    backgroundRepeat: 'no-repeat',
-    
+    display: 'flex',
+    marginBottom: theme.spacing(2),
+    marginTop: theme.spacing(2),
   },
   image: {
-    backgroundImage: `url(${Desktop})`,
     backgroundRepeat: 'no-repeat',
     backgroundColor: 'lightblue',
     backgroundPosition: 'center',
+    paddingLeft: theme.spacing(5),
+    paddingRight: theme.spacing(5),
   },
 
-  logo: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    margin: '10% auto',
+  media: {
+    height: 0,
+    paddingTop: '100%', // 16:9
   },
   paper: {
     margin: theme.spacing(8, 4),
@@ -55,7 +56,6 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: '#6cc7d9',
   },
   form: {
-    width: '100%',
     marginTop: theme.spacing(1),
   },
   submit: {
@@ -84,11 +84,16 @@ export default function Login() {
   return (
     <Grid container component="main" className={classes.root}>
        <CssBaseline />
-      <Grid item xs={false} sm={4} md={7} className={classes.logoText} />
-      <Grid item xs={false} sm={4} md={7} className={classes.image}>
-        <img src={Logo2} alt="" className={classes.logo} />
+       <Grid item xs={12} sm={12} md={12} lg={12} elevation={6}>
+        <img src={Logo1} alt="" className={classes.head} />
       </Grid>
-      <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
+      <Grid item xs={12} sm={12} md={7} lg={7} className={classes.image} elevation={6} square>
+        <CardMedia
+          item xs={12} sm={12} md={7} lg={7} className={classes.media} elevation={6} square
+          image={Desktop}
+        />
+      </Grid>
+      <Grid item xs={12} sm={12} md={5} lg={5} component={Paper} elevation={6} square>
         <div className={classes.paper}>
           <Avatar className={classes.avatar}>
             <LockOutlinedIcon />

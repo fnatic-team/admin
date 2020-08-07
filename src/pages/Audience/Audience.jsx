@@ -10,9 +10,11 @@ import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 import TableSortLabel from '@material-ui/core/TableSortLabel';
 import Paper from '@material-ui/core/Paper';
+import Box from '@material-ui/core/Box';
 import { getAllAudience } from "../../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
 import Avatar from '@material-ui/core/Avatar';
+import moment from 'moment';
 
 
 
@@ -43,7 +45,7 @@ function stableSort(array, comparator) {
 }
 
 const headCells = [
-  { id: 'avatar', numeric: false, disablePadding: true, label: 'Avatar' },
+  { id: 'image', numeric: false, disablePadding: true, label: 'Avatar' },
   { id: 'name', numeric: true, disablePadding: false, label: 'Full Name' },
   { id: 'email', numeric: true, disablePadding: false, label: 'Email' },
   { id: 'phone', numeric: true, disablePadding: false, label: 'Phone Number' },
@@ -57,7 +59,7 @@ function EnhancedTableHead(props) {
   };
 
   return (
-    <TableHead>
+    <TableHead className={classes.tablehead}>
       <TableRow>
         <TableCell >
           No
@@ -113,6 +115,13 @@ const useStyles = makeStyles((theme) => ({
   table: {
     minWidth: 750,
   },
+  tablehead: {
+    backgroundColor: '#3a6986',
+      '& th, & a,': {
+        color: 'white',
+        fontSize: '18px',
+    },
+  },
   visuallyHidden: {
     border: 0,
     clip: 'rect(0 0 0 0)',
@@ -128,8 +137,8 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Audience() {
   const classes = useStyles();
-  const [order, setOrder] = React.useState('asc');
-  const [orderBy, setOrderBy] = React.useState('calories');
+  const [order, setOrder] = React.useState('desc');
+  const [orderBy, setOrderBy] = React.useState('createdAt');
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
@@ -157,7 +166,7 @@ export default function Audience() {
   };
 
   return (
-    <div className={classes.root}>
+    <Box className={classes.root}>
       <Paper className={classes.paper}>
         <TableContainer>
           <Table
@@ -192,7 +201,7 @@ export default function Audience() {
                       <TableCell align="left">{row.name}</TableCell>
                       <TableCell align="right">{row.email}</TableCell>
                       <TableCell align="right">{row.phone}</TableCell>
-                      <TableCell align="right">{row.createdAt}</TableCell>
+                      <TableCell align="right">{moment(row.createdAt).format('LL')}</TableCell>
                     </TableRow>
                   );
                 })}
@@ -211,6 +220,6 @@ export default function Audience() {
         />
       </Paper>
      
-    </div>
+    </Box>
   );
 }

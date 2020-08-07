@@ -60,6 +60,13 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
     backgroundColor: theme.palette.background.paper,
   },
+  tablehead: {
+    backgroundColor: '#3a6986',
+      '& th, & a,': {
+        color: 'white',
+        fontSize: '18px',
+    },
+  },
 }));
 
 export default function Speaker() {
@@ -71,8 +78,8 @@ export default function Speaker() {
   };
 
   return (
-    <div className={classes.root}>
-      <AppBar position="static">
+    <Box className={classes.root}>
+      <AppBar position="static" className={classes.tablehead} >
         <Tabs
           value={value}
           onChange={handleChange}
@@ -92,6 +99,6 @@ export default function Speaker() {
       <TabPanel value={value} index={2}>
         <InactiveSPeaker />
       </TabPanel>
-    </div>
+    </Box>
   );
 }

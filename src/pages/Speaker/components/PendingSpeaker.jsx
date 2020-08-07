@@ -17,6 +17,7 @@ import { getPendingSpeaker, updateStatusSpeaker } from "../../../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
 import { green } from '@material-ui/core/colors';
 import AttachFileIcon from '@material-ui/icons/AttachFile';
+import moment from 'moment';
 
 
 function descendingComparator(a, b, orderBy) {
@@ -47,11 +48,11 @@ function stableSort(array, comparator) {
 
 const headCells = [
   { id: 'name', numeric: false, disablePadding: true, label: 'Name' },
-  { id: 'doc', numeric: true, disablePadding: false, label: 'Documentation' },
-  { id: 'expertation', numeric: true, disablePadding: false, label: 'Expertation' },
+  { id: 'cv', numeric: true, disablePadding: false, label: 'Documentation' },
+  { id: 'category', numeric: true, disablePadding: false, label: 'Expertation' },
   { id: 'createdAt', numeric: true, disablePadding: false, label: 'Registered At' },
   { id: 'status', numeric: true, disablePadding: false, label: 'Status' },
-  { id: 'action', numeric: true, disablePadding: false, label: 'Action' },
+  { id: '_id', numeric: true, disablePadding: false, label: 'Action' },
 ];
 
 function EnhancedTableHead(props) {
@@ -136,7 +137,7 @@ const useStyles = makeStyles((theme) => ({
 export default function EnhancedTable() {
   const classes = useStyles();
   const [order, setOrder] = React.useState('asc');
-  const [orderBy, setOrderBy] = React.useState('calories');
+  const [orderBy, setOrderBy] = React.useState('createdAt');
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
@@ -204,7 +205,7 @@ export default function EnhancedTable() {
                         </Button>
                       </TableCell>
                       <TableCell align="right">{row.category}</TableCell>
-                      <TableCell align="right">{row.createdAt}</TableCell>
+                      <TableCell align="right">{moment(row.createdAt).format('LL')}</TableCell>
                       <TableCell align="right">{row.status}</TableCell>
                       <TableCell align="right">
                           <Button

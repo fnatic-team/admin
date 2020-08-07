@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
+import Box from '@material-ui/core/Box';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -12,8 +13,7 @@ import TableSortLabel from '@material-ui/core/TableSortLabel';
 import Paper from '@material-ui/core/Paper';
 import { getAllNewsletter } from "../../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
-
-
+import moment from 'moment';
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -42,8 +42,8 @@ function stableSort(array, comparator) {
 }
 
 const headCells = [
-  { id: 'email', numeric: true, disablePadding: false, label: 'Email' },
-  { id: 'createdAt', numeric: true, disablePadding: false, label: 'Registered At' },
+  { id: 'email', numeric: false, disablePadding: false, label: 'Email' },
+  { id: 'createdAt', numeric: true, disablePadding: false, label: 'Subscribed At' },
 ];
 
 function EnhancedTableHead(props) {
@@ -53,7 +53,7 @@ function EnhancedTableHead(props) {
   };
 
   return (
-    <TableHead>
+    <TableHead className={classes.tablehead}>
       <TableRow>
         <TableCell >
           No
@@ -109,6 +109,13 @@ const useStyles = makeStyles((theme) => ({
   table: {
     minWidth: 750,
   },
+  tablehead: {
+    backgroundColor: '#3a6986',
+      '& th, & a,': {
+        color: 'white',
+        fontSize: '18px',
+    },
+  },
   visuallyHidden: {
     border: 0,
     clip: 'rect(0 0 0 0)',
@@ -124,8 +131,8 @@ const useStyles = makeStyles((theme) => ({
 
 export default function NewsLetter() {
   const classes = useStyles();
-  const [order, setOrder] = React.useState('asc');
-  const [orderBy, setOrderBy] = React.useState('calories');
+  const [order, setOrder] = React.useState('desc');
+  const [orderBy, setOrderBy] = React.useState('createdAt');
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
@@ -153,7 +160,7 @@ export default function NewsLetter() {
   };
 
   return (
-    <div className={classes.root}>
+    <Box className={classes.root}>
       <Paper className={classes.paper}>
         <TableContainer>
           <Table
@@ -182,8 +189,8 @@ export default function NewsLetter() {
                       <TableCell >
                         {index+1}
                       </TableCell>
-                      <TableCell align="right">{row.email}</TableCell>
-                      <TableCell align="right">{row.createdAt}</TableCell>
+                      <TableCell align="left">{row.email}</TableCell>
+                      <TableCell align="right">{moment(row.createdAt).format('LL')}</TableCell>
                     </TableRow>
                   );
                 })}
@@ -202,6 +209,6 @@ export default function NewsLetter() {
         />
       </Paper>
      
-    </div>
+    </Box>
   );
 }
