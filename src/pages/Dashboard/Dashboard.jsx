@@ -7,21 +7,37 @@ import { Typography } from "@material-ui/core";
 import { getActiveSpeaker, getPendingSpeaker, getInactiveSpeaker, getAllAudience } from "../../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
 
+
 const useStyles = makeStyles((theme) => ({
     root: {
-        padding: '0',
+        padding: '3px',
     },
     
     count: {
         display: 'flex',
         justifyContent: 'space-around',
-        marginTop: theme.spacing(5),
+        padding: theme.spacing(4),
+        flexWrap: 'wrap',
     },
+    
+    talkbubble: {
+        width: theme.spacing(10),
+        height: theme.spacing(10),
+        backgroundColor: 'red',
+        MozBorderRadius: '10px',
+        WebkitBorderRadius: '10px',
+        borderRadius: '10px',
+        margin: 'auto',
+        color: 'white',
+        marginTop: theme.spacing(3),
+        padding: theme.spacing(3),
+     },
+    
     paper: {
-        width: '30%',
         textAlign: 'center',
-        height: theme.spacing(16),
-        },
+        padding: theme.spacing(5),
+    },
+   
 }));
 
 
@@ -48,56 +64,68 @@ export default function Dashboard() {
                         <h1>Dashboard</h1>
                     </Grid >
                 </Container >
-                    <Grid item xs={12} md={12} lg={12} className={classes.count} >
-                        <Paper elevation={3} className={classes.paper}  >
-                            <Typography variant="h6">
+                    <Grid item="true" xs={12} md={12} lg={12} className={classes.count} >
+                        <Paper elevation={3} className={classes.paper} item="true" xs={12} md={12} lg={12} >
+                            <Typography variant="h5">
                                 Total Aproved Speaker
                             </Typography>
-                            <Typography >
-                                {activeSpeakers.length}
-                            </Typography>
+                            <Grid className={classes.talkbubble}>
+                                <Typography variant="h4">
+                                    {activeSpeakers.length}
+                                </Typography>
+                            </Grid>
                         </Paper>
-                        <Paper elevation={3} className={classes.paper} >
-                            <Typography >
-                                Total Pending  Speaker
+                        <Paper elevation={3} className={classes.paper} item="true" xs={12} md={12} lg={12} >
+                            <Typography variant="h5">
+                                Total Aproved Speaker
                             </Typography>
-                            <Typography>
-                                {pendingSpeaker.length}
-                            </Typography>
+                            <Grid className={classes.talkbubble}>
+                                <Typography variant="h4">
+                                    {activeSpeakers.length}
+                                </Typography>
+                            </Grid>
                         </Paper>
-                        <Paper elevation={3} className={classes.paper}>
-                            <Typography >
-                                Total Inactive Speaker
+                        <Paper elevation={3} className={classes.paper} item="true" xs={12} md={12} lg={12} >
+                            <Typography variant="h5">
+                                Total Aproved Speaker
                             </Typography>
-                            <Typography>
-                                {inactiveSpeaker.length}
-                            </Typography>
+                            <Grid className={classes.talkbubble}>
+                                <Typography variant="h4">
+                                    {activeSpeakers.length}
+                                </Typography>
+                            </Grid>
                         </Paper>
                     </Grid>
-                    <Grid item xs={12} md={12} lg={12} className={classes.count}>
-                        <Paper elevation={3} className={classes.paper} >
-                            <Typography >
-                                Total Audience
+                    <Grid item="true" xs={12} md={12} lg={12} className={classes.count} >
+                        <Paper elevation={3} className={classes.paper} item="true" xs={12} md={12} lg={12} >
+                            <Typography variant="h5">
+                                Total Aproved Speaker
                             </Typography>
-                            <Typography>
-                                {allAudience.length}
-                            </Typography>
+                            <Grid className={classes.talkbubble}>
+                                <Typography variant="h4">
+                                    {activeSpeakers.length}
+                                </Typography>
+                            </Grid>
                         </Paper>
-                        <Paper elevation={3} className={classes.paper}>
-                            <Typography >
-                                Total Audience
+                        <Paper elevation={3} className={classes.paper} item="true" xs={12} md={12} lg={12} >
+                            <Typography variant="h5">
+                                Total Aproved Speaker
                             </Typography>
-                            <Typography>
-                                -
-                            </Typography>
+                            <Grid className={classes.talkbubble}>
+                                <Typography variant="h4">
+                                    {activeSpeakers.length}
+                                </Typography>
+                            </Grid>
                         </Paper>
-                        <Paper elevation={3} className={classes.paper}>
-                            <Typography >
-                                Total Audience
+                        <Paper elevation={3} className={classes.paper} item="true" xs={12} md={12} lg={12} >
+                            <Typography variant="h5">
+                                Total Aproved Speaker
                             </Typography>
-                            <Typography>
-                                -
-                            </Typography>
+                            <Grid className={classes.talkbubble}>
+                                <Typography variant="h4">
+                                    {activeSpeakers.length}
+                                </Typography>
+                            </Grid>
                         </Paper>
                     </Grid>
             </Container>
