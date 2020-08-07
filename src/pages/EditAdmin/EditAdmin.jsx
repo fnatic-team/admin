@@ -3,6 +3,7 @@ import React, { Fragment } from "react";
 import { Grid, Container, Paper } from "@material-ui/core";
 import { FormEditAdmin, SubMenu } from "../../components";
 import { makeStyles } from "@material-ui/core/styles";
+import { Box } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -16,7 +17,7 @@ export default function CreateAdmin() {
 
     return (
         <Fragment>
-            <div className={classes.root}>
+            <Box className={classes.root}>
                 <SubMenu title="Edit Admin" />
                 <Container>
                     <Grid container spacing={3}>
@@ -27,7 +28,7 @@ export default function CreateAdmin() {
                         </Grid>
                     </Grid>
                 </Container>
-            </div>
+            </Box>
         </Fragment>
     );
 }

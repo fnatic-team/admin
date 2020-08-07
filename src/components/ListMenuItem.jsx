@@ -23,9 +23,6 @@ import jwtDecode from "jwt-decode";
 const useStyles = makeStyles((theme) => ({
     text: {
         color: '#e04349',
-        '& span, & svg,': {
-            fontSize: '1vw',
-        }
     },
     link: {
         textDecoration: "none",
@@ -68,7 +65,7 @@ export default function ListMenuItem() {
                 </Avatar>
             }
                 <Grid>
-                    <ListItem>{loggedAdmin.fullname}</ListItem>
+                    {loggedAdmin.fullname}
                 </Grid>
             </ListItem>
             <Divider />

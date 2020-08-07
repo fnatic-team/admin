@@ -9,6 +9,7 @@ import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
 import Container from "@material-ui/core/Container";
+import { Box } from "@material-ui/core";
 import Button from "@material-ui/core/Button";
 import DeleteIcon from "@material-ui/icons/Delete";
 import EditIcon from "@material-ui/icons/Edit";
@@ -53,7 +54,7 @@ export default function Admin() {
 
     return (
         <Fragment >
-            <div className={classes.root}>
+            <Box className={classes.root}>
                 <Container>
                     <Grid
                         container
@@ -161,7 +162,7 @@ export default function Admin() {
                         </TableBody>
                     </Table>
                 </TableContainer>
-            </div>
+            </Box>
         </Fragment>
     );
 }

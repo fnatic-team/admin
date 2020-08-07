@@ -15,6 +15,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Avatar from '@material-ui/core/Avatar';
 import Button from "@material-ui/core/Button";
 import RejectedIcon from "@material-ui/icons/Clear";
+import { Box } from "@material-ui/core";
 
 
 
@@ -159,7 +160,7 @@ export default function ListSpeaker() {
   };
 
   return (
-    <div className={classes.root}>
+    <Box className={classes.root}>
       <Paper className={classes.paper}>
         <TableContainer>
           <Table
@@ -231,6 +232,6 @@ export default function ListSpeaker() {
         />
       </Paper>
      
-    </div>
+    </Box>
   );
 }

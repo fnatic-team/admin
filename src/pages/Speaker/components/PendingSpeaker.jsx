@@ -17,6 +17,7 @@ import { getPendingSpeaker, updateStatusSpeaker } from "../../../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
 import { green } from "@material-ui/core/colors";
 import AttachFileIcon from "@material-ui/icons/AttachFile";
+import { Box } from "@material-ui/core";
 import moment from "moment";
 
 function descendingComparator(a, b, orderBy) {
@@ -167,7 +168,7 @@ export default function EnhancedTable() {
   };
 
   return (
-    <div className={classes.root}>
+    <Box className={classes.root}>
       <Paper className={classes.paper}>
         <TableContainer>
           <Table
@@ -249,6 +250,6 @@ export default function EnhancedTable() {
           onChangeRowsPerPage={handleChangeRowsPerPage}
         />
       </Paper>
-    </div>
+    </Box>
   );
 }
