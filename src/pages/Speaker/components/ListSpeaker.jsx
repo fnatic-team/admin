@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
-import Box from '@material-ui/core/Box';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -96,6 +95,7 @@ function EnhancedTableHead(props) {
 EnhancedTableHead.propTypes = {
   classes: PropTypes.object.isRequired,
   onRequestSort: PropTypes.func.isRequired,
+  onSelectAllClick: PropTypes.func.isRequired,
   order: PropTypes.oneOf(['asc', 'desc']).isRequired,
   orderBy: PropTypes.string.isRequired,
   rowCount: PropTypes.number.isRequired,
@@ -129,7 +129,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function ListActiveSpeaker() {
+export default function ListSpeaker() {
   const classes = useStyles();
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState('calories');
@@ -137,8 +137,8 @@ export default function ListActiveSpeaker() {
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
     const dispatch = useDispatch();
-    const active = useSelector((state) => state.speaker.activeSpeaker);
-   
+    const activeSpeakers = useSelector((state) => state.speaker.activeSpeaker);
+    console.log(activeSpeakers)
 
     useEffect(() => {
         dispatch(getActiveSpeaker(), updateStatusSpeaker());
@@ -160,7 +160,7 @@ export default function ListActiveSpeaker() {
   };
 
   return (
-    <Box className={classes.root}>
+    <div className={classes.root}>
       <Paper className={classes.paper}>
         <TableContainer>
           <Table
@@ -173,10 +173,10 @@ export default function ListActiveSpeaker() {
               order={order}
               orderBy={orderBy}
               onRequestSort={handleRequestSort}
-              rowCount={active.length}
+              rowCount={activeSpeakers.length}
             />
             <TableBody>
-              {stableSort(active, getComparator(order, orderBy))
+              {stableSort(activeSpeakers, getComparator(order, orderBy))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, index) => {
 
@@ -218,19 +218,21 @@ export default function ListActiveSpeaker() {
                     </TableRow>
                   );
                 })}
+             
             </TableBody>
           </Table>
         </TableContainer>
         <TablePagination
           rowsPerPageOptions={[5, 10, 25]}
           component="div"
-          count={active.length}
+          count={activeSpeakers.length}
           rowsPerPage={rowsPerPage}
           page={page}
           onChangePage={handleChangePage}
           onChangeRowsPerPage={handleChangeRowsPerPage}
         />
       </Paper>
-    </Box>
+     
+    </div>
   );
 }

@@ -1,12 +1,12 @@
 import {
-    GET_NEWSLETTER
+    GET_CONTACTUS
 } from "../actions";
 
 const initialState = [];
 
 export default (state = initialState, actions) => {
     switch (actions.type) {
-        case GET_NEWSLETTER:
+        case GET_CONTACTUS:
             return actions.payload;
 
         default:

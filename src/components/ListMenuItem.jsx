@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
     },
     link: {
         textDecoration: "none",
-        color: "#3336ff",
+        color: "#062031",
     },
     profile: {
         display: 'flex',
@@ -63,7 +63,7 @@ export default function ListMenuItem() {
                 </Avatar>
             }
                 <Grid>
-                    {loggedAdmin.fullname}
+                    <ListItem>{loggedAdmin.fullname}</ListItem>
                 </Grid>
             </ListItem>
             <Divider />
@@ -99,12 +99,12 @@ export default function ListMenuItem() {
                         <ListItemText primary="Audience" />
                 </ListItem>
             </Link>
-            <Link to="/dashboard/transaksi" className={classes.link}>
+            <Link to="/dashboard/transaction" className={classes.link}>
                 <ListItem button>
                     <ListItemIcon>
                         <TimelineRoundedIcon color="primary" />
                     </ListItemIcon>
-                        <ListItemText primary="Transaksi" />
+                        <ListItemText primary="Transaction" />
                 </ListItem>
             </Link>
             <Link to="/dashboard/newsletter" className={classes.link}>

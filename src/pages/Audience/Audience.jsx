@@ -92,6 +92,7 @@ function EnhancedTableHead(props) {
 EnhancedTableHead.propTypes = {
   classes: PropTypes.object.isRequired,
   onRequestSort: PropTypes.func.isRequired,
+  onSelectAllClick: PropTypes.func.isRequired,
   order: PropTypes.oneOf(['asc', 'desc']).isRequired,
   orderBy: PropTypes.string.isRequired,
   rowCount: PropTypes.number.isRequired,
@@ -125,7 +126,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function TableAudience() {
+export default function Audience() {
   const classes = useStyles();
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState('calories');
@@ -175,11 +176,12 @@ export default function TableAudience() {
               {stableSort(allAudience, getComparator(order, orderBy))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, index) => {
+
                   return (
                     <TableRow
                       hover
                       tabIndex={-1}
-                      key={row.id}
+                      key={row.role}
                     >
                       <TableCell >
                         {index+1}

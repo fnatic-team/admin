@@ -1,7 +1,7 @@
 import React from "react";
 import { Switch, Route } from "react-router-dom";
 
-import { Dashboard, Admins, Login, CreateAdmin, EditAdmin, Speaker, TableAudience, Transaksi, Newsletter, Contact } from "../pages";
+import { Dashboard, Admins, Login, CreateAdmin, EditAdmin, Speaker, Audience, Transaction, Newsletter, Contact } from "../pages";
 
 export default function Routes() {
     return (
@@ -25,10 +25,10 @@ export default function Routes() {
                 <Speaker />
             </Route>
             <Route exact path="/dashboard/audience">
-                <TableAudience />
+                <Audience />
             </Route>
-            <Route exact path="/dashboard/transaksi">
-                <Transaksi />
+            <Route exact path="/dashboard/transaction">
+                <Transaction />
             </Route>
             <Route exact path="/dashboard/newsletter">
                 <Newsletter />
