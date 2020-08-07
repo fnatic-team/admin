@@ -43,7 +43,7 @@ function stableSort(array, comparator) {
 }
 
 const headCells = [
-  { id: 'avatar', numeric: false, disablePadding: true, label: 'Avatar' },
+  { id: 'image', numeric: false, disablePadding: true, label: 'Avatar' },
   { id: 'name', numeric: true, disablePadding: false, label: 'Full Name' },
   { id: 'email', numeric: true, disablePadding: false, label: 'Email' },
   { id: 'phone', numeric: true, disablePadding: false, label: 'Phone Number' },
