@@ -10,6 +10,6 @@ export default (state = initialState, actions) => {
             return actions.payload;
 
         default:
-            return state;   
+            return state;
     }
 };

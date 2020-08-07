@@ -70,7 +70,7 @@ const CustomField = (props) => {
           variant="outlined"
           margin="normal"
           required
-          size="medium"
+          size="larger"
           {...props}
       />
   );

@@ -66,7 +66,7 @@ export default function ListMenuItem() {
                 </Avatar>
             }
                 <Grid>
-                    {loggedAdmin.fullname}
+                    <ListItem>{loggedAdmin.fullname}</ListItem>
                 </Grid>
             </ListItem>
             <Divider />
