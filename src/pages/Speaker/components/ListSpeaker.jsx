@@ -45,12 +45,12 @@ function stableSort(array, comparator) {
 }
 
 const headCells = [
-  { id: 'avatar', numeric: false, disablePadding: true, label: 'Avatar' },
+  { id: 'image', numeric: false, disablePadding: true, label: 'Avatar' },
   { id: 'name', numeric: true, disablePadding: false, label: 'Name' },
-  { id: 'expertation', numeric: true, disablePadding: false, label: 'Expertation' },
+  { id: 'category', numeric: true, disablePadding: false, label: 'Expertation' },
   { id: 'fee', numeric: true, disablePadding: false, label: 'Fee' },
   { id: 'rating', numeric: true, disablePadding: false, label: 'Rating' },
-  { id: 'suspend', numeric: true, disablePadding: false, label: 'Suspend' },
+  { id: '_id', numeric: true, disablePadding: false, label: 'Suspend' },
 ];
 
 function EnhancedTableHead(props) {

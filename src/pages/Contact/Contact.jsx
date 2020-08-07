@@ -47,7 +47,7 @@ const headCells = [
   { id: 'email', numeric: true, disablePadding: false, label: 'Email' },
   { id: 'subject', numeric: true, disablePadding: false, label: 'Subject' },
   { id: 'message', numeric: true, disablePadding: false, label: 'Message' },
-  { id: 'date', numeric: true, disablePadding: false, label: 'Date' },
+  { id: 'createdAt', numeric: true, disablePadding: false, label: 'Date' },
 ];
 
 function EnhancedTableHead(props) {
