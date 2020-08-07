@@ -11,7 +11,6 @@ import MainApp from "./MainApp";
 import { useLocation } from "react-router-dom";
 import Typography from "@material-ui/core/Typography";
 import SideImage from "./assets/bg.jpg"
-import { Box } from "@material-ui/core";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -49,7 +48,7 @@ export default function Dashboard() {
     }
 
     return (
-        <Box className={classes.root}>
+        <div className={classes.root}>
             <CssBaseline />
             <Header open={open} />
 
@@ -61,17 +60,17 @@ export default function Dashboard() {
                     ),
                 }}
             >
-                <Box className={classes.toolbarIcon}>
-                    <Typography
-                        component="h5"
-                        variant="h5"
-                        color="inherit"
-                        noWrap
-                        className={classes.title}
-                    >
-                        {capitalize(`${routeName}`)}
-                    </Typography>
-                </Box>
+                <div className={classes.toolbarIcon}>
+                <Typography
+                    component="h5"
+                    variant="h5"
+                    color="inherit"
+                    noWrap
+                    className={classes.title}
+                >
+                    {capitalize(`${routeName}`)}
+                </Typography>
+                </div>
                 <Divider />
                 <List>
                     <ListMenuItem />
@@ -79,6 +78,6 @@ export default function Dashboard() {
                 <Divider />
             </Drawer>
             <MainApp />
-        </Box>
+        </div>
     );
 }
