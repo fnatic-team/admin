@@ -15,6 +15,7 @@ import { useDispatch } from "react-redux";
 import { login } from "../../redux/actions";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { useHistory } from "react-router-dom";
+import { Box } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -82,7 +83,7 @@ export default function Login() {
   const history = useHistory();
 
   return (
-    <Grid container component="main" className={classes.root}>
+    <Grid container component="main" className={classes.root} >
        <CssBaseline />
        <Grid item xs={12} sm={12} md={12} lg={12} elevation={6}>
         <img src={Logo1} alt="" className={classes.head} />
@@ -94,7 +95,7 @@ export default function Login() {
         />
       </Grid>
       <Grid item xs={12} sm={12} md={5} lg={5} component={Paper} elevation={6} square>
-        <div className={classes.paper}>
+        <Box className={classes.paper}>
           <Avatar className={classes.avatar}>
             <LockOutlinedIcon />
           </Avatar>
@@ -154,7 +155,7 @@ export default function Login() {
                 </Form>
             )}
         </Formik>
-        </div>
+        </Box>
       </Grid>
     </Grid>
   );
