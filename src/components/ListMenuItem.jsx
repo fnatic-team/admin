@@ -12,7 +12,8 @@ import RecordVoiceOverRoundedIcon from '@material-ui/icons/RecordVoiceOverRounde
 import PeopleAltRoundedIcon from '@material-ui/icons/PeopleAltRounded';
 import TimelineRoundedIcon from '@material-ui/icons/TimelineRounded';
 import { Link } from "react-router-dom";
-import { Grid } from "@material-ui/core";
+import { Grid, Box } from "@material-ui/core";
+
 import Divider from '@material-ui/core/Divider';
 import DraftsRoundedIcon from '@material-ui/icons/DraftsRounded';
 import ImportContactsRoundedIcon from '@material-ui/icons/ImportContactsRounded';
@@ -36,10 +37,14 @@ const useStyles = makeStyles((theme) => ({
     },
     avatar: {
         margin: 'auto',
+        padding: theme.spacing(2),
         marginBottom: theme.spacing(2),
         '& img, & svg,': {
-            width: '10vh',
-            height: '10vh',
+            width: '12vh',
+            height: '12vh',
+            padding: theme.spacing(2),
+            backgroundColor: 'white',
+            border: '2px solid #e04349',
         },
     },
 }));
@@ -50,7 +55,7 @@ export default function ListMenuItem() {
     console.log(loggedAdmin, "loggedAvatar")
 
     return (
-        <div className={classes.text} >
+        <Box className={classes.text} >
             <ListItem className={classes.profile}>
             { loggedAdmin.role==='superadmin' && 
                 <Avatar className={classes.avatar} >
@@ -123,6 +128,6 @@ export default function ListMenuItem() {
                         <ListItemText primary="Contact" />
                 </ListItem>
             </Link>
-        </div>
+        </Box>
     );
 }
