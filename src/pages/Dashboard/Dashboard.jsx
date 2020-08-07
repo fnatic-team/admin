@@ -4,8 +4,10 @@ import Container from "@material-ui/core/Container";
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import { Typography } from "@material-ui/core";
-import { getActiveSpeaker, getPendingSpeaker, getInactiveSpeaker, getAllAudience } from "../../redux/actions";
+import { getActiveSpeaker, getPendingSpeaker, getInactiveSpeaker, getAllAudience, getAllTransaction } from "../../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
+import CountUp from 'react-countup';
+
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -15,13 +17,77 @@ const useStyles = makeStyles((theme) => ({
     count: {
         display: 'flex',
         justifyContent: 'space-around',
-        marginTop: theme.spacing(5),
+        padding: theme.spacing(4),
+        flexWrap: 'wrap',
     },
+    
+    actspeaker: {
+        backgroundColor: '#66de64',
+        MozBorderRadius: '10px',
+        WebkitBorderRadius: '10px',
+        borderRadius: '10px',
+        margin: 'auto',
+        color: 'white',
+        marginTop: theme.spacing(3),
+        padding: theme.spacing(3),
+     },
+     pndspeaker: {
+        backgroundColor: '#64adde',
+        MozBorderRadius: '10px',
+        WebkitBorderRadius: '10px',
+        borderRadius: '10px',
+        margin: 'auto',
+        color: 'white',
+        marginTop: theme.spacing(3),
+        padding: theme.spacing(3),
+     },
+     inactspeaker: {
+        backgroundColor: '#de6464',
+        MozBorderRadius: '10px',
+        WebkitBorderRadius: '10px',
+        borderRadius: '10px',
+        margin: 'auto',
+        color: 'white',
+        marginTop: theme.spacing(3),
+        padding: theme.spacing(3),
+     },
+     audience: {
+        backgroundColor: '#64ded2',
+        MozBorderRadius: '10px',
+        WebkitBorderRadius: '10px',
+        borderRadius: '10px',
+        margin: 'auto',
+        color: 'white',
+        marginTop: theme.spacing(3),
+        padding: theme.spacing(3),
+     },
+     ogevent: {
+        backgroundColor: '#8b64de',
+        MozBorderRadius: '10px',
+        WebkitBorderRadius: '10px',
+        borderRadius: '10px',
+        margin: 'auto',
+        color: 'white',
+        marginTop: theme.spacing(3),
+        padding: theme.spacing(3),
+     },
+     cmpldevent: {
+        backgroundColor: '#66de64',
+        MozBorderRadius: '10px',
+        WebkitBorderRadius: '10px',
+        borderRadius: '10px',
+        margin: 'auto',
+        color: 'white',
+        marginTop: theme.spacing(3),
+        padding: theme.spacing(3),
+     },
     paper: {
-        width: '30%',
         textAlign: 'center',
-        height: theme.spacing(16),
-        },
+        padding: theme.spacing(5),
+        margin: theme.spacing(4),
+        width: theme.spacing(40),
+    },
+   
 }));
 
 
@@ -32,60 +98,127 @@ export default function Dashboard() {
     const pendingSpeaker = useSelector ((state) => state.speaker.pendingSpeaker);
     const inactiveSpeaker = useSelector ((state) => state.speaker.inactiveSpeaker);
     const allAudience = useSelector((state) => state.audience);
+    const allTransaction = useSelector((state) => state.transaction);
+    console.log(allTransaction, 'Trans')
 
     useEffect(() => {
         dispatch(getActiveSpeaker());
         dispatch(getPendingSpeaker());
         dispatch(getInactiveSpeaker());
         dispatch(getAllAudience());
+        dispatch(getAllTransaction());
     }, [dispatch]);
-    
+
     return (
         <Fragment>
             <Container  className={classes.root}>
-                <Container>
                     <Grid>
-                        <h1>Dashboard</h1>
+                        <Typography variant='h3'>
+                            Dashboard
+                        </Typography>
                     </Grid >
-                </Container >
-                    <Grid item xs={12} md={12} lg={12} className={classes.count} color="primary">
-                        <Paper elevation={3} className={classes.paper} color="primary" >
-                            <Typography >
-                                <h3>Total Aproved Speaker</h3>
-                                <h2>{activeSpeakers.length}</h2>
+                    <Grid item="true" xs={12} md={12} lg={12} className={classes.count} >
+                        <Paper elevation={3} className={classes.paper} item="true" xs={12} md={6} lg={4} >
+                            <Typography variant="h5">
+                                Total Aproved Speakers
                             </Typography>
+                            <Grid className={classes.actspeaker} >
+                                <Typography variant="h4">
+                                    <CountUp
+                                        start={0}
+                                        end={activeSpeakers.length}
+                                        duration={4}
+                                        useEasing={true}
+                                        useGrouping={true}
+                                        separator=" "
+                                    />
+                                </Typography>
+                            </Grid>
                         </Paper>
-                        <Paper elevation={3} className={classes.paper} >
-                        <Typography >
-                                <h3>Total Pending  Speaker</h3>
-                                <h2>{pendingSpeaker.length}</h2>
+                        <Paper elevation={3} className={classes.paper} item="true" xs={12} md={6} lg={4} >
+                            <Typography variant="h5">
+                                Total Pending Speakers
                             </Typography>
+                            <Grid className={classes.pndspeaker}>
+                                <Typography variant="h4">
+                                    <CountUp
+                                        start={0}
+                                        end={pendingSpeaker.length}
+                                        duration={4}
+                                        useEasing={true}
+                                        useGrouping={true}
+                                        separator=" "
+                                    />
+                                </Typography>
+                            </Grid>
                         </Paper>
-                        <Paper elevation={3} className={classes.paper}>
-                        <Typography >
-                                <h3>Total Inactive Speaker</h3>
-                                <h2>{inactiveSpeaker.length}</h2>
+                        <Paper elevation={3} className={classes.paper} item="true" xs={12} md={6} lg={4} >
+                            <Typography variant="h5">
+                                Total Inactive Speakers
                             </Typography>
+                            <Grid className={classes.inactspeaker}>
+                                <Typography variant="h4">
+                                    <CountUp
+                                        start={0}
+                                        end={inactiveSpeaker.length}
+                                        duration={4}
+                                        useEasing={true}
+                                        useGrouping={true}
+                                        separator=" "
+                                    />
+                                </Typography>
+                            </Grid>
                         </Paper>
-                    </Grid>
-                    <Grid item xs={12} md={12} lg={12} className={classes.count}>
-                        <Paper elevation={3} className={classes.paper} >
-                            <Typography >
-                                <h3>Total Audience</h3>
-                                <h2>{allAudience.length}</h2>
+                        <Paper elevation={3} className={classes.paper} item="true" xs={12} md={6} lg={4} >
+                            <Typography variant="h5">
+                                Total Audiences
                             </Typography>
+                            <Grid className={classes.audience}>
+                                <Typography variant="h4">
+                                    <CountUp
+                                        start={0}
+                                        end={allAudience.length}
+                                        duration={4}
+                                        useEasing={true}
+                                        useGrouping={true}
+                                        separator=" "
+                                    />
+                                </Typography>
+                            </Grid>
                         </Paper>
-                        <Paper elevation={3} className={classes.paper}>
-                        <Typography >
-                                <h3>Total Ongoing Event</h3>
-                                <h2>-</h2>
+                        <Paper elevation={3} className={classes.paper} item="true" xs={12} md={6} lg={4} >
+                            <Typography variant="h5">
+                                Total Ongoing Events
                             </Typography>
+                            <Grid className={classes.ogevent}>
+                                <Typography variant="h4">
+                                    <CountUp
+                                        start={0}
+                                        end={allTransaction.length}
+                                        duration={4}
+                                        useEasing={true}
+                                        useGrouping={true}
+                                        separator=" "
+                                    />
+                                </Typography>
+                            </Grid>
                         </Paper>
-                        <Paper elevation={3} className={classes.paper}>
-                        <Typography >
-                                <h3>Total Completed Event</h3>
-                                <h2>-</h2>
+                        <Paper elevation={3} className={classes.paper} item="true" xs={12} md={6} lg={4} >
+                            <Typography variant="h5">
+                                Total Completed Events
                             </Typography>
+                            <Grid className={classes.cmpldevent}>
+                                <Typography variant="h4">
+                                    <CountUp
+                                        start={0}
+                                        end={0}
+                                        duration={4}
+                                        useEasing={true}
+                                        useGrouping={true}
+                                        separator=" "
+                                    />
+                                </Typography>
+                            </Grid>
                         </Paper>
                     </Grid>
             </Container>
