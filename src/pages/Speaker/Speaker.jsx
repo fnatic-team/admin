@@ -71,7 +71,7 @@ export default function Speaker() {
   };
 
   return (
-    <div className={classes.root}>
+    <Box className={classes.root}>
       <AppBar position="static">
         <Tabs
           value={value}
@@ -92,6 +92,6 @@ export default function Speaker() {
       <TabPanel value={value} index={2}>
         <InactiveSPeaker />
       </TabPanel>
-    </div>
+    </Box>
   );
 }
