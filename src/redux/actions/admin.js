@@ -37,12 +37,12 @@ export const getAdminByID = (id) => async (dispatch) => {
         },
     };
 
-    const response = await fetch(`${url}/api/admin/${id}`, options);
+    const response = await fetch(`${url}/api/admin/edit/${id}`, options);
     const result = await response.json();
-
+    console.log(response,"bbbbbbbbbbbbb")
     dispatch({
         type: GET_ADMIN_BY_ID,
-        payload: result.data,
+        payload: result.result,
     });
 };
 
@@ -105,7 +105,7 @@ export const updateAdmin = (values, id, history) => async () => {
         if (response.status === 200) {
             Swal.fire({
                 icon: "success",
-                title: "Update Admin is successfully",
+                title: "Update User is successfully",
             });
 
             history.goBack();
