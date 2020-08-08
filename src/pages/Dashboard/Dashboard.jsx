@@ -101,8 +101,8 @@ export default function Dashboard() {
     const pendingSpeaker = useSelector ((state) => state.speaker.pendingSpeaker);
     const inactiveSpeaker = useSelector ((state) => state.speaker.inactiveSpeaker);
     const allAudience = useSelector((state) => state.audience);
-    const allTransaction = useSelector((state) => state.transaction);
-    console.log(allTransaction, 'Trans')
+    const allTransactions = useSelector((state) => state.transaction.allTransaction);
+    console.log(allTransactions, 'Trans')
 
     useEffect(() => {
         dispatch(getActiveSpeaker());
@@ -197,7 +197,7 @@ export default function Dashboard() {
                                 <Typography variant="h4">
                                     <CountUp
                                         start={0}
-                                        end={allTransaction.length}
+                                        end={allTransactions.length}
                                         duration={4}
                                         useEasing={true}
                                         useGrouping={true}

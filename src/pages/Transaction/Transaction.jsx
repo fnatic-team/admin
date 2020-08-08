@@ -14,6 +14,11 @@ import Paper from '@material-ui/core/Paper';
 import { getAllTransaction } from "../../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
 import moment from 'moment';
+import DetailTrans from './ModalTrans'
+import Payment from "./ModalPayment"
+import { blue } from "@material-ui/core/colors";
+import AttachFileIcon from "@material-ui/icons/AttachFile";
+import Button from "@material-ui/core/Button";
 
 
 
@@ -44,15 +49,15 @@ function stableSort(array, comparator) {
 }
 
 const headCells = [
-  { id: 'speakername', numeric: false, disablePadding: false, label: 'Speaker Name' },
-  { id: 'audiencename', numeric: false, disablePadding: false, label: 'Audience Name' },
-  { id: 'eventname', numeric: false, disablePadding: false, label: 'Event Name' },
+  { id: 'nama_acara', numeric: false, disablePadding: false, label: 'Event Name' },
+  { id: 'name', numeric: false, disablePadding: false, label: 'Speaker Name' },
+  { id: 'name', numeric: false, disablePadding: false, label: 'Audience Name' },
   { id: 'tanggal_acara', numeric: false, disablePadding: false, label: 'Event Date' },
-  { id: 'eventlocation', numeric: false, disablePadding: false, label: 'Event Location' },
-  { id: 'participants', numeric: false, disablePadding: false, label: 'Participants' },
-  { id: 'duration', numeric: false, disablePadding: false, label: 'Duration' },
+  { id: 'status_transaksi', numeric: false, disablePadding: false, label: 'Event Status' },
+  { id: 'status_speaker', numeric: false, disablePadding: false, label: 'Speaker Action' },
+  { id: 'status_transaksi', numeric: false, disablePadding: false, label: 'Audience Action' },
+  { id: 'payment', numeric: false, disablePadding: false, label: 'Pay To Speaker' },
   { id: 'description', numeric: false, disablePadding: false, label: 'Description' },
-  { id: 'status', numeric: false, disablePadding: false, label: 'Status' },
 ];
 
 function EnhancedTableHead(props) {
@@ -117,7 +122,11 @@ const useStyles = makeStyles((theme) => ({
   table: {
     minWidth: 750,
   },
+  tablecell: {
+    whiteSpace: 'nowrap',
+  },
   tablehead: {
+    whiteSpace: 'nowrap',
     backgroundColor: '#3a6986',
       '& th, & a,': {
         color: 'white',
@@ -135,6 +144,9 @@ const useStyles = makeStyles((theme) => ({
     top: 20,
     width: 1,
   },
+  button: {
+    margin: theme.spacing(1),
+},
 }));
 
 export default function Audience() {
@@ -145,7 +157,7 @@ export default function Audience() {
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
     const dispatch = useDispatch();
-    const allTransaction = useSelector((state) => state.transaction);
+    const allTransaction = useSelector((state) => state.transaction.allTransaction);
 
     useEffect(() => {
         dispatch(getAllTransaction());
@@ -188,6 +200,7 @@ export default function Audience() {
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, index) => {
                   return (
+
                     <TableRow
                       hover
                       tabIndex={-1}
@@ -196,15 +209,32 @@ export default function Audience() {
                       <TableCell>
                         {index+1}
                       </TableCell>
+                      <TableCell align="left" className={classes.tablecell}  >
+                         <DetailTrans id={row._id}/>
+                          {row.nama_acara}
+                      </TableCell>
                       <TableCell align="left">{row.speakerID.name}</TableCell>
                       <TableCell align="left">{row.audienceID.name}</TableCell>
-                      <TableCell align="left">{row.nama_acara}</TableCell>
                       <TableCell align="left">{moment(row.tanggal_acara).format('LL') + ', Pukul ' + row.waktu_acara}</TableCell>
-                      <TableCell align="left">{row.alamat + ', ' + row.kota}</TableCell>
-                      <TableCell align="left">{row.jml_peserta}</TableCell>
-                      <TableCell align="left">{row.durasi}</TableCell>
-                      <TableCell align="left">{row.deskripsi}</TableCell>
                       <TableCell align="left">{row.status_transaksi}</TableCell>
+                      <TableCell align="left">{row.status_speaker}</TableCell>
+                      <TableCell align="left">{row.status_audience}</TableCell>
+                      <TableCell align="left" >
+                      {(row.status_speaker==='SELESAI' && row.status_audience==='SELESAI') &&
+                        <Payment />
+                      }
+                      {(row.status_speaker==='PENDING' || row.status_audience==='PENDING') &&
+                        <Button
+                            disabled
+                            color="primary"
+                            variant="contained"
+                            style={{ color: blue[500] }}
+                          >
+                            <AttachFileIcon />
+                        </Button>
+                      }
+                      </TableCell>
+                      <TableCell align="left">{row.deskripsi}</TableCell>
                     </TableRow>
                   );
                 })}
@@ -222,7 +252,6 @@ export default function Audience() {
           onChangeRowsPerPage={handleChangeRowsPerPage}
         />
       </Paper>
-     
     </Box>
   );
 }
