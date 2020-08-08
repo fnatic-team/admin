@@ -34,7 +34,9 @@ export default function ModalTrans(props) {
                 color="primary"
                 onClick={handleOpen}
             >
-                Detail
+                <Typography >
+                            Detail 
+                        </Typography>
             </Button>
             <Dialog
                 open={open}

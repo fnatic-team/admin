@@ -102,7 +102,7 @@ export default function Dashboard() {
     const inactiveSpeaker = useSelector ((state) => state.speaker.inactiveSpeaker);
     const allAudience = useSelector((state) => state.audience);
     const allTransactions = useSelector((state) => state.transaction.allTransaction);
-    console.log(allTransactions, 'Trans')
+   
 
     useEffect(() => {
         dispatch(getActiveSpeaker());

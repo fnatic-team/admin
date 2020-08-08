@@ -1,7 +1,7 @@
 import React, { Fragment } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
-import DetailTrans from "./DetailTrans";
+import Payment from "./Payment";
 import Dialog from "@material-ui/core/Dialog";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
@@ -45,12 +45,12 @@ export default function ModalTrans(props) {
                 <DialogTitle id="form-dialog-title" >
                     <Box className={classes.modal}>
                         <Typography variant="h4">
-                            Detail Transaction
+                            Pay Now
                         </Typography>
                     </Box>
                 </DialogTitle>
                 <DialogContent>
-                    <DetailTrans id={props.id} handleClose={handleClose} />
+                    <Payment id={props.id} handleClose={handleClose} />
                 </DialogContent>
             </Dialog>
         </Fragment>

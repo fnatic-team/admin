@@ -50,14 +50,13 @@ function stableSort(array, comparator) {
 
 const headCells = [
   { id: 'nama_acara', numeric: false, disablePadding: false, label: 'Event Name' },
-  { id: 'name', numeric: false, disablePadding: false, label: 'Speaker Name' },
-  { id: 'name', numeric: false, disablePadding: false, label: 'Audience Name' },
+  { id: 'audienceID.name', numeric: false, disablePadding: false, label: 'Speaker Name' },
+  { id: 'speakerID.name', numeric: false, disablePadding: false, label: 'Audience Name' },
   { id: 'tanggal_acara', numeric: false, disablePadding: false, label: 'Event Date' },
   { id: 'status_transaksi', numeric: false, disablePadding: false, label: 'Event Status' },
   { id: 'status_speaker', numeric: false, disablePadding: false, label: 'Speaker Action' },
-  { id: 'status_transaksi', numeric: false, disablePadding: false, label: 'Audience Action' },
+  { id: 'status_audience', numeric: false, disablePadding: false, label: 'Audience Action' },
   { id: 'payment', numeric: false, disablePadding: false, label: 'Pay To Speaker' },
-  { id: 'description', numeric: false, disablePadding: false, label: 'Description' },
 ];
 
 function EnhancedTableHead(props) {
@@ -234,7 +233,6 @@ export default function Audience() {
                         </Button>
                       }
                       </TableCell>
-                      <TableCell align="left">{row.deskripsi}</TableCell>
                     </TableRow>
                   );
                 })}
