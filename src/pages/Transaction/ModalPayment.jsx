@@ -15,10 +15,11 @@ const useStyles = makeStyles((theme) => ({
         textAlign: 'center',
         backgroundColor: '#3a6986',
         color: 'white',
+        paddingBottom: theme.spacing(1),
     },
 }));
 
-export default function ModalTrans(props) {
+export default function ModalPayment(props) {
     const classes = useStyles();
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => {

@@ -9,6 +9,9 @@ import { useHistory } from "react-router-dom";
 import jwtDecode from "jwt-decode";
 
 const useStyles = makeStyles((theme) => ({
+    root: {
+        boxShadow: '0 0.7rem 1rem rgba(111, 115, 184, 0.8) !important',
+    },
     field: {
         width: "100%",
     },
@@ -53,8 +56,8 @@ export default function AddAdmin() {
     };
 
     return (
-        <Container>
-            <Formik
+        <Container  >
+            <Formik 
                 initialValues={{
                     fullname: "",
                     username: "",
@@ -78,11 +81,10 @@ export default function AddAdmin() {
             >
                 {() => (
                 <Form
-                className={classes.root}
                 noValidate
                 autoComplete="off"
             >
-                <Grid
+                <Grid 
                     container
                     justify="center"
                     direction="column"

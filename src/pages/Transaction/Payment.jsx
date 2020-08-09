@@ -14,7 +14,7 @@ import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 const useStyles = makeStyles((theme) => ({
     root: {
         width: "100%",
-        margin: "auto",
+        margin: "auto",    
     },
     textField: {
         marginLeft: theme.spacing(2),

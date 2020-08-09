@@ -6,8 +6,8 @@ export default function SubMenu(props) {
     const history = useHistory();
 
     return (
-        <Container>
-            <Grid
+        <Container >
+            <Grid 
                 container
                 direction="row"
                 justify="space-between"
@@ -19,6 +19,7 @@ export default function SubMenu(props) {
                 <Grid>
                     <Button
                         variant="contained"
+                        color="primary"
                         onClick={() => {
                             history.goBack();
                         }}

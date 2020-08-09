@@ -7,8 +7,11 @@ import { Box } from "@material-ui/core";
 const useStyles = makeStyles((theme) => ({
     root: {
         width: '60%',
-        margin: '5% auto',
+        margin: 'auto',
     },
+    box: {
+        boxShadow: '0 0.7rem 1rem rgba(111, 115, 184, 0.8) !important',
+    }
 }));
 
 export default function CreateAdmin() {
@@ -21,7 +24,9 @@ export default function CreateAdmin() {
                 <Container>
                     <Grid container spacing={3}>
                         <Grid item xs={12} md={12} lg={12}>
-                            <Paper style={{ padding: 20 }}>
+                            <Paper 
+                                className={classes.box}
+                                style={{ padding: 50 }}>
                                 <FormAddAdmin />
                             </Paper>
                         </Grid>
