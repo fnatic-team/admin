@@ -1,14 +1,14 @@
-import React, { useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Container, Grid} from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
 import { getTransactionDetail, updateAdminPayment } from "../../redux/actions";
 import Typography from "@material-ui/core/Typography";
 import TextField from '@material-ui/core/TextField';
-// import Button from "@material-ui/core/Button";
 import ReactFilestack from "filestack-react";
-import { useHistory } from "react-router-dom";
-import { Formik, Form, Field } from "formik";
+import Button from "@material-ui/core/Button";
+import FormGroup from '@material-ui/core/FormGroup';
+
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -27,87 +27,127 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Payment(props) {
     const classes = useStyles();
-    const history = useHistory();
     const dispatch = useDispatch();
     const detail = useSelector((state) => state.transaction.transactionById);
     const id = props.id;
     useEffect(() => {
         dispatch(getTransactionDetail(id));
     }, [dispatch, id]);
-
-    const [formData, setFormData] = useState({
-        nom_trans_adm: "",
-        bukti_trans_adm: "",
-        
-    });
-
-    // const handleChange = (event) => {
-    //     setFormData({
-    //         ...formData,
-    //         [event.target.name]: event.target.value,
-    //     });
+   
+    // const handleSubmit = (event) => {
+    //     event.preventDefault();
+    //     dispatch(updateAdminPayment(id, formData));
     // };
+    const [formData, setFormData] = useState({
+        bukti_trans_adm: "",
+        // nom_trans_adm: detail.jumlah_bayar,
+        nom_trans_adm: "6000000",
+        status_transaksi: "PAID BY ADMIN",
+    });
+    console.log(formData, 'nominalku')
 
-    
+    // eslint-disable-next-line no-extend-native
+    String.prototype.localIDR = function () {
+        return Number(this).toLocaleString("id-ID", {
+            style: "currency",
+            currency: "IDR",
+            minimumFractionDigits: 2,
+        });
+    };
     return (
         <Container className={classes.root}>
-            <Formik
-             initialValues={{ username: "", password: "" }}
-             validate={(values) => {
-               const errors = {};
-               if (!values.username) {
-                 errors.username = "Required";
-               }
-               if (!values.password) {
-                 errors.password = "Required";
-               }
-               return errors;
-             }}
-             onSubmit={(values) => {
-               dispatch(updateAdminPayment(values, history));
-             }}
-            >
-                <Grid container item xs={12} md={12} lg={12}>
-                    <Grid key={detail._id} container item xs={12} md={12} lg={12}>
-                        <Grid container item xs={12} md={12} lg={12}>
-                            <Typography className={classes.typography}
-                                variant="h6" >
-                                Nominal Transfer
-                            </Typography>
-                            <TextField
-                                className={classes.textField}
-                                defaultValue={detail.nama_acara}
-                                
-                            />
-                        </Grid>
-                        <Grid container item xs={12} md={12} lg={12}>
-                            <Typography className={classes.typography}
-                                variant="h6" >
-                                Bukti Transfer
-                            </Typography>
-                            <ReactFilestack
-                                    apikey={`${process.env.REACT_APP_API_KEY}`}
-                                    customRender={({ onPick }) => (
-                                        <div>
-                                            <button
-                                                className="btn btn-primary btn-block"
-                                                onClick={onPick}
-                                            >
-                                                Upload Foto Profile
-                                            </button>
-                                        </div>
-                                    )}
-                                    onSuccess={(res) =>
-                                        setFormData({
-                                            ...formData,
-                                            image: res.filesUploaded[0].url,
-                                        })
-                                    }
-                                />
-                        </Grid>
+            <Grid container item xs={12} md={12} lg={12}>
+                <Grid key={detail._id} container item xs={12} md={12} lg={12}>
+                    <Grid container item xs={12} md={12} lg={12}>
+                        <Typography className={classes.typography}
+                            variant="h6" >
+                            Event Name
+                        </Typography>
+                        <TextField
+                            className={classes.textField}
+                            defaultValue={detail.nama_acara}
+                            InputProps={{
+                                readOnly: true,
+                            }}
+                        />
                     </Grid>
+                    <Grid container item xs={12} md={12} lg={12}>
+                        <Typography className={classes.typography}
+                            variant="h6" >
+                            Event Organizer
+                        </Typography>
+                        <TextField
+                            className={classes.textField}
+                            defaultValue={detail.penyelenggara}
+                            InputProps={{
+                                readOnly: true,
+                            }}
+                        />
+                    </Grid>
+                    <Grid container item xs={12} md={12} lg={12}>
+                        <Typography variant="h6" className={classes.typography}>
+                            Nominal Transfer
+                        </Typography>
+                        <TextField
+                            className={classes.textField}
+                            defaultValue={detail !== null &&
+                                `${`${
+                                    detail.jumlah_bayar
+                                }
+                                    `.localIDR()}`}
+                            // defaultValue={detail.jumlah_bayar}
+                            // value={setFormData({
+                            //     ...formData,
+                            //     nom_trans_adm: detail.jumlah_bayar,
+                            // })}
+                            // value={this.state.detail.jumlah_bayar}
+                            // onChange={this.handleChange}
+                            InputProps={{
+                                readOnly: true,
+                            }}
+                        />
+                    </Grid>
+                    <Grid container item xs={12} md={12} lg={12}>
+                        <FormGroup
+                            style={{ textAlign: "left" }}>
+                            <ReactFilestack
+                                apikey={`${process.env.REACT_APP_API_KEY}`}
+                                customRender={({ onPick }) => (
+                                    <div>
+                                        <button
+                                            className="btn btn-primary btn-block"
+                                            onClick={onPick}
+                                        >
+                                            Upload Bukti Pembayaran
+                                        </button>
+                                    </div>
+                                )}
+                                onSuccess={(res) =>
+                                    setFormData({
+                                        ...formData,
+                                        bukti_trans_adm:
+                                            res.filesUploaded[0].url,
+                                    })
+                                }
+                            />
+                            <Grid container item xs={12} md={12} lg={12}>
+                                <Button 
+                                    type="submit"
+                                    variant="contained"
+                                    color="primary"
+                                    className={classes.button}
+                                    onClick={() =>
+                                        dispatch(updateAdminPayment(id, formData))
+                                      }
+                                    >
+                                    Pay Now
+                                </Button>
+                            </Grid>
+                        </FormGroup>
+                    </Grid>
+                    
                 </Grid>
-            </Formik>
+            </Grid>
         </Container>
     );
 }

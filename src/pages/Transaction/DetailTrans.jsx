@@ -31,6 +31,7 @@ export default function DetailTrans(props) {
         dispatch(getTransactionDetail(id));
     }, [dispatch, id]);
     
+    
     return (
         <Container className={classes.root}>
             <Grid container item xs={12} md={12} lg={12}>

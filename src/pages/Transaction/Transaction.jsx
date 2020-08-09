@@ -219,8 +219,8 @@ export default function Audience() {
                       <TableCell align="left">{row.status_speaker}</TableCell>
                       <TableCell align="left">{row.status_audience}</TableCell>
                       <TableCell align="left" >
-                      {(row.status_speaker==='SELESAI' && row.status_audience==='SELESAI') &&
-                        <Payment />
+                      {(row.status_speaker==='SELESAI' && row.status_audience==='SELESAI' && row.status_transaksi !== 'PAID BY ADMIN') &&
+                        <Payment id={row._id}/>
                       }
                       {(row.status_speaker==='PENDING' || row.status_audience==='PENDING') &&
                         <Button
@@ -230,6 +230,16 @@ export default function Audience() {
                             style={{ color: blue[500] }}
                           >
                             <AttachFileIcon />
+                        </Button>
+                      }
+                      {(row.status_transaksi==='PAID BY ADMIN') &&
+                        <Button
+                            disabled
+                            color="primary"
+                            variant="contained"
+                            style={{ color: blue[500] }}
+                          >
+                            PAID
                         </Button>
                       }
                       </TableCell>

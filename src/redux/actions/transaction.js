@@ -49,7 +49,7 @@ export const updateAdminPayment = (id, formData) => async (
 ) => {
     try {
         const token = localStorage.getItem("token");
-        const url = `${process.env.REACT_APP_BACKEND_ENDPOINT}api/transaksi/update/${id}`;
+        const url = `${process.env.REACT_APP_API_URL}/api/transaksi/update/${id}`;
         const options = {
             method: "PUT",
             headers: {
@@ -58,7 +58,7 @@ export const updateAdminPayment = (id, formData) => async (
             },
             body: JSON.stringify(formData),
         };
-
+        console.log(formData, 'formdataku')
         const response = await fetch(url, options);
         const result = await response.json();
 
