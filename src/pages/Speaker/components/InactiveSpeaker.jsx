@@ -60,7 +60,7 @@ function EnhancedTableHead(props) {
   };
 
   return (
-    <TableHead>
+    <TableHead className={classes.tablehead}>
       <TableRow>
         <TableCell >
           No
@@ -115,6 +115,13 @@ const useStyles = makeStyles((theme) => ({
   },
   table: {
     minWidth: 750,
+  },
+  tablehead: {
+    backgroundColor: '#5c84a6',
+      '& th, & a,': {
+        color: 'white',
+        fontSize: '18px',
+    },
   },
   visuallyHidden: {
     border: 0,

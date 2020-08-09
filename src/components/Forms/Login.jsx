@@ -85,10 +85,10 @@ export default function Login() {
   return (
     <Grid container component="main" className={classes.root}>
       <CssBaseline />
-      <Grid item xs={false} sm={12} md={12} lg={12} elevation={6}>
+      <Grid item xs={false} sm={12} md={12} lg={12} >
         <img src={Logo1} alt="" className={classes.head} />
       </Grid>
-      <Grid item sm={12} md={7} lg={7} className={classes.image} elevation={6} >
+      <Grid item sm={12} md={7} lg={7} className={classes.image}  >
         <CardMedia
           sm={12}
           md={7}
@@ -98,7 +98,7 @@ export default function Login() {
           image={Desktop}
         />
       </Grid>
-      <Grid item sm={12} md={5} lg={5} component={Paper} elevation={6}>
+      <Grid item sm={12} md={5} lg={5} component={Paper} >
         <Box className={classes.paper}>
           <Avatar className={classes.avatar}>
             <LockOutlinedIcon />

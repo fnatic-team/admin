@@ -51,7 +51,7 @@ export const login = (formData, history) => async () => {
         Swal.fire({
             icon: "error",
             title: "Forbidden",
-            text: "email atau password salah",
+            text: "usename atau password salah",
         });
     }
 };

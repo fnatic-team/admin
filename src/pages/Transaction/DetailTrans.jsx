@@ -5,21 +5,28 @@ import { useDispatch, useSelector } from "react-redux";
 import { getTransactionDetail } from "../../redux/actions";
 import Typography from "@material-ui/core/Typography";
 import TextField from '@material-ui/core/TextField';
+import AttachFileIcon from "@material-ui/icons/AttachFile";
+import Button from "@material-ui/core/Button";
+
 
 
 const useStyles = makeStyles((theme) => ({
     root: {
         width: "100%",
         margin: "auto",
+        marginBottom: theme.spacing(3),
     },
     textField: {
         marginLeft: theme.spacing(2),
         marginBottom: theme.spacing(3),
-        width: theme.spacing(40),
+        width: theme.spacing(35),
     },
     typography: {
-        width: theme.spacing(20),
-    }
+        width: theme.spacing(25),
+    },
+    button: {
+        marginLeft: theme.spacing(3)
+    },
 }));
 
 export default function DetailTrans(props) {
@@ -109,6 +116,32 @@ export default function DetailTrans(props) {
                                 readOnly: true,
                             }}
                         />
+                    </Grid>
+                    <Grid container item xs={12} md={12} lg={12}>
+                        <Typography variant="h6" className={classes.typography}>
+                            Paid to Speaker
+                        </Typography>
+                        <TextField
+                            className={classes.textField}
+                            defaultValue={detail.nom_trans_adm }
+                            InputProps={{
+                                readOnly: true,
+                            }}
+                        />
+                    </Grid>
+                    <Grid container item xs={12} md={12} lg={12}>
+                        <Typography variant="h6" className={classes.typography}>
+                            Evidence of Transfer
+                        </Typography>
+                        <Button className={classes.button}
+                            variant="contained"
+                            style={{ color: 'blue' }}
+                            href={detail.bukti_trans_adm}
+                            target="_blank"
+                            size="small"
+                        >
+                          <AttachFileIcon />Bukti Transfer
+                        </Button>
                     </Grid>
                 </Grid>
             </Grid>

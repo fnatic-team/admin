@@ -59,6 +59,7 @@ const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
     backgroundColor: theme.palette.background.paper,
+    boxShadow: '0 0.7rem 1rem rgba(111, 115, 184, 0.8) !important',
   },
   tablehead: {
     backgroundColor: '#3a6986',
