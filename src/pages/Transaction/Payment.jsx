@@ -30,23 +30,21 @@ export default function Payment(props) {
     const dispatch = useDispatch();
     const detail = useSelector((state) => state.transaction.transactionById);
     const id = props.id;
+
     useEffect(() => {
         dispatch(getTransactionDetail(id));
-    }, [dispatch, id]);
+         // eslint-disable-next-line
+    }, []);
    
-    // const handleSubmit = (event) => {
-    //     event.preventDefault();
-    //     dispatch(updateAdminPayment(id, formData));
-    // };
+    console.log(detail.jumlah_bayar, 'bayar')
     const [formData, setFormData] = useState({
         bukti_trans_adm: "",
-        // nom_trans_adm: detail.jumlah_bayar,
-        nom_trans_adm: "6000000",
+        nom_trans_adm: 0,
         status_transaksi: "PAID BY ADMIN",
     });
-    console.log(formData, 'nominalku')
+    console.log(formData, 'form data')
 
-    // eslint-disable-next-line no-extend-native
+ // eslint-disable-next-line 
     String.prototype.localIDR = function () {
         return Number(this).toLocaleString("id-ID", {
             style: "currency",
@@ -54,6 +52,13 @@ export default function Payment(props) {
             minimumFractionDigits: 2,
         });
     };
+    //  const handleChange = (event) => {
+    //     event.preventDefault();
+    //     setFormData({
+    //         ...formData,
+    //         nom_trans_adm: detail.jumlah_bayar,
+    //     })
+    // };
     return (
         <Container className={classes.root}>
             <Grid container item xs={12} md={12} lg={12}>
@@ -88,20 +93,13 @@ export default function Payment(props) {
                         <Typography variant="h6" className={classes.typography}>
                             Nominal Transfer
                         </Typography>
-                        <TextField
+                        <TextField 
                             className={classes.textField}
                             defaultValue={detail !== null &&
                                 `${`${
                                     detail.jumlah_bayar
                                 }
                                     `.localIDR()}`}
-                            // defaultValue={detail.jumlah_bayar}
-                            // value={setFormData({
-                            //     ...formData,
-                            //     nom_trans_adm: detail.jumlah_bayar,
-                            // })}
-                            // value={this.state.detail.jumlah_bayar}
-                            // onChange={this.handleChange}
                             InputProps={{
                                 readOnly: true,
                             }}
@@ -127,6 +125,7 @@ export default function Payment(props) {
                                         ...formData,
                                         bukti_trans_adm:
                                             res.filesUploaded[0].url,
+                                        nom_trans_adm: detail.jumlah_bayar
                                     })
                                 }
                             />
@@ -136,7 +135,7 @@ export default function Payment(props) {
                                     variant="contained"
                                     color="primary"
                                     className={classes.button}
-                                    onClick={() =>
+                                    onClick={() => 
                                         dispatch(updateAdminPayment(id, formData))
                                       }
                                     >
