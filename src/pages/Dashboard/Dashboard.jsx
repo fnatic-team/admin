@@ -1,12 +1,11 @@
 import React, { Fragment, useEffect} from "react";
 import Grid from "@material-ui/core/Grid";
-import Container from "@material-ui/core/Container";
 import { makeStyles } from '@material-ui/core/styles';
-import Paper from '@material-ui/core/Paper';
 import { Typography } from "@material-ui/core";
 import { getActiveSpeaker, getPendingSpeaker, getInactiveSpeaker, getAllAudience, getAllTransaction } from "../../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
 import CountUp from 'react-countup';
+import { Box } from "@material-ui/core";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -85,7 +84,11 @@ const useStyles = makeStyles((theme) => ({
         textAlign: 'center',
         padding: theme.spacing(5),
         margin: theme.spacing(4),
-        width: theme.spacing(40),
+        backgroundColor: 'rgba(191, 255, 254, 0.2);',
+        boxShadow: '0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important',
+        MozBorderRadius: '10px',
+        WebkitBorderRadius: '10px',
+        borderRadius: '10px'
     },
    
 }));
@@ -98,8 +101,8 @@ export default function Dashboard() {
     const pendingSpeaker = useSelector ((state) => state.speaker.pendingSpeaker);
     const inactiveSpeaker = useSelector ((state) => state.speaker.inactiveSpeaker);
     const allAudience = useSelector((state) => state.audience);
-    const allTransaction = useSelector((state) => state.transaction);
-    console.log(allTransaction, 'Trans')
+    const allTransactions = useSelector((state) => state.transaction.allTransaction);
+   
 
     useEffect(() => {
         dispatch(getActiveSpeaker());
@@ -111,14 +114,14 @@ export default function Dashboard() {
 
     return (
         <Fragment>
-            <Container  className={classes.root}>
+            <Box  className={classes.root}>
                     <Grid>
                         <Typography variant='h3'>
                             Dashboard
                         </Typography>
                     </Grid >
-                    <Grid item="true" xs={12} md={12} lg={12} className={classes.count} >
-                        <Paper elevation={3} className={classes.paper} item="true" xs={12} md={6} lg={4} >
+                    <Grid className={classes.count} >
+                        <Grid elevation={3} className={classes.paper} item xs={false} sm={12} md={5} lg={3}  >
                             <Typography variant="h5">
                                 Total Aproved Speakers
                             </Typography>
@@ -134,8 +137,8 @@ export default function Dashboard() {
                                     />
                                 </Typography>
                             </Grid>
-                        </Paper>
-                        <Paper elevation={3} className={classes.paper} item="true" xs={12} md={6} lg={4} >
+                        </Grid>
+                        <Grid elevation={3} className={classes.paper} item sm={12} md={5} lg={3} >
                             <Typography variant="h5">
                                 Total Pending Speakers
                             </Typography>
@@ -151,8 +154,8 @@ export default function Dashboard() {
                                     />
                                 </Typography>
                             </Grid>
-                        </Paper>
-                        <Paper elevation={3} className={classes.paper} item="true" xs={12} md={6} lg={4} >
+                        </Grid>
+                        <Grid elevation={3} className={classes.paper} item sm={12} md={5} lg={3} >
                             <Typography variant="h5">
                                 Total Inactive Speakers
                             </Typography>
@@ -168,8 +171,8 @@ export default function Dashboard() {
                                     />
                                 </Typography>
                             </Grid>
-                        </Paper>
-                        <Paper elevation={3} className={classes.paper} item="true" xs={12} md={6} lg={4} >
+                        </Grid>
+                        <Grid elevation={3} className={classes.paper} item sm={12} md={5} lg={3} >
                             <Typography variant="h5">
                                 Total Audiences
                             </Typography>
@@ -185,8 +188,8 @@ export default function Dashboard() {
                                     />
                                 </Typography>
                             </Grid>
-                        </Paper>
-                        <Paper elevation={3} className={classes.paper} item="true" xs={12} md={6} lg={4} >
+                        </Grid>
+                        <Grid elevation={3} className={classes.paper} item sm={12} md={5} lg={3} >
                             <Typography variant="h5">
                                 Total Ongoing Events
                             </Typography>
@@ -194,7 +197,7 @@ export default function Dashboard() {
                                 <Typography variant="h4">
                                     <CountUp
                                         start={0}
-                                        end={allTransaction.length}
+                                        end={allTransactions.length}
                                         duration={4}
                                         useEasing={true}
                                         useGrouping={true}
@@ -202,8 +205,8 @@ export default function Dashboard() {
                                     />
                                 </Typography>
                             </Grid>
-                        </Paper>
-                        <Paper elevation={3} className={classes.paper} item="true" xs={12} md={6} lg={4} >
+                        </Grid>
+                        <Grid elevation={3} className={classes.paper} item sm={12} md={5} lg={3} >
                             <Typography variant="h5">
                                 Total Completed Events
                             </Typography>
@@ -219,9 +222,9 @@ export default function Dashboard() {
                                     />
                                 </Typography>
                             </Grid>
-                        </Paper>
+                        </Grid>
                     </Grid>
-            </Container>
+            </Box>
         </Fragment>
     );
 }

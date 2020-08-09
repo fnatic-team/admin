@@ -15,6 +15,7 @@ import { useDispatch } from "react-redux";
 import { login } from "../../redux/actions";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { useHistory } from "react-router-dom";
+import { Box } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -70,7 +71,7 @@ const CustomField = (props) => {
       variant="outlined"
       margin="normal"
       required
-      size="larger"
+      size="medium"
       {...props}
     />
   );
@@ -84,42 +85,21 @@ export default function Login() {
   return (
     <Grid container component="main" className={classes.root}>
       <CssBaseline />
-      <Grid item xs={12} sm={12} md={12} lg={12} elevation={6}>
+      <Grid item xs={false} sm={12} md={12} lg={12} elevation={6}>
         <img src={Logo1} alt="" className={classes.head} />
       </Grid>
-      <Grid
-        item
-        xs={12}
-        sm={12}
-        md={7}
-        lg={7}
-        className={classes.image}
-        elevation={6}
-        square
-      >
+      <Grid item sm={12} md={7} lg={7} className={classes.image} elevation={6} >
         <CardMedia
-          item
-          xs={12}
           sm={12}
           md={7}
           lg={7}
           className={classes.media}
           elevation={6}
-          square
           image={Desktop}
         />
       </Grid>
-      <Grid
-        item
-        xs={12}
-        sm={12}
-        md={5}
-        lg={5}
-        component={Paper}
-        elevation={6}
-        square
-      >
-        <div className={classes.paper}>
+      <Grid item sm={12} md={5} lg={5} component={Paper} elevation={6}>
+        <Box className={classes.paper}>
           <Avatar className={classes.avatar}>
             <LockOutlinedIcon />
           </Avatar>
@@ -179,7 +159,7 @@ export default function Login() {
               </Form>
             )}
           </Formik>
-        </div>
+        </Box>
       </Grid>
     </Grid>
   );

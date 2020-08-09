@@ -10,6 +10,7 @@ import TablePagination from "@material-ui/core/TablePagination";
 import TableRow from "@material-ui/core/TableRow";
 import TableSortLabel from "@material-ui/core/TableSortLabel";
 import Paper from "@material-ui/core/Paper";
+import { Box } from "@material-ui/core";
 import { getAllContactUs } from "../../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
 import TextareaAutosize from "@material-ui/core/TextareaAutosize";
@@ -161,7 +162,7 @@ export default function ContactUs() {
   };
 
   return (
-    <div className={classes.root}>
+    <Box className={classes.root}>
       <Paper className={classes.paper}>
         <TableContainer>
           <Table
@@ -214,6 +215,6 @@ export default function ContactUs() {
           onChangeRowsPerPage={handleChangeRowsPerPage}
         />
       </Paper>
-    </div>
+    </Box>
   );
 }

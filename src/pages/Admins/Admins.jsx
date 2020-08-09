@@ -9,6 +9,8 @@ import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
 import Container from "@material-ui/core/Container";
+import { Box } from "@material-ui/core";
+import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import DeleteIcon from "@material-ui/icons/Delete";
 import EditIcon from "@material-ui/icons/Edit";
@@ -21,21 +23,29 @@ import jwtDecode from "jwt-decode";
 const useStyles = makeStyles((theme) => ({
     root: {
         width: '80%',
-        margin: '5% auto',
+        margin: 'auto',
+        boxShadow: '0 0.7rem 1rem rgba(111, 115, 184, 0.8) !important',
+        backgroundColor: '#3a6986',
     },
     table: {
         padding: theme.spacing(3),
     },
     tablehead: {
-        padding: '0',
-        margin: '0',
+        marginRight: theme.spacing(5),
+        color: 'white',
+        marginLeft: theme.spacing(5),
     },
     button: {
         margin: theme.spacing(1),
+        backgroundColor: '#d16473'
     },
     link: {
         textDecoration: "none",
     },
+    text: {
+        color: 'white',
+        backgroundColor: '#5c84a6',
+    }
 }));
 
 
@@ -53,8 +63,8 @@ export default function Admin() {
 
     return (
         <Fragment >
-            <div className={classes.root}>
-                <Container>
+            <Box component={Paper} className={classes.root}>
+                <Container >
                     <Grid
                         container
                         direction="row"
@@ -62,22 +72,9 @@ export default function Admin() {
                         alignItems="center"
                     >
                         <Grid>
-                            <h1>List Admin</h1>
+                            <Typography className={classes.tablehead} variant="h4">List Admin</Typography>
                         </Grid>
                         <Grid>
-                            <Link
-                                    to="/dashboard/admins/edit"
-                                    className={classes.link}
-                                >
-                                    <Button
-                                        variant="contained"
-                                        color="primary"
-                                        className={classes.button}
-                                        startIcon={<EditIcon />}
-                                    >
-                                        Edit
-                                    </Button>
-                            </Link>
                             {loggedAdmin.role==='superadmin' && 
                             <Link
                                 to="/dashboard/admins/create"
@@ -85,7 +82,7 @@ export default function Admin() {
                             >
                                 <Button
                                     variant="contained"
-                                    color="primary"
+                                    color="secondary"
                                     className={classes.button}
                                     startIcon={<AddIcon />}
                                 >
@@ -98,19 +95,19 @@ export default function Admin() {
 
                 <TableContainer component={Paper} className={classes.table} >
                     <Table aria-label="a dense table" size="small">
-                        <TableHead >
-                            <TableRow className={classes.tablehead} > 
+                        <TableHead className={classes.text} >
+                            <TableRow  > 
                                 <TableCell >
-                                    <h2>No</h2>
+                                    <Typography className={classes.text} variant="h6">No</Typography>
                                 </TableCell>
                                 <TableCell align="left">
-                                    <h2>Name</h2>
+                                    <Typography className={classes.text} variant="h6">Name</Typography>
                                 </TableCell>
                                 <TableCell align="left">
-                                    <h2>Role</h2>
+                                    <Typography className={classes.text} variant="h6">Role</Typography>
                                 </TableCell>
-                                <TableCell align="right">
-                                    <h2>Action</h2>
+                                <TableCell align="right" >
+                                    <Typography className={classes.tablehead} variant="h6">Action</Typography>
                                 </TableCell>
                             </TableRow>
                         </TableHead>
@@ -119,16 +116,52 @@ export default function Admin() {
                             admins.map((row, index) => (
                                 <TableRow key={row._id}>
                                     <TableCell component="th" scope="row">
-                                        <h3>{index+1}</h3>
+                                        <Typography variant="h6">{index+1}</Typography>
                                     </TableCell>
                                     <TableCell align="left">
-                                        <h3>{row.fullname}</h3>
+                                        <Typography variant="h6">{row.fullname}</Typography>
                                     </TableCell>
                                     <TableCell align="left">
-                                        <h3>{row.role}</h3>
+                                        <Typography variant="h6">{row.role}</Typography>
                                     </TableCell>
-                                    {loggedAdmin.role==='superadmin' && 
+                                    {index===0 &&
+                                    <TableCell align="Right">
+                                        <Typography variant="h6"></Typography>
+                                    </TableCell>
+                                    }
+                                    {index > 0 &&
                                     <TableCell align="right">
+                                        {loggedAdmin.id===row._id &&
+                                        <Link
+                                            to={`/dashboard/admins/edit/${row._id}`}
+                                            className={classes.link}
+                                        >
+                                            <Button
+                                                variant="contained"
+                                                color="secondary"
+                                                className={classes.button}
+                                                startIcon={<EditIcon />}
+                                            >
+                                                Edit
+                                            </Button>
+                                    </Link>
+                                        
+                                        }
+                                    {(loggedAdmin.role==='superadmin' && index===0) && 
+                                        <Button
+                                            variant="contained"
+                                            color="secondary"
+                                            disabled
+                                            className={classes.button}
+                                            startIcon={<DeleteIcon />}
+                                            onClick={() =>
+                                                dispatch(deleteAdmin(row._id))
+                                            }
+                                        >
+                                            Delete
+                                        </Button>
+                                    }
+                                    {(loggedAdmin.role==='superadmin' && index>0) && 
                                         <Button
                                             variant="contained"
                                             color="secondary"
@@ -140,10 +173,8 @@ export default function Admin() {
                                         >
                                             Delete
                                         </Button>
-                                    </TableCell>
                                     }
                                     {loggedAdmin.role==='admin' && 
-                                    <TableCell align="right">
                                         <Button
                                             variant="contained"
                                             color="secondary"
@@ -153,15 +184,15 @@ export default function Admin() {
                                         >
                                             Delete
                                         </Button>
+                                    }
                                     </TableCell>
                                     }
-                                    
                                 </TableRow>
                             ))}
                         </TableBody>
                     </Table>
                 </TableContainer>
-            </div>
+            </Box>
         </Fragment>
     );
 }

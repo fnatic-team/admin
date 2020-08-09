@@ -13,7 +13,7 @@ import PeopleAltRoundedIcon from '@material-ui/icons/PeopleAltRounded';
 import TimelineRoundedIcon from '@material-ui/icons/TimelineRounded';
 import { Link } from "react-router-dom";
 import { Grid, Box } from "@material-ui/core";
-
+import Typography from "@material-ui/core/Typography";
 import Divider from '@material-ui/core/Divider';
 import DraftsRoundedIcon from '@material-ui/icons/DraftsRounded';
 import ImportContactsRoundedIcon from '@material-ui/icons/ImportContactsRounded';
@@ -23,9 +23,6 @@ import jwtDecode from "jwt-decode";
 const useStyles = makeStyles((theme) => ({
     text: {
         color: '#e04349',
-        '& span, & svg,': {
-            fontSize: '1vw',
-        }
     },
     link: {
         textDecoration: "none",
@@ -68,7 +65,7 @@ export default function ListMenuItem() {
                 </Avatar>
             }
                 <Grid>
-                    <ListItem>{loggedAdmin.fullname}</ListItem>
+                    <Typography variant="h5">{loggedAdmin.fullname}</Typography>
                 </Grid>
             </ListItem>
             <Divider />
