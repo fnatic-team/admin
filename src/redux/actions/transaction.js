@@ -1,3 +1,4 @@
+import Swal from "sweetalert2";
 const url = process.env.REACT_APP_API_URL;
 
 export const GET_ALL_TRANSACTION = "GET_ALL_TRANSACTION";
@@ -5,7 +6,7 @@ export const GET_TRANSACTION_DETAIL = "GET_TRANSACTION_DETAIL";
 
 export const getAllTransaction = () => async (dispatch) => {
     const token = localStorage.getItem("token");
-
+    
     const options = {
         method: "GET",
         headers: {
@@ -41,4 +42,40 @@ export const getTransactionDetail = (id) => async (dispatch) => {
         type: GET_TRANSACTION_DETAIL,
         payload: results
     });
+};
+
+export const updateAdminPayment = (id, formData) => async (
+    dispatch
+) => {
+    try {
+        const token = localStorage.getItem("token");
+        const url = `${process.env.REACT_APP_BACKEND_ENDPOINT}api/transaksi/update/${id}`;
+        const options = {
+            method: "PUT",
+            headers: {
+                "content-type": "application/json",
+                authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify(formData),
+        };
+
+        const response = await fetch(url, options);
+        const result = await response.json();
+
+        if (response.status === 200) {
+            Swal.fire({
+                icon: "success",
+                title: `Status Transaksi Berhasil diUpdate`,
+            });
+
+            window.location.back();
+        } else {
+            Swal.fire({
+                icon: "error",
+                title: result.message,
+            });
+        }
+    } catch (error) {
+        console.error(error);
+    }
 };
