@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect} from "react";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import clsx from "clsx";
@@ -6,32 +6,22 @@ import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
-
+import SideImage from "./assets/bg.jpg"
+import Badge from '@material-ui/core/Badge';
+import NotificationsActiveIcon from '@material-ui/icons/NotificationsActive';
 import LogoutIcon from "@material-ui/icons/ExitToApp";
+import { getPendingSpeaker} from "../redux/actions";
 import { useLocation, useHistory } from "react-router-dom";
 import { logout } from "../redux/actions";
-import { useDispatch } from "react-redux";
-
-const drawerWidth = 240;
+import { useDispatch, useSelector} from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
     appBar: {
-        zIndex: theme.zIndex.drawer + 1,
-        backgroundColor: '#5997b2',
-        transition: theme.transitions.create(["width", "margin"], {
-            easing: theme.transitions.easing.sharp,
-            duration: theme.transitions.duration.leavingScreen,
-        }),
+        zIndex: theme.zIndex.drawer - 1,
+        backgroundImage: `url(${SideImage})`,
+        paddingRight: theme.spacing(5),
     },
-    appBarShift: {
-        marginLeft: drawerWidth,
-        backgroundColor: '#5997b2',
-        width: `calc(100% - ${drawerWidth}px)`,
-        transition: theme.transitions.create(["width", "margin"], {
-            easing: theme.transitions.easing.sharp,
-            duration: theme.transitions.duration.enteringScreen,
-        }),
-    },
+   
     menuButton: {
         marginRight: 36,
     },
@@ -41,6 +31,9 @@ const useStyles = makeStyles((theme) => ({
     title: {
         flexGrow: 1,
     },
+    icon: {
+        marginLeft: theme.spacing(2),
+    },
 }));
 
 export default function Header(props) {
@@ -48,13 +41,17 @@ export default function Header(props) {
     const history = useHistory();
     const dispatch = useDispatch();
     const classes = useStyles();
-
     const routeName = pathname.split("/")[2];
+    const pendingSpeaker = useSelector ((state) => state.speaker.pendingSpeaker);
+
+    useEffect(() => {
+        dispatch(getPendingSpeaker());
+    }, [dispatch]);
 
     return (
         <AppBar
             position="absolute"
-            className={clsx(classes.appBar, props.open && classes.appBarShift)}
+            className={clsx(classes.appBar)}
         >
             <Toolbar className={classes.toolbar}>
                 <IconButton
@@ -78,8 +75,11 @@ export default function Header(props) {
                 >
                     {routeName}
                 </Typography>
-                <IconButton onClick={() => dispatch(logout(history))}>
-                    <LogoutIcon className={classes.icon} />
+                <Badge className={classes.icon} badgeContent={pendingSpeaker.length} color="secondary">
+                    <NotificationsActiveIcon  color="primary"/>
+                </Badge >
+                <IconButton className={classes.icon} onClick={() => dispatch(logout(history))}>
+                    <LogoutIcon color="secondary" />
                 </IconButton>
             </Toolbar>
         </AppBar>

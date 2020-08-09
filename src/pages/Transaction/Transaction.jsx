@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
+import Box from '@material-ui/core/Box';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
@@ -10,12 +11,14 @@ import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 import TableSortLabel from '@material-ui/core/TableSortLabel';
 import Paper from '@material-ui/core/Paper';
-import { getActiveSpeaker, updateStatusSpeaker } from "../../../redux/actions";
+import { getAllTransaction } from "../../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
-import Avatar from '@material-ui/core/Avatar';
+import moment from 'moment';
+import DetailTrans from './ModalTrans'
+import Payment from "./ModalPayment"
+import { blue } from "@material-ui/core/colors";
+import AttachFileIcon from "@material-ui/icons/AttachFile";
 import Button from "@material-ui/core/Button";
-import RejectedIcon from "@material-ui/icons/Clear";
-import { Box } from "@material-ui/core";
 
 
 
@@ -46,12 +49,14 @@ function stableSort(array, comparator) {
 }
 
 const headCells = [
-  { id: 'image', numeric: false, disablePadding: true, label: 'Avatar' },
-  { id: 'name', numeric: true, disablePadding: false, label: 'Name' },
-  { id: 'category', numeric: true, disablePadding: false, label: 'Expertation' },
-  { id: 'fee', numeric: true, disablePadding: false, label: 'Fee' },
-  { id: 'rating', numeric: true, disablePadding: false, label: 'Rating' },
-  { id: '_id', numeric: true, disablePadding: false, label: 'Suspend' },
+  { id: 'nama_acara', numeric: false, disablePadding: false, label: 'Event Name' },
+  { id: 'audienceID.name', numeric: false, disablePadding: false, label: 'Speaker Name' },
+  { id: 'speakerID.name', numeric: false, disablePadding: false, label: 'Audience Name' },
+  { id: 'tanggal_acara', numeric: false, disablePadding: false, label: 'Event Date' },
+  { id: 'status_transaksi', numeric: false, disablePadding: false, label: 'Event Status' },
+  { id: 'status_speaker', numeric: false, disablePadding: false, label: 'Speaker Action' },
+  { id: 'status_audience', numeric: false, disablePadding: false, label: 'Audience Action' },
+  { id: 'payment', numeric: false, disablePadding: false, label: 'Pay To Speaker' },
 ];
 
 function EnhancedTableHead(props) {
@@ -61,7 +66,7 @@ function EnhancedTableHead(props) {
   };
 
   return (
-    <TableHead>
+    <TableHead className={classes.tablehead}>
       <TableRow>
         <TableCell >
           No
@@ -96,7 +101,6 @@ function EnhancedTableHead(props) {
 EnhancedTableHead.propTypes = {
   classes: PropTypes.object.isRequired,
   onRequestSort: PropTypes.func.isRequired,
-  onSelectAllClick: PropTypes.func.isRequired,
   order: PropTypes.oneOf(['asc', 'desc']).isRequired,
   orderBy: PropTypes.string.isRequired,
   rowCount: PropTypes.number.isRequired,
@@ -117,6 +121,17 @@ const useStyles = makeStyles((theme) => ({
   table: {
     minWidth: 750,
   },
+  tablecell: {
+    whiteSpace: 'nowrap',
+  },
+  tablehead: {
+    whiteSpace: 'nowrap',
+    backgroundColor: '#3a6986',
+      '& th, & a,': {
+        color: 'white',
+        fontSize: '18px',
+    },
+  },
   visuallyHidden: {
     border: 0,
     clip: 'rect(0 0 0 0)',
@@ -128,21 +143,23 @@ const useStyles = makeStyles((theme) => ({
     top: 20,
     width: 1,
   },
+  button: {
+    margin: theme.spacing(1),
+},
 }));
 
-export default function ListSpeaker() {
+export default function Audience() {
   const classes = useStyles();
-  const [order, setOrder] = React.useState('asc');
-  const [orderBy, setOrderBy] = React.useState('calories');
+  const [order, setOrder] = React.useState('desc');
+  const [orderBy, setOrderBy] = React.useState('tanggal_acara');
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
     const dispatch = useDispatch();
-    const activeSpeakers = useSelector((state) => state.speaker.activeSpeaker);
-    console.log(activeSpeakers)
+    const allTransaction = useSelector((state) => state.transaction.allTransaction);
 
     useEffect(() => {
-        dispatch(getActiveSpeaker(), updateStatusSpeaker());
+        dispatch(getAllTransaction());
     }, [dispatch]);
 
   const handleRequestSort = (event, property) => {
@@ -159,6 +176,7 @@ export default function ListSpeaker() {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
+ 
 
   return (
     <Box className={classes.root}>
@@ -174,47 +192,56 @@ export default function ListSpeaker() {
               order={order}
               orderBy={orderBy}
               onRequestSort={handleRequestSort}
-              rowCount={activeSpeakers.length}
+              rowCount={allTransaction.length}
             />
             <TableBody>
-              {stableSort(activeSpeakers, getComparator(order, orderBy))
+              {stableSort(allTransaction, getComparator(order, orderBy))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, index) => {
-
                   return (
+
                     <TableRow
                       hover
                       tabIndex={-1}
-                      key={row.role}
+                      key={row._id}
                     >
-                      <TableCell >
+                      <TableCell>
                         {index+1}
                       </TableCell>
-                      <TableCell component="th" scope="row" padding="none">
-                        <Avatar alt="Remy Sharp" src={row.image} />
+                      <TableCell align="left" className={classes.tablecell}  >
+                         <DetailTrans id={row._id}/>
+                          {row.nama_acara}
                       </TableCell>
-                      <TableCell align="right">{row.name}</TableCell>
-                      <TableCell align="right">{row.category}</TableCell>
-                      <TableCell align="right">{row.fee}</TableCell>
-                      <TableCell align="right">{row.rating}</TableCell>
-                      <TableCell align="right">
+                      <TableCell align="left">{row.speakerID.name}</TableCell>
+                      <TableCell align="left">{row.audienceID.name}</TableCell>
+                      <TableCell align="left">{moment(row.tanggal_acara).format('LL') + ', Pukul ' + row.waktu_acara}</TableCell>
+                      <TableCell align="left">{row.status_transaksi}</TableCell>
+                      <TableCell align="left">{row.status_speaker}</TableCell>
+                      <TableCell align="left">{row.status_audience}</TableCell>
+                      <TableCell align="left" >
+                      {(row.status_speaker==='SELESAI' && row.status_audience==='SELESAI' && row.status_transaksi !== 'PAID BY ADMIN') &&
+                        <Payment id={row._id}/>
+                      }
+                      {(row.status_speaker==='PENDING' || row.status_audience==='PENDING') &&
                         <Button
-                                variant="contained"
-                                color="secondary"
-                                className={classes.button}
-                                size="small"
-                                startIcon={<RejectedIcon />}
-                                onClick={() =>
-                                    dispatch(
-                                        updateStatusSpeaker(
-                                            row._id,
-                                            "INACTIVE"
-                                        )
-                                    )
-                                }
-                            >
-                                Suspend
-                          </Button>
+                            disabled
+                            color="primary"
+                            variant="contained"
+                            style={{ color: blue[500] }}
+                          >
+                            <AttachFileIcon />
+                        </Button>
+                      }
+                      {(row.status_transaksi==='PAID BY ADMIN') &&
+                        <Button
+                            disabled
+                            color="primary"
+                            variant="contained"
+                            style={{ color: blue[500] }}
+                          >
+                            PAID
+                        </Button>
+                      }
                       </TableCell>
                     </TableRow>
                   );
@@ -226,14 +253,13 @@ export default function ListSpeaker() {
         <TablePagination
           rowsPerPageOptions={[5, 10, 25]}
           component="div"
-          count={activeSpeakers.length}
+          count={allTransaction.length}
           rowsPerPage={rowsPerPage}
           page={page}
           onChangePage={handleChangePage}
           onChangeRowsPerPage={handleChangeRowsPerPage}
         />
       </Paper>
-     
     </Box>
   );
 }

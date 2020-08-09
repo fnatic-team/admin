@@ -1,5 +1,6 @@
 import React from 'react';
-import { makeStyles, Theme} from '@material-ui/core/styles';
+import PropTypes from 'prop-types';
+import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
@@ -7,16 +8,9 @@ import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import PendingSpeaker from './components/PendingSpeaker'
 import ListSpeaker from './components/ListSpeaker'
+import InactiveSPeaker from './components/InactiveSpeaker'
 
-
-
-interface TabPanelProps {
-  children?: React.ReactNode;
-  index: any;
-  value: any;
-}
-
-function TabPanel(props: TabPanelProps) {
+function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
   return (
@@ -36,23 +30,24 @@ function TabPanel(props: TabPanelProps) {
   );
 }
 
-function a11yProps(index: any) {
+TabPanel.propTypes = {
+  children: PropTypes.node,
+  index: PropTypes.any.isRequired,
+  value: PropTypes.any.isRequired,
+};
+
+function a11yProps(index) {
   return {
     id: `nav-tab-${index}`,
     'aria-controls': `nav-tabpanel-${index}`,
   };
 }
 
-interface LinkTabProps {
-  label?: string;
-  href?: string;
-}
-
-function LinkTab(props: LinkTabProps) {
+function LinkTab(props) {
   return (
     <Tab
       component="a"
-      onClick={(event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
+      onClick={(event) => {
         event.preventDefault();
       }}
       {...props}
@@ -60,40 +55,39 @@ function LinkTab(props: LinkTabProps) {
   );
 }
 
-
-const useStyles = makeStyles((theme: Theme) => ({
+const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
     backgroundColor: theme.palette.background.paper,
   },
-  head: {
-    backgroundColor: theme.palette.background.paper,
-    color: 'black',
-  }
+  tablehead: {
+    backgroundColor: '#3a6986',
+      '& th, & a,': {
+        color: 'white',
+        fontSize: '18px',
+    },
+  },
 }));
 
 export default function Speaker() {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
 
-  const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
+  const handleChange = (event, newValue) => {
     setValue(newValue);
   };
 
- 
-
   return (
-    <div className={classes.root}>
-      <AppBar position="static" className={classes.head}>
+    <Box className={classes.root}>
+      <AppBar position="static" className={classes.tablehead} >
         <Tabs
-          variant="standard"
           value={value}
           onChange={handleChange}
           aria-label="nav tabs example"
         >
-          <LinkTab label="Active Speaker" href="" {...a11yProps(0)} />
-          <LinkTab label="Pending Speaker" href="" {...a11yProps(1)} />
-          <LinkTab label="In Active Speaker" href="" {...a11yProps(2)} />
+          <LinkTab label="Active Speaker" href="/activeSpeaker" {...a11yProps(0)} />
+          <LinkTab label="Pending Speaker" href="/pendingSpeaker" {...a11yProps(1)} />
+          <LinkTab label="Inactive Speaker" href="/inActiveSpeaker" {...a11yProps(2)} />
         </Tabs>
       </AppBar>
       <TabPanel value={value} index={0}>
@@ -103,8 +97,8 @@ export default function Speaker() {
         <PendingSpeaker />
       </TabPanel>
       <TabPanel value={value} index={2}>
-        Page Three
+        <InactiveSPeaker />
       </TabPanel>
-    </div>
+    </Box>
   );
 }
