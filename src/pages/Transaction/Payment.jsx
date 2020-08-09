@@ -8,6 +8,7 @@ import TextField from '@material-ui/core/TextField';
 import ReactFilestack from "filestack-react";
 import Button from "@material-ui/core/Button";
 import FormGroup from '@material-ui/core/FormGroup';
+import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -22,7 +23,13 @@ const useStyles = makeStyles((theme) => ({
     },
     typography: {
         width: theme.spacing(20),
-    }
+    },
+    button: {
+        textAlign: 'center',
+        margin: 'auto',
+        marginTop: theme.spacing(3),
+        marginBottom: theme.spacing(3),
+    },
 }));
 
 export default function Payment(props) {
@@ -116,18 +123,19 @@ export default function Payment(props) {
                         />
                     </Grid>
                     <Grid container item xs={12} md={12} lg={12}>
-                        <FormGroup
-                            style={{ textAlign: "left" }}>
+                        <FormGroup>
                             <ReactFilestack
                                 apikey={`${process.env.REACT_APP_API_KEY}`}
                                 customRender={({ onPick }) => (
                                     <div>
-                                        <button
-                                            className="btn btn-primary btn-block"
+                                        <Button
                                             onClick={onPick}
+                                            color="default"
+                                            variant="contained"
+                                            startIcon={<CloudUploadIcon />}
                                         >
                                             Upload Bukti Pembayaran
-                                        </button>
+                                        </Button>
                                     </div>
                                 )}
                                 onSuccess={(res) =>
@@ -139,20 +147,20 @@ export default function Payment(props) {
                                     })
                                 }
                             />
-                            <Grid container item xs={12} md={12} lg={12}>
-                                <Button 
-                                    type="submit"
-                                    variant="contained"
-                                    color="primary"
-                                    className={classes.button}
-                                    onClick={() => {
-                                        dispatch(updateAdminPayment(id, formData))
-                                      } }
-                                    >
-                                    Pay Now
-                                </Button>
-                            </Grid>
                         </FormGroup>
+                        <Grid container item xs={12} md={12} lg={12}>
+                            <Button 
+                                type="submit"
+                                variant="contained"
+                                color="primary"
+                                className={classes.button}
+                                onClick={() => {
+                                    dispatch(updateAdminPayment(id, formData))
+                                    } }
+                                >
+                                Pay Now
+                            </Button>
+                        </Grid>
                     </Grid>
                     
                 </Grid>
