@@ -47,7 +47,6 @@ function stableSort(array, comparator) {
 
 const headCells = [
   { id: "name", numeric: false, disablePadding: true, label: "Name" },
-  { id: "cv", numeric: false, disablePadding: false, label: "Documentation" },
   {
     id: "category",
     numeric: false,
@@ -61,6 +60,7 @@ const headCells = [
     label: "Date Registered",
   },
   { id: "status", numeric: false, disablePadding: false, label: "Status" },
+  { id: "cv", numeric: true, disablePadding: false, label: "Portfolio" },
   { id: "_id", numeric: true, disablePadding: false, label: "Action" },
 ];
 
@@ -199,21 +199,21 @@ export default function EnhancedTable() {
                       <TableCell component="th" scope="row" padding="none">
                         {row.name}
                       </TableCell>
+                      <TableCell align="left">{row.category}</TableCell>
                       <TableCell align="left">
+                        {moment(row.createdAt).format("LL")}
+                      </TableCell>
+                      <TableCell align="left">{row.status}</TableCell>
+                      <TableCell align="right">
                         <Button
                           variant="contained"
                           style={{ color: 'blue' }}
                           href={row.cv}
                           target="_blank"
                         >
-                          <AttachFileIcon />
+                          <AttachFileIcon />Check CV
                         </Button>
                       </TableCell>
-                      <TableCell align="left">{row.category}</TableCell>
-                      <TableCell align="left">
-                        {moment(row.createdAt).format("LL")}
-                      </TableCell>
-                      <TableCell align="left">{row.status}</TableCell>
                       <TableCell align="right">
                         <Button
                           variant="contained"

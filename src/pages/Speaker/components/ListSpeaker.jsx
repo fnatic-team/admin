@@ -16,6 +16,7 @@ import Avatar from '@material-ui/core/Avatar';
 import Button from "@material-ui/core/Button";
 import RejectedIcon from "@material-ui/icons/Clear";
 import { Box } from "@material-ui/core";
+import AttachFileIcon from "@material-ui/icons/AttachFile";
 
 
 
@@ -51,6 +52,7 @@ const headCells = [
   { id: 'category', numeric: false, disablePadding: false, label: 'Expertation' },
   { id: 'fee', numeric: true, disablePadding: false, label: 'Fee' },
   // { id: 'rating', numeric: true, disablePadding: false, label: 'Rating' },
+  { id: "cv", numeric: true, disablePadding: false, label: "Portfolio" },
   { id: '_id', numeric: true, disablePadding: false, label: 'Suspend' },
 ];
 
@@ -199,6 +201,16 @@ export default function ListSpeaker() {
                       <TableCell align="left">{row.category}</TableCell>
                       <TableCell align="right">{row.fee}</TableCell>
                       {/* <TableCell align="right">{row.rating}</TableCell> */}
+                      <TableCell align="right">
+                        <Button
+                            variant="contained"
+                            style={{ color: 'blue' }}
+                            href={row.cv}
+                            target="_blank"
+                          >
+                            <AttachFileIcon />Check CV
+                          </Button>
+                      </TableCell>
                       <TableCell align="right">
                         <Button
                                 variant="contained"
