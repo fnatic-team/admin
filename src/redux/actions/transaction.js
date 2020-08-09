@@ -67,7 +67,7 @@ export const updateAdminPayment = (id, formData) => async (
                 icon: "success",
                 title: `Status Transaksi Berhasil diUpdate`,
             });
-            // window.location.reload();
+            window.location.reload();
         } else {
             Swal.fire({
                 icon: "error",
