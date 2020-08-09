@@ -107,7 +107,7 @@ export const updateAdmin = (values, id, history) => async () => {
         if (response.status === 200) {
             Swal.fire({
                 icon: "success",
-                title: "Update User is successfully",
+                title: "Your data is successfully updated",
             });
 
             history.goBack();

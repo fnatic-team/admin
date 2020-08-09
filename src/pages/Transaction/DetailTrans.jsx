@@ -38,7 +38,14 @@ export default function DetailTrans(props) {
         dispatch(getTransactionDetail(id));
     }, [dispatch, id]);
     
-    
+     // eslint-disable-next-line 
+     String.prototype.localIDR = function () {
+        return Number(this).toLocaleString("id-ID", {
+            style: "currency",
+            currency: "IDR",
+            minimumFractionDigits: 2,
+        });
+    };
     return (
         <Container className={classes.root}>
             <Grid container item xs={12} md={12} lg={12}>
@@ -121,27 +128,54 @@ export default function DetailTrans(props) {
                         <Typography variant="h6" className={classes.typography}>
                             Paid to Speaker
                         </Typography>
+                        {detail.status_transaksi !=='PAID BY ADMIN' && 
                         <TextField
                             className={classes.textField}
-                            defaultValue={detail.nom_trans_adm }
+                            defaultValue="Speaker belum dibayar"
                             InputProps={{
                                 readOnly: true,
                             }}
                         />
+                        }
+                        {detail.status_transaksi ==='PAID BY ADMIN' && 
+                        <TextField
+                            className={classes.textField}
+                            defaultValue={`${detail.nom_trans_adm}`.localIDR()}
+                            InputProps={{
+                                readOnly: true,
+                            }}
+                        />
+                        }
                     </Grid>
                     <Grid container item xs={12} md={12} lg={12}>
                         <Typography variant="h6" className={classes.typography}>
                             Evidence of Transfer
                         </Typography>
+                        {detail.status_transaksi !=='PAID BY ADMIN' && 
+                        <Button className={classes.button}
+                            disabled
+                            variant="contained"
+                            color="primary"
+                            style={{ color: 'blue' }}
+                            // href={detail.bukti_trans_adm}
+                            target="_blank"
+                            size="small"
+                        >
+                          <AttachFileIcon />Bukti Transfer
+                        </Button>
+                        }
+                        {detail.status_transaksi ==='PAID BY ADMIN' && 
                         <Button className={classes.button}
                             variant="contained"
-                            style={{ color: 'blue' }}
+                            color="primary"
+                            style={{ color: 'white' }}
                             href={detail.bukti_trans_adm}
                             target="_blank"
                             size="small"
                         >
                           <AttachFileIcon />Bukti Transfer
                         </Button>
+                        }
                     </Grid>
                 </Grid>
             </Grid>
