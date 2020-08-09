@@ -3,11 +3,11 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import { Container, Grid, Button } from "@material-ui/core";
-// import { useDispatch, useSelector } from "react-redux";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+// import { useDispatch } from "react-redux";
 import { useLocation, useHistory } from "react-router-dom";
 // import { getAdminByID } from "../../redux/actions";
-import { Formik, Form, Field } from "formik";
+import { Formik, Form, Field, ErrorMessage} from "formik";
 import { updateAdmin } from "../../redux/actions";
 
 const useStyles = makeStyles((theme) => ({
@@ -27,10 +27,9 @@ export default function EditAdmin() {
         return (
             <TextField
                 fullWidth
-                variant="filled"
+                variant="outlined"
                 margin="normal"
                 className={classes.field}
-                autoFocus
                 {...props}
             />
         );
@@ -38,8 +37,10 @@ export default function EditAdmin() {
 
     const dispatch = useDispatch();
     const { pathname } = useLocation();
-    // const admins = useSelector((state) => state.admin);
+    const admins = useSelector((state) => state.admin);
     const history = useHistory();
+
+    console.log(admins, 'ssss')
 
     const id = pathname.split("/")[4];
 
@@ -51,13 +52,11 @@ export default function EditAdmin() {
         <Container>
             <Formik
                 initialValues={{
-                    // username: admin.username || "",
-
-                    username: "",
+                    username: admins.username || "",
                     password: "",
                     confirmPassword: "",
                 }}
-                // enableReinitialize={true}
+                enableReinitialize={true}
                 validate={(values) => {
                     const errors = {};
                     
@@ -95,10 +94,11 @@ export default function EditAdmin() {
                                     name="username"
                                     label="Username"
                                     required
+                                    autoFocus
                                 />
                               
                             </Grid>
-                            {/* <Grid container item xs={12} md={6} lg={6}>
+                            <Grid container item xs={12} md={6} lg={6}>
                                 <Field
                                     type="password"
                                     as={CustomField}
@@ -110,8 +110,8 @@ export default function EditAdmin() {
                                     component="div"
                                     className={classes.error}
                                 />
-                            </Grid> */}
-                            {/* <Grid container item xs={12} md={6} lg={6}>
+                            </Grid>
+                            <Grid container item xs={12} md={6} lg={6}>
                                 <Field
                                     type="password"
                                     as={CustomField}
@@ -123,7 +123,7 @@ export default function EditAdmin() {
                                     component="div"
                                     className={classes.error}
                                 />
-                            </Grid> */}
+                            </Grid>
                             <Grid container item xs={12} md={6} lg={6}>
                                 <Button
                                     type="submit"

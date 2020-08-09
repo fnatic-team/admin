@@ -2,7 +2,7 @@ import Swal from "sweetalert2";
 const url = process.env.REACT_APP_API_URL;
 
 export const GET_ALL_ADMIN = "GET_ALL_ADMIN";
-export const GET_ADMIN_BY_ID = "GET_ADMIN_BY_ID";
+// export const GET_ADMIN_BY_ID = "GET_ADMIN_BY_ID";
 export const GET_ADMIN_DASHBOARD = "GET_ADMIN_DASHBOARD";
 
 export const getAllAdmin = () => async (dispatch) => {
@@ -26,25 +26,27 @@ export const getAllAdmin = () => async (dispatch) => {
     });
 };
 
-export const getAdminByID = (id) => async (dispatch) => {
-    const token = localStorage.getItem("token");
+// export const getAdminByID = (id) => async (dispatch) => {
+//     const token = localStorage.getItem("token");
 
-    const options = {
-        method: "GET",
-        headers: {
-            "content-type": "application/json",
-            authorization: `Bearer ${token}`,
-        },
-    };
+//     const options = {
+//         method: "GET",
+//         headers: {
+//             "content-type": "application/json",
+//             authorization: `Bearer ${token}`,
+//         },
+//     };
 
-    const response = await fetch(`${url}/api/admin/${id}`, options);
-    const result = await response.json();
-    console.log(response,"bbbbbbbbbbbbb")
-    dispatch({
-        type: GET_ADMIN_BY_ID,
-        payload: result.result,
-    });
-};
+//     const response = await fetch(`${url}/api/admin/${id}`, options);
+//     const result = await response.json();
+
+//     console.log(result,"bbbbbbbbbbbbb")
+
+//     dispatch({
+//         type: GET_ADMIN_BY_ID,
+//         payload: result.result,
+//     });
+// };
 
 export const addAdmin = (values, role, history) => async () => {
     const token = localStorage.getItem("token");

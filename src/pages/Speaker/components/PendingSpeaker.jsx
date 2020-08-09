@@ -15,7 +15,6 @@ import RejectedIcon from "@material-ui/icons/Clear";
 import ApprovedIcon from "@material-ui/icons/CheckBox";
 import { getPendingSpeaker, updateStatusSpeaker } from "../../../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
-import { green } from "@material-ui/core/colors";
 import AttachFileIcon from "@material-ui/icons/AttachFile";
 import { Box } from "@material-ui/core";
 import moment from "moment";
@@ -48,20 +47,20 @@ function stableSort(array, comparator) {
 
 const headCells = [
   { id: "name", numeric: false, disablePadding: true, label: "Name" },
-  { id: "cv", numeric: true, disablePadding: false, label: "Documentation" },
+  { id: "cv", numeric: false, disablePadding: false, label: "Documentation" },
   {
     id: "category",
-    numeric: true,
+    numeric: false,
     disablePadding: false,
     label: "Expertation",
   },
   {
     id: "createdAt",
-    numeric: true,
+    numeric: false,
     disablePadding: false,
     label: "Date Registered",
   },
-  { id: "status", numeric: true, disablePadding: false, label: "Status" },
+  { id: "status", numeric: false, disablePadding: false, label: "Status" },
   { id: "_id", numeric: true, disablePadding: false, label: "Action" },
 ];
 
@@ -72,7 +71,7 @@ function EnhancedTableHead(props) {
   };
 
   return (
-    <TableHead>
+    <TableHead className={classes.tablehead}>
       <TableRow>
         <TableCell>No</TableCell>
         {headCells.map((headCell) => (
@@ -120,6 +119,13 @@ const useStyles = makeStyles((theme) => ({
   },
   table: {
     minWidth: 750,
+  },
+  tablehead: {
+    backgroundColor: '#5c84a6',
+      '& th, & a,': {
+        color: 'white',
+        fontSize: '18px',
+    },
   },
   visuallyHidden: {
     border: 0,
@@ -193,21 +199,21 @@ export default function EnhancedTable() {
                       <TableCell component="th" scope="row" padding="none">
                         {row.name}
                       </TableCell>
-                      <TableCell align="right">
+                      <TableCell align="left">
                         <Button
                           variant="contained"
-                          style={{ color: green[500] }}
+                          style={{ color: 'blue' }}
                           href={row.cv}
                           target="_blank"
                         >
                           <AttachFileIcon />
                         </Button>
                       </TableCell>
-                      <TableCell align="right">{row.category}</TableCell>
-                      <TableCell align="right">
+                      <TableCell align="left">{row.category}</TableCell>
+                      <TableCell align="left">
                         {moment(row.createdAt).format("LL")}
                       </TableCell>
-                      <TableCell align="right">{row.status}</TableCell>
+                      <TableCell align="left">{row.status}</TableCell>
                       <TableCell align="right">
                         <Button
                           variant="contained"
