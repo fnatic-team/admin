@@ -1,11 +1,12 @@
 import React, { useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
-import { Container, Grid, Button, MenuItem } from "@material-ui/core";
+import { Container, Grid, Button } from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useHistory } from "react-router-dom";
-import { getAdminByID, updateAdmin } from "../../redux/actions";
+// import { getAdminByID } from "../../redux/actions";
 import { Formik, Form, Field, ErrorMessage } from "formik";
+import { updateAdmin } from "../../redux/actions";
 
 const useStyles = makeStyles((theme) => ({
     field: {
@@ -33,62 +34,42 @@ export default function EditAdmin() {
         );
     };
 
-    const CustomSelectField = (props) => {
-        return (
-            <TextField
-                id="standard-select-currency"
-                select
-                label="Select"
-                helperText="Please select your status"
-                variant="filled"
-                margin="normal"
-                className={classes.field}
-                {...props}
-            >
-                <MenuItem value="PENDING">PENDING</MenuItem>
-                <MenuItem value="ACTIVE">ACTIVE</MenuItem>
-                <MenuItem value="REJECTED">REJECTED</MenuItem>
-            </TextField>
-        );
-    };
-
     const dispatch = useDispatch();
     const { pathname } = useLocation();
-    const admins = useSelector((state) => state.admin);
+    // const admins = useSelector((state) => state.admin);
     const history = useHistory();
-    console.log(admins, 'dasdasdas')
 
     const id = pathname.split("/")[4];
 
-    useEffect(() => {
-        dispatch(getAdminByID(id));
-    }, [dispatch, id]);
+    // useEffect(() => {
+    //     dispatch(getAdminByID(id));
+    // }, [dispatch, id]);
 
     return (
         <Container>
             <Formik
                 initialValues={{
-                    username: admins.username || "",
-                    email: admins.email || "",
-                    address: admins.address || "",
-                    phone: admins.phone || "",
-                    status: admins.status || "",
+                    // username: admin.username || "",
+
+                    username: "",
+                    password: "",
+                    confirmPassword: "",
                 }}
-                enableReinitialize={true}
+                // enableReinitialize={true}
                 validate={(values) => {
                     const errors = {};
-                    if (!values.email) {
-                        errors.email = "Required";
-                    } else if (
-                        !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(
-                            values.email
-                        )
-                    ) {
-                        errors.email = "Invalid email address";
+                    
+
+                    if (values.password.length > 0) {
+                        if (values.password !== values.confirmPassword) {
+                            errors.confirmPassword = "Password not match";
+                        } else if (values.password.length < 8) {
+                            errors.password = "Minimum Password 8 Character";
+                        }
                     }
 
-                    if (!values.fullname) {
-                        errors.fullname = "Required";
+                    if (!values.username) {
+                        errors.username = "Required";
                     }
                     return errors;
                 }}
@@ -113,64 +94,34 @@ export default function EditAdmin() {
                                     label="Username"
                                     required
                                 />
-                                <ErrorMessage
-                                    name="username"
-                                    component="div"
-                                    className={classes.error}
-                                />
+                              
                             </Grid>
-                            <Grid container item xs={12} md={6} lg={6}>
+                            {/* <Grid container item xs={12} md={6} lg={6}>
                                 <Field
-                                    type="text"
+                                    type="password"
                                     as={CustomField}
-                                    name="fullname"
-                                    label="Fullname"
-                                    required
+                                    name="password"
+                                    label="Password"
                                 />
                                 <ErrorMessage
-                                    name="fullname"
+                                    name="password"
                                     component="div"
                                     className={classes.error}
                                 />
-                            </Grid>
-                            <Grid container item xs={12} md={6} lg={6}>
+                            </Grid> */}
+                            {/* <Grid container item xs={12} md={6} lg={6}>
                                 <Field
-                                    type="text"
+                                    type="password"
                                     as={CustomField}
-                                    name="phone"
-                                    label="Phone"
+                                    name="confirmPassword"
+                                    label="Re-enter Password"
                                 />
                                 <ErrorMessage
-                                    name="phone"
+                                    name="confirmPassword"
                                     component="div"
                                     className={classes.error}
                                 />
-                            </Grid>
-                            <Grid container item xs={12} md={6} lg={6}>
-                                <Field
-                                    type="text"
-                                    as={CustomField}
-                                    name="address"
-                                    label="Address"
-                                />
-                                <ErrorMessage
-                                    name="address"
-                                    component="div"
-                                    className={classes.error}
-                                />
-                            </Grid>
-                            <Grid container item xs={12} md={6} lg={6}>
-                                <Field
-                                    as={CustomSelectField}
-                                    name="status"
-                                    label="Status"
-                                />
-                                <ErrorMessage
-                                    name="status"
-                                    component="div"
-                                    className={classes.error}
-                                />
-                            </Grid>
+                            </Grid> */}
                             <Grid container item xs={12} md={6} lg={6}>
                                 <Button
                                     type="submit"

@@ -37,7 +37,7 @@ export const getAdminByID = (id) => async (dispatch) => {
         },
     };
 
-    const response = await fetch(`${url}/api/admin/edit/${id}`, options);
+    const response = await fetch(`${url}/api/admin/${id}`, options);
     const result = await response.json();
     console.log(response,"bbbbbbbbbbbbb")
     dispatch({
