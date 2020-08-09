@@ -102,7 +102,9 @@ export default function Dashboard() {
     const inactiveSpeaker = useSelector ((state) => state.speaker.inactiveSpeaker);
     const allAudience = useSelector((state) => state.audience);
     const allTransactions = useSelector((state) => state.transaction.allTransaction);
-   
+    
+    let completed = allTransactions !== [] && allTransactions.filter(transaction => transaction.status_transaksi === 'PAID BY ADMIN').length
+    let ongoing = allTransactions !== [] && allTransactions.filter(transaction => transaction.status_transaksi !== 'PAID BY ADMIN').length
 
     useEffect(() => {
         dispatch(getActiveSpeaker());
@@ -197,7 +199,7 @@ export default function Dashboard() {
                                 <Typography variant="h4">
                                     <CountUp
                                         start={0}
-                                        end={allTransactions.length}
+                                        end={ongoing}
                                         duration={4}
                                         useEasing={true}
                                         useGrouping={true}
@@ -214,7 +216,7 @@ export default function Dashboard() {
                                 <Typography variant="h4">
                                     <CountUp
                                         start={0}
-                                        end={0}
+                                        end={completed}
                                         duration={4}
                                         useEasing={true}
                                         useGrouping={true}
