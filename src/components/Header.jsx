@@ -1,4 +1,4 @@
-import React, { useEffect} from "react";
+import React from "react";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import clsx from "clsx";
@@ -7,13 +7,10 @@ import Typography from "@material-ui/core/Typography";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
 import SideImage from "./assets/bg.jpg"
-import Badge from '@material-ui/core/Badge';
-import NotificationsActiveIcon from '@material-ui/icons/NotificationsActive';
 import LogoutIcon from "@material-ui/icons/ExitToApp";
-import { getPendingSpeaker} from "../redux/actions";
 import { useLocation, useHistory } from "react-router-dom";
 import { logout } from "../redux/actions";
-import { useDispatch, useSelector} from "react-redux";
+import { useDispatch} from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
     appBar: {
@@ -33,6 +30,7 @@ const useStyles = makeStyles((theme) => ({
     },
     icon: {
         marginLeft: theme.spacing(2),
+        color:"#f50057",
     },
 }));
 
@@ -42,12 +40,6 @@ export default function Header(props) {
     const dispatch = useDispatch();
     const classes = useStyles();
     const routeName = pathname.split("/")[2];
-    const pendingSpeaker = useSelector ((state) => state.speaker.pendingSpeaker);
-
-    useEffect(() => {
-        dispatch(getPendingSpeaker());
-    }, [dispatch]);
-
     return (
         <AppBar
             position="absolute"
@@ -75,11 +67,9 @@ export default function Header(props) {
                 >
                     {routeName}
                 </Typography>
-                <Badge className={classes.icon} badgeContent={pendingSpeaker.length} color="secondary">
-                    <NotificationsActiveIcon  color="primary"/>
-                </Badge >
                 <IconButton className={classes.icon} onClick={() => dispatch(logout(history))}>
                     <LogoutIcon color="secondary" />
+                    <Typography className={classes.icon}>LOGOUT</Typography>
                 </IconButton>
             </Toolbar>
         </AppBar>
