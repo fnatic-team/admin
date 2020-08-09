@@ -59,6 +59,16 @@ export default function Payment(props) {
     //         nom_trans_adm: detail.jumlah_bayar,
     //     })
     // };
+
+    // const [open, setOpen] = React.useState(false);
+
+    // const handleClickOpen = () => {
+    //     setOpen(true);
+    // };
+
+    // const handleClose = () => {
+    //     setOpen(false);
+    // };
     return (
         <Container className={classes.root}>
             <Grid container item xs={12} md={12} lg={12}>
@@ -135,9 +145,9 @@ export default function Payment(props) {
                                     variant="contained"
                                     color="primary"
                                     className={classes.button}
-                                    onClick={() => 
+                                    onClick={() => {
                                         dispatch(updateAdminPayment(id, formData))
-                                      }
+                                      } }
                                     >
                                     Pay Now
                                 </Button>

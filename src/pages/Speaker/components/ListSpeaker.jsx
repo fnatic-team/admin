@@ -47,10 +47,10 @@ function stableSort(array, comparator) {
 
 const headCells = [
   { id: 'image', numeric: false, disablePadding: true, label: 'Avatar' },
-  { id: 'name', numeric: true, disablePadding: false, label: 'Name' },
-  { id: 'category', numeric: true, disablePadding: false, label: 'Expertation' },
+  { id: 'name', numeric: false, disablePadding: false, label: 'Name' },
+  { id: 'category', numeric: false, disablePadding: false, label: 'Expertation' },
   { id: 'fee', numeric: true, disablePadding: false, label: 'Fee' },
-  { id: 'rating', numeric: true, disablePadding: false, label: 'Rating' },
+  // { id: 'rating', numeric: true, disablePadding: false, label: 'Rating' },
   { id: '_id', numeric: true, disablePadding: false, label: 'Suspend' },
 ];
 
@@ -188,10 +188,10 @@ export default function ListSpeaker() {
                       <TableCell component="th" scope="row" padding="none">
                         <Avatar alt="Remy Sharp" src={row.image} />
                       </TableCell>
-                      <TableCell align="right">{row.name}</TableCell>
-                      <TableCell align="right">{row.category}</TableCell>
+                      <TableCell align="left">{row.name}</TableCell>
+                      <TableCell align="left">{row.category}</TableCell>
                       <TableCell align="right">{row.fee}</TableCell>
-                      <TableCell align="right">{row.rating}</TableCell>
+                      {/* <TableCell align="right">{row.rating}</TableCell> */}
                       <TableCell align="right">
                         <Button
                                 variant="contained"
