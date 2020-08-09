@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect} from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
@@ -18,6 +18,9 @@ import Divider from '@material-ui/core/Divider';
 import DraftsRoundedIcon from '@material-ui/icons/DraftsRounded';
 import ImportContactsRoundedIcon from '@material-ui/icons/ImportContactsRounded';
 import jwtDecode from "jwt-decode";
+import Badge from '@material-ui/core/Badge';
+import { getPendingSpeaker, getAllTransaction } from "../redux/actions";
+import { useDispatch, useSelector } from "react-redux";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -44,12 +47,25 @@ const useStyles = makeStyles((theme) => ({
             border: '2px solid #e04349',
         },
     },
+    icon: {
+        paddingRight: theme.spacing(1),
+    },
 }));
 
 export default function ListMenuItem() {
     const classes = useStyles();
     const loggedAdmin = jwtDecode(localStorage.getItem('token'))
-    console.log(loggedAdmin, "loggedAvatar")
+    const dispatch = useDispatch();
+    const pendingSpeaker = useSelector ((state) => state.speaker.pendingSpeaker);
+    const allTransactions = useSelector((state) => state.transaction.allTransaction);
+
+    let needToPay = allTransactions !== [] && allTransactions.filter(transaction => 
+        transaction.status_speaker === 'SELESAI' && transaction.status_audience === 'SELESAI').length
+
+    useEffect(() => {
+        dispatch(getPendingSpeaker());
+        dispatch(getAllTransaction());
+    }, [dispatch]);
 
     return (
         <Box className={classes.text} >
@@ -90,7 +106,9 @@ export default function ListMenuItem() {
                     <ListItemIcon>
                         <RecordVoiceOverRoundedIcon color="primary" />
                     </ListItemIcon>
-                        <ListItemText primary="Speaker" />
+                        <Badge className={classes.icon} badgeContent={pendingSpeaker.length} color="secondary">
+                            <ListItemText primary="Speaker" />
+                        </Badge >
                 </ListItem>
             </Link>
             <Link to="/dashboard/audience" className={classes.link}>
@@ -106,7 +124,9 @@ export default function ListMenuItem() {
                     <ListItemIcon>
                         <TimelineRoundedIcon color="primary" />
                     </ListItemIcon>
-                        <ListItemText primary="Transaction" />
+                        <Badge className={classes.icon} badgeContent={needToPay} color="secondary">
+                            <ListItemText primary="Transaction" />
+                        </Badge >
                 </ListItem>
             </Link>
             <Link to="/dashboard/newsletter" className={classes.link}>
