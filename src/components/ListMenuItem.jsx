@@ -60,7 +60,9 @@ export default function ListMenuItem() {
     const allTransactions = useSelector((state) => state.transaction.allTransaction);
 
     let needToPay = allTransactions !== [] && allTransactions.filter(transaction => 
-        transaction.status_speaker === 'SELESAI' && transaction.status_audience === 'SELESAI').length
+        transaction.status_speaker === 'SELESAI' && 
+        transaction.status_audience === 'SELESAI' && 
+        transaction.status_transaksi !== 'PAID BY ADMIN').length
 
     useEffect(() => {
         dispatch(getPendingSpeaker());
