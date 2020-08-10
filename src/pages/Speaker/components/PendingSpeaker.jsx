@@ -206,17 +206,18 @@ export default function EnhancedTable() {
                       <TableCell align="left">{row.status}</TableCell>
                       <TableCell align="right">
                         <Button
-                          variant="contained"
+                          variant="outlined"
                           style={{ color: 'blue' }}
                           href={row.cv}
                           target="_blank"
+                          size="small"
                         >
                           <AttachFileIcon />Check CV
                         </Button>
                       </TableCell>
                       <TableCell align="right">
                         <Button
-                          variant="contained"
+                          variant="outlined"
                           color="primary"
                           className={classes.button}
                           size="small"
@@ -228,7 +229,7 @@ export default function EnhancedTable() {
                           Approve
                         </Button>
                         <Button
-                          variant="contained"
+                          variant="outlined"
                           color="secondary"
                           className={classes.button}
                           size="small"

@@ -204,7 +204,7 @@ export default function ListSpeaker() {
                       <TableCell align="right">{row.phone}</TableCell>
                       <TableCell align="right">
                         <Button
-                                variant="contained"
+                                variant="outlined"
                                 color="secondary"
                                 className={classes.button}
                                 size="small"
