@@ -203,17 +203,18 @@ export default function ListSpeaker() {
                       {/* <TableCell align="right">{row.rating}</TableCell> */}
                       <TableCell align="right">
                         <Button
-                            variant="contained"
+                            variant="outlined"
                             style={{ color: 'blue' }}
                             href={row.cv}
                             target="_blank"
+                            size="small"
                           >
                             <AttachFileIcon />Check CV
                           </Button>
                       </TableCell>
                       <TableCell align="right">
                         <Button
-                                variant="contained"
+                                variant="outlined"
                                 color="secondary"
                                 className={classes.button}
                                 size="small"

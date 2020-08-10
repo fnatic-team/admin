@@ -149,7 +149,7 @@ export default function Admin() {
                                         }
                                     {(loggedAdmin.role==='superadmin' && index===0) && 
                                         <Button
-                                            variant="contained"
+                                            variant="outlined"
                                             color="secondary"
                                             disabled
                                             className={classes.button}

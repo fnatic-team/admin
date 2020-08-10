@@ -14,8 +14,9 @@ import Paper from '@material-ui/core/Paper';
 import { getAllTransaction } from "../../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
 import moment from 'moment';
-import DetailTrans from './ModalTrans'
-import Payment from "./ModalPayment"
+import DetailTrans from './ModalTrans';
+// import Payment from "./ModalPayment"
+import Payment from "./DialogPayment";
 import { blue } from "@material-ui/core/colors";
 import AttachFileIcon from "@material-ui/icons/AttachFile";
 import Button from "@material-ui/core/Button";

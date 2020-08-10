@@ -43,8 +43,8 @@ function stableSort(array, comparator) {
 }
 
 const headCells = [
-  { id: "name", numeric: true, disablePadding: false, label: "Name" },
-  { id: "email", numeric: true, disablePadding: false, label: "Email" },
+  { id: "name", numeric: false, disablePadding: false, label: "Name" },
+  { id: "email", numeric: false, disablePadding: false, label: "Email" },
   { id: "subject", numeric: true, disablePadding: false, label: "Subject" },
   { id: "message", numeric: true, disablePadding: false, label: "Message" },
   {
@@ -185,8 +185,8 @@ export default function ContactUs() {
                   return (
                     <TableRow hover tabIndex={-1} key={row._id}>
                       <TableCell>{index + 1}</TableCell>
-                      <TableCell align="right">{row.name}</TableCell>
-                      <TableCell align="right">{row.email}</TableCell>
+                      <TableCell align="left">{row.name}</TableCell>
+                      <TableCell align="left">{row.email}</TableCell>
                       <TableCell align="right">{row.subject}</TableCell>
                       <TableCell align="right">
                         <TextareaAutosize
